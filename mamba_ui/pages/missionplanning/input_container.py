@@ -1,4 +1,5 @@
 from dash import html
+from dash import dcc
 
 from mamba_ui import config
 from mamba_ui import STANDARD_WIDTH
@@ -46,7 +47,7 @@ InputContainer = html.Div(
                 options=list(map(lambda x: x.capitalize(), config['missionplanning']['metrics'].split(', ')))
             )
         ),
-        InputItem('row-13', 'Percentile', input_kwargs=dict(min=0, max=100))
+        InputItem('row-13', 'Percentile', input_kwargs=dict(min=0, max=100)),
     ],
     style=style
 )

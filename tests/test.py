@@ -21,12 +21,12 @@ def display_page(pathname):
         return mui.pages.home.layout
 
 
-@mui.app.callback(
-    Output('sidebar', 'is_open'),
-    Input('navbar', 'children')
-)
-def show_sidebar(_):
-    return True
+# @mui.app.callback(
+#     Output('menubar', 'is_open'),
+#     Input('navbar', 'children')
+# )
+# def show_sidebar(_):
+#     return True
 
 
 if __name__ == '__main__':

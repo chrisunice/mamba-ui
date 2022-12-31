@@ -1,4 +1,5 @@
 from dash import html, dcc
+import dash_bootstrap_components as dbc
 
 
 def dropdown_item(container_name: str, label_text: str, dropdown_kwargs: dict = None):
@@ -27,23 +28,41 @@ def dropdown_item(container_name: str, label_text: str, dropdown_kwargs: dict = 
         'width': '40%'
     }
 
-    dropdown_style = {
-        'display': 'block',
+    dropdown_menu_style = {
+        'display': 'flex',
+        'justify-content': 'space-between',
+        'align-items': 'center',
         'width': '100%',
+        'color': 'black',
+        'background': 'white',
     }
 
-    dropdown_id = '-'.join(label_text.split(' ')).lower()
+    dropdown_checklist_id = '-'.join(label_text.split(' ')).lower()
+
+    dropdown_checklist_style = {
+        'display': 'flex',
+        'width': 'auto'
+    }
 
     return html.Div(
         id=container_name,
         children=[
             html.Label(label_text, style=label_style),
             html.Div(
-                dcc.Dropdown(
-                    id=dropdown_id,
-                    style=dropdown_style,
-                    **dropdown_kwargs
-                ),
+                children=[
+                    dbc.DropdownMenu(
+                        label='Select... ',
+                        children=[
+                            dcc.Checklist(
+                                id=dropdown_checklist_id,
+                                options=['No results found'],
+                                style=dropdown_checklist_style
+                            )
+                        ],
+                        toggle_style=dropdown_menu_style,
+                        style=dict(width='100%')
+                    )
+                ],
                 style=dropdown_container_style
             )
 
