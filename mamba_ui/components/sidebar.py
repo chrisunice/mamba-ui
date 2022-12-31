@@ -44,6 +44,8 @@ SideBar = dbc.Offcanvas(
                 menu_item(id_name='menu-data-vis', icon_name='chart-area', text='Data Visualization', link=True),
                 HorizontalLine('md'),
                 menu_item(id_name='menu-imagery', icon_name='images', text='Imagery', link=True),
+                HorizontalLine('md'),
+                menu_item(id_name='menu-mission-planning', icon_name='route', text='Mission Planning', link=True)
             ],
             style={'display': 'flex', 'flex-direction': 'column', 'align-items': 'center'}
         )
