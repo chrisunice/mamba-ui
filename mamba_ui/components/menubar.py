@@ -30,7 +30,7 @@ def menu_item(id_name: str, icon_name: str, text: str, link: bool = True):
         return dcc.Link(button, href=page_name, style=container_style, className='text-decoration-none')
 
 
-SideBar = dbc.Offcanvas(
+MenuBar = dbc.Offcanvas(
     children=[
         html.Div(
             children=[
@@ -50,7 +50,7 @@ SideBar = dbc.Offcanvas(
             style={'display': 'flex', 'flex-direction': 'column', 'align-items': 'center'}
         )
     ],
-    id="sidebar",
+    id="menubar",
     scrollable=True,
     is_open=False,
     close_button=False,
