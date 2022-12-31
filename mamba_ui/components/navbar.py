@@ -4,7 +4,7 @@ import dash_bootstrap_components as dbc
 NAVBAR_HEIGHT = '50px'
 
 NavBar = dbc.Navbar(
-    id='nav-bar',
+    id='navbar',
     children=[
         html.I(
             id='menu-icon',
