@@ -28,21 +28,21 @@ Sidebar = dbc.Offcanvas(
         html.Div(
             children=[
                 html.H5('Query Filter'),
-                HorizontalLine,
+                HorizontalLine('sm'),
                 sidebar_dropdown_item(
                     label_text='SQL Database',
                     options=[{'label': os.path.basename(config['imagery']['database_path']),
                               'value': config['imagery']['database_path']}]
                 ),
-                HorizontalLine,
+                HorizontalLine('sm'),
                 sidebar_dropdown_item('Platform', multi=True),
-                HorizontalLine,
+                HorizontalLine('sm'),
                 sidebar_dropdown_item('Band', multi=True),
-                HorizontalLine,
+                HorizontalLine('sm'),
                 sidebar_dropdown_item('Polarization', multi=True),
-                HorizontalLine,
+                HorizontalLine('sm'),
                 sidebar_input_item('Look'),
-                HorizontalLine,
+                HorizontalLine('sm'),
                 sidebar_input_item('Depression')
             ],
             style=container_style
