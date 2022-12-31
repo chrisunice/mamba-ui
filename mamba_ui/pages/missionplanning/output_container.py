@@ -12,7 +12,6 @@ col_style = {
     'max-width': STANDARD_WIDTH/2,
     'padding': '10px',
     'margin-left': '5px',
-    # 'background-color': 'rgba(0, 0, 255, 0.25)'
 }
 
 log_style = {

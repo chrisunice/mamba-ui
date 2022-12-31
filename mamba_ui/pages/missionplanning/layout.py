@@ -9,7 +9,6 @@ page_style = {
     'flex-direction': 'row',
     'justify-content': 'center',
     'width': '100%',
-    # 'background-color': 'rgba(255, 0, 0, 0.25)',
     'margin': '10px'
 }
 
