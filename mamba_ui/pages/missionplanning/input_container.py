@@ -25,27 +25,28 @@ InputContainer = html.Div(
     children=[
         ContainerTitle('Input'),
         HorizontalLine('lg'),
-        DropdownItem('row-1', 'Air Vehicle Configuration', dropdown_kwargs=dict(multi=True)),
-        DropdownItem('row-2', 'Air Vehicle Sub Configuration', dropdown_kwargs=dict(multi=True)),
-        DropdownItem('row-3', 'Missions', dropdown_kwargs=dict(multi=True)),
-        DropdownItem('row-4', 'Vector Groups', dropdown_kwargs=dict(multi=True)),
+        DropdownItem('row-1', 'Platform Database'),
+        DropdownItem('row-2', 'Air Vehicle Configuration', dropdown_kwargs=dict(multi=True)),
+        DropdownItem('row-3', 'Air Vehicle Sub Configuration', dropdown_kwargs=dict(multi=True)),
+        DropdownItem('row-4', 'Missions', dropdown_kwargs=dict(multi=True)),
+        DropdownItem('row-5', 'Vector Groups', dropdown_kwargs=dict(multi=True)),
         HorizontalLine('sm'),
-        RangeSliderItem('row-5', 'Look Range', slider_kwargs=dict(min=-180, max=180, step=30)),
-        InputItem('row-6', 'Look Bin Width', input_kwargs=dict(min=0, max=180)),
-        RangeSliderItem('row-7', 'Depression Range', slider_kwargs=dict(min=-90, max=90, step=15)),
-        InputItem('row-8', 'Depression Bin Width', input_kwargs=dict(min=0, max=90)),
+        RangeSliderItem('row-6', 'Look Range', slider_kwargs=dict(min=-180, max=180, step=30)),
+        InputItem('row-7', 'Look Bin Width', input_kwargs=dict(min=0, max=180)),
+        RangeSliderItem('row-8', 'Depression Range', slider_kwargs=dict(min=-90, max=90, step=15)),
+        InputItem('row-9', 'Depression Bin Width', input_kwargs=dict(min=0, max=90)),
         HorizontalLine('sm'),
-        InputItem('row-9', 'Minimum Hits/Bin', input_kwargs=dict(min=1)),
-        InputItem('row-10', 'Minimum Missions/Bin', input_kwargs=dict(min=1)),
+        InputItem('row-10', 'Minimum Hits/Bin', input_kwargs=dict(min=1)),
+        InputItem('row-11', 'Minimum Missions/Bin', input_kwargs=dict(min=1)),
         HorizontalLine('sm'),
         DropdownItem(
-            container_name='row-11',
+            container_name='row-12',
             label_text='Compute Metric',
             dropdown_kwargs=dict(
                 options=list(map(lambda x: x.capitalize(), config['missionplanning']['metrics'].split(', ')))
             )
         ),
-        InputItem('row-12', 'Percentile', input_kwargs=dict(min=0, max=100))
+        InputItem('row-13', 'Percentile', input_kwargs=dict(min=0, max=100))
     ],
     style=style
 )

@@ -28,7 +28,7 @@ def input_item(container_name: str, label_text: str, input_kwargs: dict = None):
     input_container_style = {
         'display': 'flex',
         'justify-content': 'left',
-        'width': '50%'
+        'width': '40%'
     }
 
     input_style = {

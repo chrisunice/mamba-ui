@@ -20,7 +20,11 @@ def dropdown_item(container_name: str, label_text: str, dropdown_kwargs: dict = 
         'display': 'flex',
         'align-items': 'center',
         'justify-content': 'left',
-        'width': '50%'
+        'width': 'auto'
+    }
+
+    dropdown_container_style = {
+        'width': '40%'
     }
 
     dropdown_style = {
@@ -40,7 +44,7 @@ def dropdown_item(container_name: str, label_text: str, dropdown_kwargs: dict = 
                     style=dropdown_style,
                     **dropdown_kwargs
                 ),
-                style={'width': '50%'}
+                style=dropdown_container_style
             )
 
         ],
