@@ -1,0 +1,20 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#_dash-app-content {
+    display: flex;
+    justify-content: center;
+}
+
+.offcanvas-header{
+    display: flex;
+    justify-content: center;
+}
+
+.offcanvas-body {
+    display: flex;
+    flex-direction: column;
+}
