@@ -1,2 +1,3 @@
 include ./mamba_ui/config.ini
 include ./mamba_ui/static/*
+recursive-include ./mamba_ui/assets *
