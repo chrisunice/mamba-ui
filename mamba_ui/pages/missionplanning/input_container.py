@@ -17,7 +17,7 @@ style = {
     'max-width': STANDARD_WIDTH/2,
     'padding': '10px',
     'margin-right': '5px',
-    'font-size': 'min(20px, 1.5vmax)',
+    'font-size': 'min(24px, 1.5vmax)',
 }
 
 

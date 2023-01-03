@@ -37,12 +37,12 @@ def dropdown_item(container_name: str, label_text: str, dropdown_kwargs: dict = 
         'background': 'white',
     }
 
-    dropdown_checklist_id = '-'.join(label_text.split(' ')).lower()
+    dropdown_checklist_id = '-'.join(label_text.split(' ')).lower() + '-dropdown'
 
-    dropdown_checklist_style = {
-        'display': 'flex',
-        'width': 'auto'
-    }
+    # dropdown_checklist_style = {
+    #     'display': 'flex',
+    #     'width': 'auto'
+    # }
 
     return html.Div(
         id=container_name,
@@ -51,16 +51,12 @@ def dropdown_item(container_name: str, label_text: str, dropdown_kwargs: dict = 
             html.Div(
                 children=[
                     dbc.DropdownMenu(
+                        id=dropdown_checklist_id,
                         label='Select... ',
                         children=[
-                            dcc.Checklist(
-                                id=dropdown_checklist_id,
-                                options=['No results found'],
-                                style=dropdown_checklist_style
-                            )
+                            html.Span('No results found'),
                         ],
                         toggle_style=dropdown_menu_style,
-                        style=dict(width='100%')
                     )
                 ],
                 style=dropdown_container_style

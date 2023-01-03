@@ -10,7 +10,7 @@ def menu_item(id_name: str, icon_name: str, text: str, link: bool = True):
     container_style = dict(display='flex', width='100%')
     button_style = dict(alignItems='center')
     icon_style = dict(color='white')
-    text_style = dict(color='white', marginLeft='10px', fontSize='1rem')
+    text_style = dict(color='white', marginLeft='10px', fontSize='min(24px, 1.5vmax)')
 
     button = dbc.Button(
         [
@@ -30,11 +30,25 @@ def menu_item(id_name: str, icon_name: str, text: str, link: bool = True):
         return dcc.Link(button, href=page_name, style=container_style, className='text-decoration-none')
 
 
+menubar_style = {
+    'display': 'flex',
+    'marginTop': '75px',
+    'width': 'auto',
+    'padding': '0px'
+}
+
+menu_item_container = {
+    'display': 'flex',
+    'flex-direction': 'column',
+    'align-items': 'center'
+}
+
+
 MenuBar = dbc.Offcanvas(
     children=[
         html.Div(
             children=[
-                html.H5('Menu'),
+                html.H2('Menu', style=dict(margin='0px')),
                 HorizontalLine('md'),
                 menu_item('menu-upload', 'upload', 'Upload', link=False),
                 Upload,
@@ -47,12 +61,12 @@ MenuBar = dbc.Offcanvas(
                 HorizontalLine('md'),
                 menu_item(id_name='menu-mission-planning', icon_name='route', text='Mission Planning', link=True)
             ],
-            style={'display': 'flex', 'flex-direction': 'column', 'align-items': 'center'}
+            style=menu_item_container
         )
     ],
     id="menubar",
     scrollable=True,
     is_open=False,
     close_button=False,
-    style={'display': 'flex', 'marginTop': '50px', 'width': '200px', 'padding': '0px'}
+    style=menubar_style
 )

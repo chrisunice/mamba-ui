@@ -1,8 +1,6 @@
 from dash import html
 import dash_bootstrap_components as dbc
 
-NAVBAR_HEIGHT = '50px'
-
 NavBar = dbc.Navbar(
     id='navbar',
     children=[
@@ -16,12 +14,9 @@ NavBar = dbc.Navbar(
             )
         ),
         html.Div(
-            html.H5(
+            html.H1(
                 'Mamba',
-                style=dict(
-                    margin='0px',
-                    fontSize=NAVBAR_HEIGHT
-                )
+                style=dict(margin='0px')
             ),
             style=dict(
                 position='absolute',
@@ -52,7 +47,7 @@ NavBar = dbc.Navbar(
             }
         )
     ],
-    style={'height': NAVBAR_HEIGHT, 'padding': '5px'}
+    style={'height': '75px', 'padding': '5px'}
 )
 
 
