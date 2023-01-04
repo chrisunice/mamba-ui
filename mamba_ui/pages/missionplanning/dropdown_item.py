@@ -39,11 +39,6 @@ def dropdown_item(container_name: str, label_text: str, dropdown_kwargs: dict = 
 
     dropdown_checklist_id = '-'.join(label_text.split(' ')).lower() + '-dropdown'
 
-    # dropdown_checklist_style = {
-    #     'display': 'flex',
-    #     'width': 'auto'
-    # }
-
     return html.Div(
         id=container_name,
         children=[
