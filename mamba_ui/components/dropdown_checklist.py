@@ -6,8 +6,18 @@ def dropdown_checklist(id_name: str, items: list | dict, menu_item_kwargs: dict 
 
     id_name = id_name.lower()
 
+    # Handle keyword arguements
+    if menu_item_kwargs is None:
+        menu_item_kwargs = {'toggle': True}
+
+    if checklist_kwargs is None:
+        checklist_kwargs = {}
+
+    # Styling component
     menu_item_style = {
-        'background-color': 'transparent'
+        'background-color': 'transparent',
+        'overflow-y': 'auto',
+        'max-height': '250px'
     }
 
     checklist_style = {
@@ -24,6 +34,7 @@ def dropdown_checklist(id_name: str, items: list | dict, menu_item_kwargs: dict 
         'font-size': 'large'
     }
 
+    # Build component
     component = dbc.DropdownMenuItem(
         id=f'{id_name}-menu-item',
         children=[
@@ -36,7 +47,6 @@ def dropdown_checklist(id_name: str, items: list | dict, menu_item_kwargs: dict 
                 **checklist_kwargs
             )
         ],
-        toggle=True,
         style=menu_item_style,
         **menu_item_kwargs
     )
