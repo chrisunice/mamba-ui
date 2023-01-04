@@ -2,6 +2,7 @@ import dash
 import requests
 import dash_uploader
 import dash_bootstrap_components as dbc
+from dash_extensions.enrich import DashProxy, MultiplexerTransform
 
 from mamba_ui import config
 
@@ -21,12 +22,13 @@ except (requests.exceptions.ConnectionError, requests.Timeout):
     ]
 
 # Application set up
-app = dash.Dash(
+app = DashProxy(
     name=__name__,
     title='Mamba',
     external_stylesheets=sheets,
     suppress_callback_exceptions=True,
     prevent_initial_callbacks=False,
+    transforms=[MultiplexerTransform()]
 )
 
 # Configure upload to server
