@@ -1,9 +1,7 @@
 from dash import html
-from dash import dcc
 
-from mamba_ui import config
 from mamba_ui import STANDARD_WIDTH
-from mamba_ui.components import HorizontalLine
+from mamba_ui.components import HorizontalLine, SubmitButtonGroup
 from .container_title import container_title as ContainerTitle
 from .dropdown_item import dropdown_item as DropdownItem
 from .rangeslider_item import rangeslider_item as RangeSliderItem
@@ -43,6 +41,11 @@ InputContainer = html.Div(
         HorizontalLine('sm'),
         DropdownItem('Compute Metric'),
         InputItem('Percentile', input_kwargs=dict(min=0, max=100)),
+        HorizontalLine('sm'),
+        html.Div(
+            SubmitButtonGroup('mission-planning-page'),
+            style=dict(width='min(100%, 750px)')
+        )
     ],
     style=style
 )
