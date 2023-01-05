@@ -27,6 +27,7 @@ def submit_button_group(uid: str):
             'flex-direction': 'column',
             'flex': '1',
             'justify-content': 'flex-end',
-            'width': '100%'
+            'align-items': 'left',
+            'width': 'min(100%, 750px)'
         }
     )

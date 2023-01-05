@@ -42,10 +42,7 @@ InputContainer = html.Div(
         DropdownItem('Compute Metric'),
         InputItem('Percentile', input_kwargs=dict(min=0, max=100)),
         HorizontalLine('sm'),
-        html.Div(
-            SubmitButtonGroup('mission-planning-page'),
-            style=dict(width='min(100%, 750px)')
-        )
+        SubmitButtonGroup('mission-planning-page')
     ],
     style=style
 )
