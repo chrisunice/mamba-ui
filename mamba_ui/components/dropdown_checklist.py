@@ -16,7 +16,7 @@ def dropdown_checklist(
         style = {}
 
     if menu_item_kwargs is None:
-        menu_item_kwargs = {'toggle': True}
+        menu_item_kwargs = {'toggle': False}
 
     if checklist_kwargs is None:
         checklist_kwargs = {}

@@ -14,7 +14,7 @@ def rangeslider_item(container_name: str, label_text: str, slider_kwargs: dict =
     if 'max' in slider_kwargs.keys():
         input_kwargs['max'] = slider_kwargs['max']
 
-    rangeslider_id = '-'.join(label_text.split(' ')).lower()
+    id_name = '-'.join(label_text.split(' ')).lower()
 
     item_style = {
         'display': 'flex',
@@ -55,9 +55,9 @@ def rangeslider_item(container_name: str, label_text: str, slider_kwargs: dict =
             html.Label(label_text, style=label_style),
             html.Div(
                 children=[
-                    dcc.Input(type='number', style=input_style, **input_kwargs),
-                    html.Div([dcc.RangeSlider(id=rangeslider_id, **slider_kwargs)], style=slider_container_style),
-                    dcc.Input(type='number', style=input_style, **input_kwargs)
+                    dcc.Input(id=f'{id_name}-min-input', type='number', style=input_style, **input_kwargs),
+                    html.Div([dcc.RangeSlider(id=f'{id_name}-slider', **slider_kwargs)], style=slider_container_style),
+                    dcc.Input(id=f'{id_name}-max-input', type='number', style=input_style, **input_kwargs)
                 ],
                 style=input_container_style
             )
