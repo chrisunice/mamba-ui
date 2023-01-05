@@ -12,7 +12,7 @@ from .SidebarInputItem import sidebar_input_item
 from .SidebarDropdownItem import sidebar_dropdown_item
 
 sidebar_style = {
-    'margin-top': '50px',
+    'margin-top': '75px',
     'width': '300px'
 }
 

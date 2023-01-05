@@ -20,6 +20,7 @@ style = {
     'font-size': 'min(24px, 1.5vmax)',
 }
 
+marks = {val: str(val) for val in [-180, 0, 180]}
 
 InputContainer = html.Div(
     id='col-left',
@@ -32,9 +33,9 @@ InputContainer = html.Div(
         DropdownItem('row-4', 'Missions', dropdown_kwargs=dict(multi=True)),
         DropdownItem('row-5', 'Vector Groups', dropdown_kwargs=dict(multi=True)),
         HorizontalLine('sm'),
-        RangeSliderItem('row-6', 'Look Range', slider_kwargs=dict(min=-180, max=180, step=30)),
+        RangeSliderItem('row-6', 'Look Range', -180, 180),
         InputItem('row-7', 'Look Bin Width', input_kwargs=dict(min=0, max=180)),
-        RangeSliderItem('row-8', 'Depression Range', slider_kwargs=dict(min=-90, max=90, step=15)),
+        RangeSliderItem('row-8', 'Depression Range', -90, 90),
         InputItem('row-9', 'Depression Bin Width', input_kwargs=dict(min=0, max=90)),
         HorizontalLine('sm'),
         InputItem('row-10', 'Minimum Hits/Bin', input_kwargs=dict(min=1)),
