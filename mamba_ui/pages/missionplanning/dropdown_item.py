@@ -1,6 +1,8 @@
 from dash import html, dcc
 import dash_bootstrap_components as dbc
 
+from mamba_ui.components import DropdownChecklist
+
 
 def dropdown_item(container_name: str, label_text: str, dropdown_kwargs: dict = None):
 
@@ -43,20 +45,7 @@ def dropdown_item(container_name: str, label_text: str, dropdown_kwargs: dict = 
         id=container_name,
         children=[
             html.Label(label_text, style=label_style),
-            html.Div(
-                children=[
-                    dbc.DropdownMenu(
-                        id=dropdown_checklist_id,
-                        label='Select... ',
-                        children=[
-                            html.Span('No results found'),
-                        ],
-                        toggle_style=dropdown_menu_style,
-                    )
-                ],
-                style=dropdown_container_style
-            )
-
+            DropdownChecklist(dropdown_checklist_id, style=dropdown_container_style)
         ],
         style=item_style
     )
