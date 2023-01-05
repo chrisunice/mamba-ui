@@ -27,28 +27,22 @@ InputContainer = html.Div(
     children=[
         ContainerTitle('Input'),
         HorizontalLine('lg'),
-        DropdownItem('row-1', 'Platform Database'),
-        DropdownItem('row-2', 'Air Vehicle Configuration', dropdown_kwargs=dict(multi=True)),
-        DropdownItem('row-3', 'Air Vehicle Sub Configuration', dropdown_kwargs=dict(multi=True)),
-        DropdownItem('row-4', 'Missions', dropdown_kwargs=dict(multi=True)),
-        DropdownItem('row-5', 'Vector Groups', dropdown_kwargs=dict(multi=True)),
+        DropdownItem('Platform Database'),
+        DropdownItem('Air Vehicle Configuration'),
+        DropdownItem('Air Vehicle Sub Configuration'),
+        DropdownItem('Missions'),
+        DropdownItem('Vector Groups'),
         HorizontalLine('sm'),
-        RangeSliderItem('row-6', 'Look Range', -180, 180),
-        InputItem('row-7', 'Look Bin Width', input_kwargs=dict(min=0, max=180)),
-        RangeSliderItem('row-8', 'Depression Range', -90, 90),
-        InputItem('row-9', 'Depression Bin Width', input_kwargs=dict(min=0, max=90)),
+        RangeSliderItem('Look Range', -180, 180),
+        InputItem('Look Bin Width', input_kwargs=dict(min=0, max=180)),
+        RangeSliderItem('Depression Range', -90, 90),
+        InputItem('Depression Bin Width', input_kwargs=dict(min=0, max=90)),
         HorizontalLine('sm'),
-        InputItem('row-10', 'Minimum Hits/Bin', input_kwargs=dict(min=1)),
-        InputItem('row-11', 'Minimum Missions/Bin', input_kwargs=dict(min=1)),
+        InputItem('Minimum Hits/Bin', input_kwargs=dict(min=1)),
+        InputItem('Minimum Missions/Bin', input_kwargs=dict(min=1)),
         HorizontalLine('sm'),
-        DropdownItem(
-            container_name='row-12',
-            label_text='Compute Metric',
-            dropdown_kwargs=dict(
-                options=list(map(lambda x: x.capitalize(), config['missionplanning']['metrics'].split(', ')))
-            )
-        ),
-        InputItem('row-13', 'Percentile', input_kwargs=dict(min=0, max=100)),
+        DropdownItem('Compute Metric'),
+        InputItem('Percentile', input_kwargs=dict(min=0, max=100)),
     ],
     style=style
 )

@@ -9,7 +9,7 @@ def _create_marks(min_: int, max_: int):
     return marks
 
 
-def rangeslider_item(container_name: str, label_text: str, minimum: int | float, maximum: int | float):
+def rangeslider_item(label_text: str, minimum: int | float, maximum: int | float):
 
     id_name = '-'.join(label_text.split(' ')).lower()
 
@@ -47,7 +47,7 @@ def rangeslider_item(container_name: str, label_text: str, minimum: int | float,
     }
 
     return html.Div(
-        id=container_name,
+        id=f'{id_name}-row',
         children=[
             html.Label(label_text, style=label_style),
             html.Div(

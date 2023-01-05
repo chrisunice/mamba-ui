@@ -1,12 +1,12 @@
 from dash import html, dcc
 
 
-def input_item(container_name: str, label_text: str, input_kwargs: dict = None):
+def input_item(label_text: str, input_kwargs: dict = None):
 
     if input_kwargs is None:
         input_kwargs = {}
 
-    input_id = '-'.join(label_text.split(' ')).lower()
+    id_name = '-'.join(label_text.split(' ')).lower()
 
     item_style = {
         'display': 'flex',
@@ -37,13 +37,13 @@ def input_item(container_name: str, label_text: str, input_kwargs: dict = None):
     }
 
     return html.Div(
-        id=container_name,
+        id=f'{id_name}-row',
         children=[
             html.Label(label_text, style=label_style),
             html.Div(
                 children=[
                     dcc.Input(
-                        id=input_id,
+                        id=id_name,
                         type='number',
                         style=input_style,
                         **input_kwargs

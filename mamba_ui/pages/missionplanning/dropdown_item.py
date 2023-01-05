@@ -4,10 +4,10 @@ import dash_bootstrap_components as dbc
 from mamba_ui.components import DropdownChecklist
 
 
-def dropdown_item(container_name: str, label_text: str, dropdown_kwargs: dict = None):
+def dropdown_item(label_text: str, dropdown_checklist_kwargs: dict = None):
 
-    if dropdown_kwargs is None:
-        dropdown_kwargs = {}
+    if dropdown_checklist_kwargs is None:
+        dropdown_checklist_kwargs = {}
 
     item_style = {
         'display': 'flex',
@@ -30,22 +30,15 @@ def dropdown_item(container_name: str, label_text: str, dropdown_kwargs: dict = 
         'width': '40%'
     }
 
-    dropdown_menu_style = {
-        'display': 'flex',
-        'justify-content': 'space-between',
-        'align-items': 'center',
-        'width': '100%',
-        'color': 'black',
-        'background': 'white',
-    }
-
-    dropdown_checklist_id = '-'.join(label_text.split(' ')).lower() + '-dropdown'
+    id_name = '-'.join(label_text.split(' ')).lower()
+    container_id = f'{id_name}-row'
+    dropdown_checklist_id = f'{id_name}-dropdown'
 
     return html.Div(
-        id=container_name,
+        id=container_id,
         children=[
             html.Label(label_text, style=label_style),
-            DropdownChecklist(dropdown_checklist_id, style=dropdown_container_style)
+            DropdownChecklist(dropdown_checklist_id, style=dropdown_container_style, **dropdown_checklist_kwargs)
         ],
         style=item_style
     )
