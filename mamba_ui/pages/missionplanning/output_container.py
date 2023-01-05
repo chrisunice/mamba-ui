@@ -1,4 +1,4 @@
-from dash import html
+from dash import html, dcc
 
 from mamba_ui.components import HorizontalLine
 from .container_title import container_title as ContainerTitle
@@ -19,7 +19,8 @@ log_style = {
     'flex': '1',
     'width': '80%',
     'border': '5px ridge white',
-    'background': 'lightgray'
+    'background': 'lightgray',
+    'color': 'black',
 }
 
 OutputContainer = html.Div(
@@ -27,10 +28,7 @@ OutputContainer = html.Div(
     children=[
         ContainerTitle('Output'),
         HorizontalLine('lg'),
-        html.Div(
-            id='output-log',
-            style=log_style
-        )
+        dcc.Textarea(id='output-log', disabled=True, style=log_style)
     ],
     style=col_style
 )
