@@ -28,7 +28,8 @@ OutputContainer = html.Div(
     children=[
         ContainerTitle('Output'),
         HorizontalLine('lg'),
-        dcc.Textarea(id='output-log', disabled=True, style=log_style)
+        dcc.Interval(id='output-interval', interval=1000),
+        dcc.Textarea(id='output-log', disabled=True, style=log_style),
     ],
     style=col_style
 )
