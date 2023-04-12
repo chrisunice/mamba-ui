@@ -2,6 +2,7 @@ from dash import html, dcc
 import dash_bootstrap_components as dbc
 
 from .upload import Upload
+from .settings import Settings
 from .lines import horizontal_line as HorizontalLine
 
 
@@ -59,7 +60,11 @@ MenuBar = dbc.Offcanvas(
                 HorizontalLine('md'),
                 menu_item(id_name='menu-imagery', icon_name='images', text='Imagery', link=True),
                 HorizontalLine('md'),
-                menu_item(id_name='menu-mission-planning', icon_name='route', text='Mission Planning', link=True)
+                menu_item(id_name='menu-mission-planning', icon_name='route', text='Mission Planning', link=True),
+                HorizontalLine('md'),
+                menu_item(id_name='menu-settings', icon_name='gear', text='Settings', link=False),
+                Settings,
+                HorizontalLine('md')
             ],
             style=menu_item_container
         )
