@@ -3,7 +3,7 @@ import requests
 import dash_uploader
 import dash_bootstrap_components as dbc
 from dash_extensions.enrich import DashProxy, MultiplexerTransform, ServersideOutputTransform, FileSystemStore, \
-    TriggerTransform, NoOutputTransform
+    TriggerTransform, NoOutputTransform, CycleBreakerTransform
 
 from mamba_ui import config
 
@@ -35,8 +35,10 @@ app = DashProxy(
             backend=FileSystemStore(cache_dir=config['init']['cache_dir'])
         ),
         TriggerTransform(),
-        NoOutputTransform()
-    ]
+        NoOutputTransform(),
+        CycleBreakerTransform()
+    ],
+    url_base_pathname='/mamba/'
 )
 
 # Configure upload to server

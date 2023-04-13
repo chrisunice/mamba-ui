@@ -1,3 +1,4 @@
+from waitress import serve
 from dash_extensions.enrich import Input, Output
 
 import mamba_ui as mui
@@ -57,4 +58,6 @@ def download(click):
 if __name__ == '__main__':
 
     mui.app.layout = mui.serve_layout()
+    # mui.app.config['SERVER_NAME'] = 'mamba:8888'
     mui.app.run(debug=True, port=8888)
+    # serve(mui.app.server, host='0.0.0.0', port=8888, threads=6)
