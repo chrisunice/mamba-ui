@@ -37,6 +37,7 @@ PolarPlot = dcc.Graph(
         )
     ),
     responsive=True,
+    config={'scrollZoom': True},
     style=graph_style
 )
 
@@ -53,6 +54,7 @@ LinearPlot = dcc.Graph(
             xaxis=dict(gridcolor='white')
         )
     ),
+    config={'scrollZoom': True},
     responsive=True,
     style=graph_style
 )
