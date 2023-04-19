@@ -38,7 +38,7 @@ app = DashProxy(
         NoOutputTransform(),
         CycleBreakerTransform()
     ],
-    url_base_pathname='/mamba/'
+    # url_base_pathname='/mamba/'
 )
 
 # Configure upload to server

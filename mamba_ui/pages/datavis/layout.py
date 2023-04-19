@@ -1,7 +1,7 @@
 from dash import html
 from mamba_ui.components import TabBar
 from mamba_ui.components import DataBar
-from mamba_ui.components.plots import PolarPlot
+from mamba_ui.components.plots import PolarPlot, LinearPlot
 
 page_styles = {
     'display': 'flex',

@@ -9,8 +9,32 @@ graph_style = {
 PolarPlot = dcc.Graph(
     id='polar-plot',
     figure=go.Figure(
-        data=go.Scatterpolargl(dict(r=None, theta=None)),
-        layout=go.Layout(autosize=True)
+        data=go.Scatterpolargl(
+            dict(
+                r=None,
+                theta=None,
+            )
+        ),
+        layout=go.Layout(
+            autosize=True,
+            paper_bgcolor='rgba(0, 0, 0, 0)',
+            polar=dict(
+                angularaxis=dict(
+                    gridcolor='white',
+                    tickcolor='white',
+                    tick0=0,
+                    dtick=15,
+                    rotation=90,
+                    direction='clockwise'
+                ),
+                radialaxis=dict(
+                    gridcolor='white'
+                ),
+                bgcolor='rgba(0, 0, 0, 0)'
+            ),
+            font=dict(color='white'),
+            xaxis=dict(gridcolor='white')
+        )
     ),
     responsive=True,
     style=graph_style
@@ -20,7 +44,14 @@ LinearPlot = dcc.Graph(
     id='linear-plot',
     figure=go.Figure(
         data=go.Scatter(dict(x=None, y=None)),
-        layout=go.Layout()
+        layout=go.Layout(
+            autosize=True,
+            paper_bgcolor='black',
+            plot_bgcolor='black',
+            font=dict(color='white'),
+            yaxis=dict(gridcolor='white'),
+            xaxis=dict(gridcolor='white')
+        )
     ),
     responsive=True,
     style=graph_style
