@@ -20,20 +20,30 @@ PolarPlot = dcc.Graph(
             paper_bgcolor='rgba(0, 0, 0, 0)',
             polar=dict(
                 angularaxis=dict(
-                    gridcolor='white',
+                    gridcolor='rgba(255, 255, 255, 0.5)',
                     tickcolor='white',
                     tick0=0,
                     dtick=15,
+                    ticklabelstep=2,
                     rotation=90,
-                    direction='clockwise'
+                    direction='clockwise',
+                    linecolor='rgba(255, 255, 255, 0.5)'
                 ),
                 radialaxis=dict(
-                    gridcolor='white'
+                    gridcolor='rgba(255, 255, 255, 0.5)',
+                    angle=0,
+                    range=[-50, 20],
+                    dtick=10,
+                    tickangle=0,
+                    showline=True,
+                    linewidth=2
                 ),
                 bgcolor='rgba(0, 0, 0, 0)'
             ),
-            font=dict(color='white'),
-            xaxis=dict(gridcolor='white')
+            font=dict(
+                color='white',
+                size=15
+            ),
         )
     ),
     responsive=True,
