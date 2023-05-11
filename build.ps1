@@ -2,7 +2,12 @@
 # This is necessary only on the unclass side
 subst U: C:\VaultNet\
 
+python -m pip install --upgrade pip
+
+# Download requirements from internet
 pip download -r .\requirements.txt --dest U:\PyPI
+
+# Build mamba-ui
 python setup.py bdist_wheel --dist-dir U:\PyPI
 
 # remove some of the junk files
