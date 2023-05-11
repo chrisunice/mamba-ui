@@ -1,7 +1,11 @@
+# Simulating network drive
+# This is necessary only on the unclass side
+subst U: C:\VaultNet\
+
 pip download -r .\requirements.txt --dest U:\PyPI
 python setup.py bdist_wheel --dist-dir U:\PyPI
 
 # remove some of the junk files
-del .\build\ -r -Force
-del .\*.egg-info -r -Force
-del .\*.pytest_cache -r -Force
+Remove-Item .\build\ -r -Force
+Remove-Item .\*.egg-info -r -Force
+Remove-Item .\*.pytest_cache -r -Force
