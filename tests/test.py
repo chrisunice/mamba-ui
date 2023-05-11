@@ -19,7 +19,7 @@ def display_page(pathname):
         return mui.pages.missionplanning.layout
     else:
         # todo add an alert here
-        return mui.pages.home.layout
+        return mui.pages.sandbox.layout
 
 
 # @mui.app.callback(
