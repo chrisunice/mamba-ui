@@ -8,3 +8,4 @@ from .submit_button_group import submit_button_group as SubmitButtonGroup
 from .tabs import TabBar
 from .upload import Upload
 from .dropdown_checklist import dropdown_checklist as DropdownChecklist
+from .footer import Footer

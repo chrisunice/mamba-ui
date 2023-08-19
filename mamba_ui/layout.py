@@ -2,6 +2,7 @@ from dash import html, dcc
 
 from mamba_ui.components import NavBar
 from mamba_ui.components import MenuBar
+from mamba_ui.components import Footer
 from mamba_ui import STANDARD_WIDTH, STANDARD_HEIGHT
 
 
@@ -33,6 +34,7 @@ def serve_layout():
             NavBar,
             MenuBar,
             html.Div(id='page-container', style=container_styles),
+            Footer
         ],
         style=app_styles
     )
