@@ -1,5 +1,4 @@
-from waitress import serve
-from dash_extensions.enrich import Input, Output
+from dash_extensions.enrich import Input, Output, Trigger
 
 import mamba_ui as mui
 
@@ -22,14 +21,14 @@ def display_page(pathname):
         return mui.pages.sandbox.layout
 
 
-# @mui.app.callback(
-#     Output('menubar', 'is_open'),
-#     Trigger('page-container', 'children')
-# )
-# def show_menu():
-#     return True
-#
-#
+@mui.app.callback(
+    Output('menubar', 'is_open'),
+    Trigger('page-container', 'children')
+)
+def show_menu():
+    return True
+
+
 # @mui.app.callback(
 #     Output('settings-modal', 'is_open'),
 #     Trigger('page-container', 'children')

@@ -1,0 +1,12 @@
+# requirements.txt
+dash
+requests
+dash-daq
+dash-uploader
+dash-bootstrap-components
+
+numpy
+
+# dev only
+ipython
+dash-extensions
