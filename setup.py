@@ -1,8 +1,9 @@
 from setuptools import setup, find_packages
-from pip._internal.req import parse_requirements
 
 # Get required packages for the project
-required_packages = [str(req.requirement) for req in parse_requirements('./requirements.txt', session='')]
+with open(r'.\requirements.txt') as f:
+    lines = f.read().splitlines()
+required_packages = [line for line in lines if not line.startswith('#') and not line == '']
 
 setup(
     name='mamba-ui',

@@ -2,7 +2,8 @@
 # This is necessary only on the unclass side
 subst U: C:\VaultNet\
 
-python -m pip install --upgrade pip
+# Update project environment
+.\update.ps1
 
 # Download requirements from internet
 pip download -r .\requirements.txt --dest U:\PyPI
