@@ -17,7 +17,8 @@ page_style = {
 layout = html.Div(
     id='mission-planning-page',
     children=[
-        dcc.Store(id='mission-planning-store', storage_type='memory'),
+        dcc.Store(id='mission-planning-input-store', storage_type='memory'),
+        dcc.Store(id='mission-planning-output-store', storage_type='memory'),
         html.P(id='mission-planning-placeholder', style=dict(display='none')),
         InputContainer,
         VerticalLine('lg'),
