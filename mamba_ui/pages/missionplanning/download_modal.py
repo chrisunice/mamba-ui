@@ -11,7 +11,7 @@ header_style = {
     'justify-content': 'center'
 }
 
-body_style = {
+footer_style = {
     'display': 'flex',
     'justify-content': 'space-between'
 }
@@ -25,6 +25,11 @@ DownloadModal = dbc.Modal(
             style=header_style
         ),
         dbc.ModalBody(
+            children=[
+                dbc.Progress(id='mission-planning-download-progress', striped=True)
+            ]
+        ),
+        dbc.ModalFooter(
             children=[
                 dbc.Button(
                     id='mission-planning-download-button',
@@ -45,7 +50,7 @@ DownloadModal = dbc.Modal(
                 ),
                 dcc.Download(id='mission-planning-download')
             ],
-            style=body_style
+            style=footer_style
         )
     ],
     size='md',
