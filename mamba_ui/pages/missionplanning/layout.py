@@ -4,6 +4,7 @@ from .input_container import InputContainer
 from .output_container import OutputContainer
 from mamba_ui.components import VerticalLine
 from .download_modal import DownloadModal
+from .input_alert import InputAlert
 
 page_style = {
     'display': 'flex',
@@ -19,11 +20,11 @@ layout = html.Div(
     children=[
         dcc.Store(id='mission-planning-input-store', storage_type='memory'),
         dcc.Store(id='mission-planning-output-store', storage_type='memory'),
-        html.P(id='mission-planning-placeholder', style=dict(display='none')),
         InputContainer,
         VerticalLine('lg'),
         OutputContainer,
-        DownloadModal
+        DownloadModal,
+        InputAlert
     ],
     style=page_style
 )

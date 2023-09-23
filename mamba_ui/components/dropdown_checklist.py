@@ -11,7 +11,7 @@ def dropdown_checklist(
 ):
     id_name = id_name.lower()
 
-    # Handle keyword arguements
+    # Handle keyword arguments
     if style is None:
         style = {}
 
@@ -61,6 +61,8 @@ def dropdown_checklist(
                                 style=checklist_style,
                                 inputStyle=checklist_input_style,
                                 labelStyle=checklist_label_style,
+                                persistence=True,
+                                persistence_type='session',
                                 **checklist_kwargs
                             )
                         ],
