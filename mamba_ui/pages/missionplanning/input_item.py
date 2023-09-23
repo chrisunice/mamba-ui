@@ -46,6 +46,8 @@ def input_item(label_text: str, input_kwargs: dict = None):
                         id=id_name,
                         type='number',
                         style=input_style,
+                        persistence=True,
+                        persistence_type='session',
                         **input_kwargs
                     )
                 ],

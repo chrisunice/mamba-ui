@@ -52,7 +52,14 @@ def rangeslider_item(label_text: str, minimum: int | float, maximum: int | float
             html.Label(label_text, style=label_style),
             html.Div(
                 children=[
-                    dcc.Input(id=f'{id_name}-min-input', min=minimum, type='number', style=input_style),
+                    dcc.Input(
+                        id=f'{id_name}-min-input',
+                        min=minimum,
+                        type='number',
+                        style=input_style,
+                        persistence=True,
+                        persistence_type='session'
+                    ),
                     html.Div(
                         children=[
                             dcc.RangeSlider(
@@ -62,11 +69,20 @@ def rangeslider_item(label_text: str, minimum: int | float, maximum: int | float
                                 marks=_create_marks(minimum, maximum),
                                 pushable=True,
                                 allowCross=False,
-                                tooltip={'placement': 'bottom', 'always_visible': True}
+                                tooltip={'placement': 'bottom', 'always_visible': True},
+                                persistence=True,
+                                persistence_type='session'
                             )
                         ],
                         style=slider_container_style),
-                    dcc.Input(id=f'{id_name}-max-input', max=maximum, type='number', style=input_style)
+                    dcc.Input(
+                        id=f'{id_name}-max-input',
+                        max=maximum,
+                        type='number',
+                        style=input_style,
+                        persistence=True,
+                        persistence_type='session'
+                    )
                 ],
                 style=input_container_style
             )
