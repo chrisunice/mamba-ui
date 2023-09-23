@@ -1,3 +1,4 @@
+from dash.exceptions import PreventUpdate
 from dash_extensions.enrich import Input, Output, Trigger
 
 import mamba_ui as mui
@@ -26,7 +27,7 @@ def display_page(pathname):
     Trigger('page-container', 'children')
 )
 def show_menu():
-    return True
+    return False
 
 
 # @mui.app.callback(
@@ -36,15 +37,6 @@ def show_menu():
 # def show_menu():
 #     return True
 
-
-@mui.app.callback(
-    Output('mission-planning-download-modal', 'is_open'),
-    Input('mission-planning-page', 'children')
-)
-def trigger_component(_):
-    return True
-
-
 @mui.app.callback(
     Output('mission-planning-download', 'data'),
     Input('mission-planning-download-button', 'n_clicks')
@@ -53,6 +45,16 @@ def download(click):
     if click is not None:
         return dict(content='hello', filename='hello.dbin')
 
+
+@mui.app.callback(
+    Output('look-range-min-input', 'value'),
+    Output('look-range-max-input', 'value'),
+    Input('look-range-slider', 'value')
+)
+def trigger_component(value):
+    if value is None:
+        raise PreventUpdate
+    return value
 
 if __name__ == '__main__':
 
