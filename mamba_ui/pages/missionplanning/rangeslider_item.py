@@ -39,7 +39,7 @@ def rangeslider_item(label_text: str, minimum: int | float, maximum: int | float
 
     input_style = {
         'width': '20%',
-        'text-align': 'center'
+        'textAlign': 'center'
     }
 
     slider_container_style = {
@@ -58,7 +58,8 @@ def rangeslider_item(label_text: str, minimum: int | float, maximum: int | float
                         type='number',
                         style=input_style,
                         persistence=True,
-                        persistence_type='session'
+                        persistence_type='session',
+                        debounce=True
                     ),
                     html.Div(
                         children=[
@@ -81,7 +82,8 @@ def rangeslider_item(label_text: str, minimum: int | float, maximum: int | float
                         type='number',
                         style=input_style,
                         persistence=True,
-                        persistence_type='session'
+                        persistence_type='session',
+                        debounce=True
                     )
                 ],
                 style=input_container_style
