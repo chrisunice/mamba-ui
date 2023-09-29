@@ -21,4 +21,3 @@ InputAlert = dbc.Modal(
     centered=True,
     fade=True
 )
-
