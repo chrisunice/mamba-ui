@@ -33,7 +33,7 @@ def input_item(label_text: str, input_kwargs: dict = None):
 
     input_style = {
         'width': '25%',
-        'text-align': 'center'
+        'textAlign': 'center'
     }
 
     return html.Div(
@@ -48,6 +48,7 @@ def input_item(label_text: str, input_kwargs: dict = None):
                         style=input_style,
                         persistence=True,
                         persistence_type='session',
+                        debounce=True,
                         **input_kwargs
                     )
                 ],
