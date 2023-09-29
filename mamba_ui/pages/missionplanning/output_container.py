@@ -11,7 +11,7 @@ col_style = {
     'width': '50%',
     'max-width': STANDARD_WIDTH/2,
     'padding': '10px',
-    'margin-left': '5px',
+    'marginLeft': '5px',
 }
 
 log_style = {
