@@ -32,11 +32,11 @@ DownloadModal = dbc.Modal(
         dbc.ModalFooter(
             children=[
                 dbc.Button(
-                    id='mission-planning-download-button',
                     children=[
                         html.I(className='fa-solid fa-file-arrow-down', style={'margin-right': '10px'}),
-                        'Download',
+                        'Download'
                     ],
+                    id='mission-planning-download-button',
                     color='success',
                     size='lg',
                     style=dict(width='65%')

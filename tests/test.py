@@ -47,7 +47,7 @@ def display_page(pathname):
 
 
 @mui.app.callback(
-    Output('mission-planning-input-alert', 'is_open'),
+    Output('mission-planning-download-modal', 'is_open'),
     Trigger('mission-planning-page', 'children')
 )
 def trigger_component():
