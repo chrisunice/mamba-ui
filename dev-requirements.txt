@@ -1,2 +1,3 @@
 ipython
 dash-extensions==0.1.13
+pip-chill

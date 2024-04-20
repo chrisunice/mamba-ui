@@ -1,11 +1,13 @@
 numpy
 requests
-packaging==21.3.0           # this is necessary to get dash-uploader to work
+dash-daq
+dash-auth
+dash-table
+dash-core-components
+dash-html-components
+dash-bootstrap-components
+dash-bootstrap-templates
+dash-draggable
 
-dash-daq==0.5.0
-dash-auth==2.0.0
-dash-table==5.0.0
+packaging==21.3.0           # this is necessary to get dash-uploader to work
 dash-uploader==0.7.0a1
-dash-core-components==2.0.0
-dash-html-components==2.0.0
-dash-bootstrap-components==1.4.1

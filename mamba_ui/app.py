@@ -7,13 +7,17 @@ from dash_extensions.enrich import DashProxy, MultiplexerTransform, ServersideOu
 from mamba_ui import config
 
 
+# GRIDSTACK_CSS = 'https://cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.6.4/gridstack.min.css'
+# GRIDSTACK_JS = 'https://cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.6.4/gridstack.min.js'
+
 # Stylesheets
 try:
     request = requests.get("http://www.google.com", timeout=1)
     sheets = [
         dbc.themes.CYBORG,
         dbc.icons.FONT_AWESOME,
-        './assets/style.css'
+        './assets/style.css',
+        # GRIDSTACK_CSS
     ]
 except (requests.exceptions.ConnectionError, requests.Timeout):
     sheets = [
@@ -26,6 +30,7 @@ app = DashProxy(
     name=__name__,
     title='Mamba',
     external_stylesheets=sheets,
+    # external_scripts=[GRIDSTACK_JS],
     suppress_callback_exceptions=True,
     prevent_initial_callbacks=False,
     transforms=[

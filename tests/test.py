@@ -1,5 +1,4 @@
-from dash.exceptions import PreventUpdate
-from dash_extensions.enrich import Input, Output, Trigger
+from dash_extensions.enrich import Input, Output, State
 
 import mamba_ui as mui
 
@@ -17,10 +16,11 @@ def display_page(pathname):
         return mui.pages.imagery.layout
     elif pathname == '/mission-planning':
         return mui.pages.missionplanning.layout
+    elif pathname == '/settings':
+        return mui.pages.settings.layout
     else:
         # todo add an alert here
         return mui.pages.sandbox.layout
-
 
 # @mui.app.callback(
 #     Output('menubar', 'is_open'),
@@ -45,13 +45,23 @@ def display_page(pathname):
 #     if click is not None:
 #         return dict(content='hello', filename='hello.dbin')
 
+@mui.app.callback(
+    Output('menubar', 'is_open'),
+    Input('menu-icon', 'n_clicks'),
+    State('menubar', 'is_open')
+)
+def trigger_component(click, menubar_is_open):
+    if click is not None:
+        return not menubar_is_open
+
 
 @mui.app.callback(
-    Output('mission-planning-download-modal', 'is_open'),
-    Trigger('mission-planning-page', 'children')
+    Output('settings-modal', 'is_open'),
+    Input('menu-settings', 'n_clicks')
 )
-def trigger_component():
-    return True
+def open_settings(click):
+    if click is not None:
+        return True
 
 
 if __name__ == '__main__':
