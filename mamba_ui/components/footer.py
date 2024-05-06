@@ -1,6 +1,6 @@
 from dash import html
 from datetime import datetime
-
+from mamba_ui import config
 
 footer_style = {
     'display': 'flex',
@@ -13,8 +13,14 @@ footer_style = {
 
 Footer = html.Footer(
     children=[
-        f'© {datetime.now().year} Denmar Technical Services, Inc. All rights reserved.'
+        html.Span(),
+        html.Span(f'© {datetime.now().year} Denmar Technical Services, Inc. All rights reserved.'),
+        html.Span(f"Version {config.get('version')}")
     ],
-    style=footer_style,
-    className='footer bg-secondary'
+    className='bg-primary text-light',
+    style={
+        'display': 'flex',
+        'justifyContent': 'space-between',
+        'padding': '0px 10px'
+    }
 )

@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0",
+  "default": {
+    "theme": "CERULEAN"
+  },
+  "directories": {
+    "cache_dir": "C:/Mamba/cache",
+    "upload_folder": "C/Mamba/uploads",
+    "image_folder": "C:/Mamba/test_assets/images",
+    "database_path": "C:/Mamba/test_assets/imagery.sqlite"
+  },
+  "window": {
+    "standard_width": 3840,
+    "standard_height": 2160
+  }
+}

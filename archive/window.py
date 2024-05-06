@@ -6,8 +6,8 @@ from mamba_ui.components import HorizontalLine
 
 AVAILABLE_THEMES = [theme for theme in dir(dbc.themes) if not theme.startswith('_')]
 
-layout = dbc.Container(
-    id='settings-page',
+layout = dbc.Modal(
+    id='settings-window',
     children=[
         dcc.Store('settings-store'),
         dbc.Row([html.H3('Settings')], className='my-3'),

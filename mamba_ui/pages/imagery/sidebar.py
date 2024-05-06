@@ -31,8 +31,8 @@ Sidebar = dbc.Offcanvas(
                 HorizontalLine('sm'),
                 sidebar_dropdown_item(
                     label_text='SQL Database',
-                    options=[{'label': os.path.basename(config['imagery']['database_path']),
-                              'value': config['imagery']['database_path']}]
+                    options=[{'label': os.path.basename(config['directories']['database_path']),
+                              'value': config['directories']['database_path']}]
                 ),
                 HorizontalLine('sm'),
                 sidebar_dropdown_item('Platform', multi=True),
