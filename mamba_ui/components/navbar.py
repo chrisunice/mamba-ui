@@ -5,14 +5,15 @@ from mamba_ui.settings import SettingsWindow
 NavBar = dbc.Navbar(
     id='navbar',
     children=[
-        html.H2('Mamba'),
+        html.H2('Mamba', className='text-light'),
         html.I(
             id='settings-icon',
-            className='fa-solid fa-gear fa-2xl',
+            className='fa-solid fa-gear fa-2xl text-light',
         ),
         SettingsWindow
     ],
     color='primary',
+    dark=True,
     style={
         'display': 'flex',
         'justifyContent': 'space-between',

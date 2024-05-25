@@ -1,0 +1,9 @@
+.widget-dropdown-menu .btn:focus,
+.widget-dropdown-menu .btn:active,
+.widget-dropdown-menu .btn:focus-visible,
+.btn-primary:focus,
+.btn-primary:active {
+    box-shadow: none !important;
+    outline: none !important;
+    border: none !important;
+}

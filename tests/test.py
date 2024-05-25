@@ -1,4 +1,4 @@
-from dash_extensions.enrich import Input, Output, Trigger, State, clientside_callback
+from dash_extensions.enrich import Input, Output, Trigger, State
 from dash.exceptions import PreventUpdate
 
 import mamba_ui as mui

@@ -1,4 +1,7 @@
+from dash import html
 import dash_bootstrap_components as dbc
+
+from mamba_ui.grid.widget_icon import NewWidgetIcon
 
 
 def widget_grid(nrows: int = 1, ncols: int = 1) -> dbc.Row:
@@ -13,22 +16,27 @@ def widget_grid(nrows: int = 1, ncols: int = 1) -> dbc.Row:
 
     grid_style = {
         'display': 'flex',
-        'flex': 1,
+        'flexGrow': '1',
         'width': '100%',
         'margin': '0px',
         'padding': '0px'
     }
 
     row_style = {
-        'border': '1px solid green',
+        'display': 'flex',
         'margin': '0px',
         'padding': '5px'
     }
 
     col_style = {
-        'border': '1px solid red',
+        'display': 'flex',
+        'flexGrow': '1',
+        'flexDirection': 'column',
+        'justifyContent': 'center',
+        'alignItems': 'center',
         'margin': '0px 5px 0px 5px',
-        'padding': '0px'
+        'padding': '0px',
+        'borderRadius': '5px'
     }
 
     grid_children = []
@@ -37,10 +45,15 @@ def widget_grid(nrows: int = 1, ncols: int = 1) -> dbc.Row:
         row_children = []
         for c in range(ncols):
             row_children.append(
-                dbc.Col(id=f'col-{c}', style=col_style)
+                html.Div(
+                    id=f'col-{c}',
+                    className='bg-secondary',
+                    children=[NewWidgetIcon],
+                    style=col_style
+                )
             )
         grid_children.append(
-            dbc.Row(id=f'row-{r}', children=row_children, style=row_style)
+            html.Div(id=f'row-{r}', children=row_children, style=row_style)
         )
 
     grid = dbc.Row(id='grid-layout', children=grid_children, style=grid_style)
