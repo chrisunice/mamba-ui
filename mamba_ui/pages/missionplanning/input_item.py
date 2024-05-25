@@ -10,7 +10,7 @@ def input_item(label_text: str, input_kwargs: dict = None):
 
     item_style = {
         'display': 'flex',
-        'flex-direction': 'row',
+        'flexDirection': 'row',
         'width': '100%',
         'justify-content': 'space-between',
         'align-items': 'center',

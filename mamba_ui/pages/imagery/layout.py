@@ -7,7 +7,7 @@ from mamba_ui import PKG_DIR
 
 page_style = {
     'display': 'flex',
-    'flex-direction': 'column',
+    'flexDirection': 'column',
     'width': '100%',
     'justify-content': 'center',
     'align-items': 'center'

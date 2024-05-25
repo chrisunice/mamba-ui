@@ -18,7 +18,7 @@ sidebar_style = {
 
 container_style = {
     'display': 'flex',
-    'flex-direction': 'column',
+    'flexDirection': 'column',
     'align-items': 'center'
 }
 

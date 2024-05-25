@@ -15,7 +15,7 @@ def rangeslider_item(label_text: str, minimum: int | float, maximum: int | float
 
     item_style = {
         'display': 'flex',
-        'flex-direction': 'row',
+        'flexDirection': 'row',
         'width': '100%',
         'justify-content': 'space-between',
         'align-items': 'center',
@@ -32,7 +32,7 @@ def rangeslider_item(label_text: str, minimum: int | float, maximum: int | float
 
     input_container_style = {
         'display': 'flex',
-        'flex-direction': 'row',
+        'flexDirection': 'row',
         'align-items': 'center',
         'width': '75%'
     }

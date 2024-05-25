@@ -13,6 +13,7 @@ def input_item(name: str) -> dcc.Input:
         min=1,
         max=4,
         required=True,
+        debounce=True,
         style={
             'maxWidth': '100%'
         }

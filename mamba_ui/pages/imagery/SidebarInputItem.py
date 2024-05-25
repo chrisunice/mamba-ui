@@ -8,7 +8,7 @@ def sidebar_input_item(label_text: str):
     col1_style = {'display': 'flex', 'align-items': 'center'}
     col2_style = {
         'display': 'flex',
-        'flex-direction': 'row',
+        'flexDirection': 'row',
         'justify-content': 'space-evenly',
         'align-items': 'center',
         'width': '70%'

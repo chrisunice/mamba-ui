@@ -33,7 +33,7 @@ def dropdown_checklist(
 
     menu_item_style = {'background-color': 'transparent', 'overflow-y': 'auto', 'max-height': '250px'}
 
-    checklist_style = {'display': 'flex', 'flex-direction': 'column'}
+    checklist_style = {'display': 'flex', 'flexDirection': 'column'}
 
     checklist_input_style = {'margin-right': '10px'}
 

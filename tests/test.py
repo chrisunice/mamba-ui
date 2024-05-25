@@ -1,7 +1,9 @@
-from dash_extensions.enrich import Input, Output, Trigger
+from dash_extensions.enrich import Input, Output, Trigger, State, clientside_callback
+from dash.exceptions import PreventUpdate
 
 import mamba_ui as mui
 from mamba_ui.grid import widget_grid as WidgetGrid
+from mamba_ui.pages.sandbox.layout import SandboxPageLayout
 
 
 @mui.app.callback(
@@ -26,17 +28,32 @@ def change_theme(selected_theme):
 @mui.app.callback(
     Output('page-container', 'children'),
     Input('grid-rows', 'value'),
-    Input('grid-columns', 'value')
+    Input('grid-columns', 'value'),
+    State('settings-window', 'is_open')
 )
-def update_grid_layout(nrows, ncols):
-    return WidgetGrid(nrows, ncols)
+def update_grid_layout(nrows, ncols, settings_open):
+    if settings_open:
+        return WidgetGrid(nrows, ncols)
+    else:
+        raise PreventUpdate
+
+
+@mui.app.callback(
+    Output('page-container', 'children'),
+    Input('url', 'pathname')
+)
+def go_to_sandbox_page(pathname):
+    if pathname == '/sandbox':
+        return SandboxPageLayout
+    else:
+        return WidgetGrid()
 
 
 if __name__ == '__main__':
 
     mui.app.layout = mui.serve_layout()
-    # mui.app.run(debug=True, port=8050)
-    mui.app.run(debug=False, port=3308)
+    mui.app.run(debug=True, port=8050)
+    # mui.app.run(debug=False, port=3308)
 
 
 

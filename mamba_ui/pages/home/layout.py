@@ -3,7 +3,7 @@ from dash import html
 page_styles = {
     'display': 'flex',
     'flex': '1',
-    'flex-direction': 'column',
+    'flexDirection': 'column',
     'justify-content': 'center',
     'align-items': 'center',
     'width': '100%',

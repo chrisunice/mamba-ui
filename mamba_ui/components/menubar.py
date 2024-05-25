@@ -39,7 +39,7 @@ menubar_style = {
 
 menu_item_container = {
     'display': 'flex',
-    'flex-direction': 'column',
+    'flexDirection': 'column',
     'align-items': 'center'
 }
 

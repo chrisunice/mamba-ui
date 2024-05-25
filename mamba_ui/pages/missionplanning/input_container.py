@@ -9,7 +9,7 @@ from .input_item import input_item as InputItem
 
 style = {
     'display': 'flex',
-    'flex-direction': 'column',
+    'flexDirection': 'column',
     'align-items': 'center',
     'width': '50%',
     'max-width': STANDARD_WIDTH/2,

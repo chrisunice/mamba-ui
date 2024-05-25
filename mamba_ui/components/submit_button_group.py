@@ -24,7 +24,7 @@ def submit_button_group(uid: str):
         ],
         style={
             'display': 'flex',
-            'flex-direction': 'column',
+            'flexDirection': 'column',
             'flex': '1',
             'justify-content': 'flex-end',
             'align-items': 'left',

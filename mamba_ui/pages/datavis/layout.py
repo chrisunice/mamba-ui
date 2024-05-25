@@ -5,7 +5,7 @@ from mamba_ui.components.plots import PolarPlot, LinearPlot
 
 page_styles = {
     'display': 'flex',
-    'flex-direction': 'column',
+    'flexDirection': 'column',
     'align-items': 'center',
     'width': '100%',
     'padding': '10px',

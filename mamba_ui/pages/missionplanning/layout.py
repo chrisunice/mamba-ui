@@ -8,7 +8,7 @@ from .input_alert import InputAlert
 
 page_style = {
     'display': 'flex',
-    'flex-direction': 'row',
+    'flexDirection': 'row',
     'justify-content': 'center',
     'width': '100%',
     'margin': '10px'

@@ -6,7 +6,7 @@ from mamba_ui import STANDARD_WIDTH
 
 col_style = {
     'display': 'flex',
-    'flex-direction': 'column',
+    'flexDirection': 'column',
     'align-items': 'center',
     'width': '50%',
     'max-width': STANDARD_WIDTH/2,

@@ -28,8 +28,12 @@ app = DashProxy(
     name=__name__,
     title='Mamba',
     external_stylesheets=[
-        getattr(dbc.themes, config['default']['theme']),
-        dbc.icons.FONT_AWESOME
+        getattr(dbc.themes, config['default']['theme']),        # dash bootstrap themes
+        dbc.icons.FONT_AWESOME,                                 # dash bootstrap icons
+        '/assets/gridstack/gridstack.min.css'
+    ],
+    external_scripts=[
+        '/assets/gridstack/gridstack-all.js'
     ],
     suppress_callback_exceptions=True,
     prevent_initial_callbacks=False,
