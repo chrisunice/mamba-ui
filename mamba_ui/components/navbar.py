@@ -1,9 +1,10 @@
 from dash import html
-import dash_bootstrap_components as dbc
 from mamba_ui.settings import SettingsWindow
 
-NavBar = dbc.Navbar(
+
+NavBar = html.Div(
     id='navbar',
+    className='bg-primary',
     children=[
         html.H2('Mamba', className='text-light'),
         html.I(
@@ -12,11 +13,10 @@ NavBar = dbc.Navbar(
         ),
         SettingsWindow
     ],
-    color='primary',
-    dark=True,
     style={
         'display': 'flex',
         'justifyContent': 'space-between',
+        'align-items': 'center',
         'padding': '0px 10px'
     }
 )

@@ -1,8 +1,5 @@
 {
-  "version": "1.0.0",
-  "default": {
-    "theme": "CERULEAN"
-  },
+  "version": "2.0.0",
   "directories": {
     "cache_dir": "C:/Mamba/cache",
     "upload_folder": "C/Mamba/uploads",
@@ -12,5 +9,39 @@
   "window": {
     "standard_width": 3840,
     "standard_height": 2160
+  },
+  "themes":
+  {
+    "default": "CERULEAN",
+    "light": [
+      "CERULEAN",
+      "LUMEN",
+      "LUX",
+      "MATERIA",
+      "SIMPLEX",
+      "YETI",
+      "ZEPHYR"
+    ],
+    "dark": [
+      "BOOTSTRAP",
+      "COSMO",
+      "CYBORG",
+      "DARKLY",
+      "FLATLY",
+      "JOURNAL",
+      "LITERA",
+      "MINTY",
+      "MORPH",
+      "PULSE",
+      "QUARTZ",
+      "SANDSTONE",
+      "SKETCHY",
+      "SLATE",
+      "SOLAR",
+      "SPACELAB",
+      "SUPERHERO",
+      "UNITED",
+      "VAPOR"
+    ]
   }
 }

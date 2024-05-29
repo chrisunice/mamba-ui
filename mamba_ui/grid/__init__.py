@@ -1,7 +1,7 @@
 from dash import html
 import dash_bootstrap_components as dbc
 
-from mamba_ui.grid.widget_icon import NewWidgetIcon
+from mamba_ui.grid.widget_icon import build_widget_icon as WidgetIcon
 
 
 def widget_grid(nrows: int = 1, ncols: int = 1) -> dbc.Row:
@@ -46,14 +46,14 @@ def widget_grid(nrows: int = 1, ncols: int = 1) -> dbc.Row:
         for c in range(ncols):
             row_children.append(
                 html.Div(
-                    id=f'col-{c}',
+                    id={'type': 'widget-container', 'index': f'r{r}c{c}'},
                     className='bg-secondary',
-                    children=[NewWidgetIcon],
+                    children=[WidgetIcon(r, c)],
                     style=col_style
                 )
             )
         grid_children.append(
-            html.Div(id=f'row-{r}', children=row_children, style=row_style)
+            html.Div(id=f'grid-row-{r}', children=row_children, style=row_style)
         )
 
     grid = dbc.Row(id='grid-layout', children=grid_children, style=grid_style)

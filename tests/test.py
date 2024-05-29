@@ -1,9 +1,12 @@
-from dash_extensions.enrich import Input, Output, Trigger, State
+import dash
 from dash.exceptions import PreventUpdate
+from dash_extensions.enrich import Input, Output, Trigger, State, MATCH
 
 import mamba_ui as mui
 from mamba_ui.grid import widget_grid as WidgetGrid
 from mamba_ui.pages.sandbox.layout import SandboxPageLayout
+from mamba_ui.widgets import LinearPlotWidget
+from mamba_ui.widgets import PolarPlotWidget
 
 
 @mui.app.callback(
@@ -49,70 +52,78 @@ def go_to_sandbox_page(pathname):
         return WidgetGrid()
 
 
+@mui.app.callback(
+    Output({'type': 'widget-container', 'index': MATCH}, 'children'),
+    [
+        Input({'type': 'linear-plot-option', 'index': MATCH}, 'n_clicks'),
+        Input({'type': 'polar-plot-option', 'index': MATCH}, 'n_clicks')
+    ]
+
+)
+def display_widget(*widgets):
+    if all(click is None for click in widgets):
+        raise PreventUpdate
+    else:
+        widget_clicked_name = dash.callback_context.triggered_id['type']
+        widget_clicked_uid = dash.callback_context.triggered_id['index']
+        if widget_clicked_name == 'polar-plot-option':
+            return PolarPlotWidget(widget_clicked_uid)
+        elif widget_clicked_name == 'linear-plot-option':
+            return LinearPlotWidget(widget_clicked_uid)
+        else:
+            raise PreventUpdate
+
+
+@mui.app.callback(
+    Output({'type': 'linear-plot', 'index': MATCH}, 'figure'),
+    Input('theme-dropdown', 'value'),
+    State({'type': 'linear-plot', 'index': MATCH}, 'figure'),
+    State('theme-dropdown', 'options')
+
+)
+def update_linear_plot_style(theme_value, figure, theme_options):
+    if theme_value is None:
+        raise PreventUpdate
+    else:
+        theme_map = {option['value']: option['label'] for option in theme_options}
+        theme_name = theme_map[theme_value]
+        if theme_name in mui.config['themes']['light']:
+            layout_updates = {
+                'font': {'color': 'black'},
+                'yaxis': {
+                    'gridcolor': 'gray',
+                    'zerolinecolor': 'black',
+                    'zerolinewidth': 2,
+                },
+                'xaxis': {
+                    'gridcolor': 'gray',
+                    'zerolinecolor': 'black',
+                    'zerolinewidth': 2,
+                }
+            }
+        elif theme_name in mui.config['themes']['dark']:
+            layout_updates = {
+                'font': {'color': 'white'},
+                'yaxis': {
+                    'gridcolor': 'lightgray',
+                    'zerolinecolor': 'white',
+                    'zerolinewidth': 2
+
+                },
+                'xaxis': {
+                    'gridcolor': 'lightgray',
+                    'zerolinecolor': 'white',
+                    'zerolinewidth': 2,
+
+                }
+            }
+        else:
+            layout_updates = {}
+        figure['layout'].update(layout_updates)
+        return figure
+
+
 if __name__ == '__main__':
 
     mui.app.layout = mui.serve_layout()
     mui.app.run(debug=True, port=8050)
-    # mui.app.run(debug=False, port=3308)
-
-
-
-
-
-
-
-
-"""
-Old code:
-
-# @mui.app.callback(
-#     Output('page-container', 'children'),
-#     Input('url', 'pathname')
-# )
-# def display_page(pathname):
-#     if pathname == '/home':
-#         return mui.pages.home.layout
-#     elif pathname == '/data-vis':
-#         return mui.pages.datavis.layout
-#     elif pathname == '/imagery':
-#         return mui.pages.imagery.layout
-#     elif pathname == '/mission-planning':
-#         return mui.pages.missionplanning.layout
-#     elif pathname == '/settings':
-#         return mui.pages.settings.layout
-#     else:
-#         # todo add an alert here
-#         return mui.pages.sandbox.layout
-
-# @mui.app.callback(
-#     Output('menubar', 'is_open'),
-#     Trigger('page-container', 'children')
-# )
-# def show_menu():
-#     return False
-
-
-# @mui.app.callback(
-#     Output('settings-modal', 'is_open'),
-#     Trigger('page-container', 'children')
-# )
-# def show_menu():
-#     return True
-
-# @mui.app.callback(
-#     Output('mission-planning-download', 'data'),
-#     Input('mission-planning-download-button', 'n_clicks')
-# )
-# def download(click):
-#     if click is not None:
-#         return dict(content='hello', filename='hello.dbin')
-#
-# @mui.app.callback(
-#     Output('menubar', 'is_open'),
-#     Input('menu-icon', 'n_clicks'),
-#     State('menubar', 'is_open')
-# )
-# def trigger_component(click, menubar_is_open):
-#     if click is not None:
-#         return not menubar_is_open
-"""

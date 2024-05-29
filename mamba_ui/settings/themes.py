@@ -3,7 +3,7 @@ import dash_bootstrap_components as dbc
 
 from mamba_ui import config
 
-_AVAILABLE_THEMES = [theme for theme in dir(dbc.themes) if not theme.startswith('_')]
+AVAILABLE_THEMES = sorted(config['themes']['light'] + config['themes']['dark'])
 
 label = html.Label(
     'Theme:',
@@ -14,10 +14,11 @@ label = html.Label(
 
 dropdown = dcc.Dropdown(
     id='theme-dropdown',
-    placeholder=config['default']['theme'],
-    options=[{'label': theme, 'value': getattr(dbc.themes, theme)} for theme in _AVAILABLE_THEMES]
+    placeholder=config['themes']['default'],
+    options=[
+        {'label': theme, 'value': getattr(dbc.themes, theme)} for theme in AVAILABLE_THEMES
+    ]
 )
-
 
 ThemeDropdownRow = dbc.Row(
     [
