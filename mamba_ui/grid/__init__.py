@@ -1,7 +1,8 @@
+# TODO break this out into its own file (i.e. grid.py)
 from dash import html
 import dash_bootstrap_components as dbc
 
-from mamba_ui.grid.widget_icon import build_widget_icon as WidgetIcon
+from mamba_ui.grid.icon import build_widget_icon as WidgetIcon
 
 
 def widget_grid(nrows: int = 1, ncols: int = 1) -> dbc.Row:

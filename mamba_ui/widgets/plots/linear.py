@@ -1,5 +1,12 @@
-from dash import dcc
 import plotly.graph_objects as go
+from dash import dcc, callback_context
+from dash.exceptions import PreventUpdate
+from dash_extensions.enrich import Input, Output, MATCH
+
+from mamba_ui import app
+
+
+# Component
 
 
 def build_linear_plot_widget(unique_id: str):
@@ -37,3 +44,9 @@ def build_linear_plot_widget(unique_id: str):
         responsive=True,
         style=graph_style
     )
+
+
+# Callbacks
+
+
+

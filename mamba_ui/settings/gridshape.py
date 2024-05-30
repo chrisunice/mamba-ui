@@ -1,8 +1,14 @@
 from dash import html, dcc
 import dash_bootstrap_components as dbc
+from dash.exceptions import PreventUpdate
+from dash_extensions.enrich import Input, Output, State
 
-label = html.Label('Widget Grid:', style={'fontWeight': 'bold'})
+from mamba_ui import app
+from mamba_ui.grid import widget_grid as WidgetGrid
+from mamba_ui.grid.grid import WidgetGridComponent
 
+
+# Component
 
 def input_item(name: str) -> dcc.Input:
     return dcc.Input(
@@ -22,7 +28,7 @@ def input_item(name: str) -> dcc.Input:
 
 GridShapeRow = dbc.Row(
     [
-        dbc.Col(label, width=6),
+        dbc.Col(html.Label('Widget Grid:', style={'fontWeight': 'bold'}), width=6),
         dbc.Col(
             dbc.Row(
                 [
@@ -38,3 +44,20 @@ GridShapeRow = dbc.Row(
     ],
     align='center'
 )
+
+# Callback
+
+
+@app.callback(
+    Output('page-container', 'children'),
+    Input('grid-rows', 'value'),
+    Input('grid-columns', 'value'),
+    State('settings-window', 'is_open'),
+    State('grid-layout', 'children')
+)
+def update_grid_layout(nrows, ncols, settings_open, current_grid):
+    # Do nothing if settings window is open
+    if not settings_open:
+        raise PreventUpdate
+
+    return WidgetGridComponent(shape=(nrows, ncols), widgets=current_grid).json
