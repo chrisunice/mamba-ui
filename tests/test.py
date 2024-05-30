@@ -9,14 +9,14 @@ from mamba_ui.widgets import LinearPlotWidget
 from mamba_ui.widgets import PolarPlotWidget
 
 
-@mui.app.callback(
-    Output('settings-window', 'is_open'),
-    Input('settings-icon', 'n_clicks'),
-    Trigger('dash-layout', 'children')
-)
-def open_settings(click):
-    if click is not None:
-        return True
+# @mui.app.callback(
+#     Output('settings-window', 'is_open'),
+#     Input('settings-icon', 'n_clicks'),
+#     Trigger('dash-layout', 'children')
+# )
+# def open_settings(click):
+#     if click is not None:
+#         return True
 
 
 @mui.app.callback(

@@ -1,5 +1,8 @@
 from dash import html
-from mamba_ui.settings import SettingsWindow
+from dash_extensions.enrich import Input, Output, Trigger
+
+from mamba_ui import app
+from mamba_ui.settings.window import SettingsWindow
 
 
 NavBar = html.Div(
@@ -20,3 +23,13 @@ NavBar = html.Div(
         'padding': '0px 10px'
     }
 )
+
+
+@app.callback(
+    Output('settings-window', 'is_open'),
+    Input('settings-icon', 'n_clicks'),
+    Trigger('dash-layout', 'children')
+)
+def open_settings(click):
+    if click is not None:
+        return True

@@ -36,7 +36,9 @@ def widget_grid(nrows: int = 1, ncols: int = 1) -> dbc.Row:
         'alignItems': 'center',
         'margin': '0px 5px 0px 5px',
         'padding': '0px',
-        'borderRadius': '5px'
+        'borderRadius': '5px',
+        'backgroundColor': 'rgba(0, 0, 0, 0)',
+        'boxShadow': '0px 0px 10px gray'
     }
 
     grid_children = []
@@ -47,7 +49,7 @@ def widget_grid(nrows: int = 1, ncols: int = 1) -> dbc.Row:
             row_children.append(
                 html.Div(
                     id={'type': 'widget-container', 'index': f'r{r}c{c}'},
-                    className='bg-secondary',
+                    className='bg-transparent border border-secondary',
                     children=[WidgetIcon(r, c)],
                     style=col_style
                 )
