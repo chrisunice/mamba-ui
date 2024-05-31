@@ -6,7 +6,9 @@ from dash_extensions.enrich import Input, Output, State, MATCH
 from mamba_ui import app
 from mamba_ui import config
 
+
 # Component
+
 
 AVAILABLE_THEMES = sorted(config['themes']['light'] + config['themes']['dark'])
 
