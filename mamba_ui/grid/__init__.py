@@ -1,63 +1,95 @@
-# TODO break this out into its own file (i.e. grid.py)
+import numpy as np
 from dash import html
 import dash_bootstrap_components as dbc
 
-from mamba_ui.grid.icon import build_widget_icon as WidgetIcon
+from mamba_ui.grid.base import WidgetGridBase
+from mamba_ui.grid.container import WidgetContainerComponent
 
 
-def widget_grid(nrows: int = 1, ncols: int = 1) -> dbc.Row:
-    """
-    Creates a grid layout
+class WidgetGridComponent(WidgetGridBase):
 
-    :param nrows: number of rows in the grid; default is 1
-    :param ncols: number of columns in the grid; default is 1
+    def __init__(self, shape: tuple = (1, 1), widgets: list[dict] = None):
+        super().__init__()
 
-    :return: dbc.Row consisting of the desired number of dbc.Rows and dbc.Cols
-    """
+        # Handle arguments
+        self.shape = shape
+        self.size = np.product(self.shape)
+        if widgets is None:
+            widgets = [WidgetContainerComponent().json]
+        self.widgets = widgets
 
-    grid_style = {
-        'display': 'flex',
-        'flexGrow': '1',
-        'width': '100%',
-        'margin': '0px',
-        'padding': '0px'
-    }
+        # Add or remove widgets
+        if self.size > len(self.widgets):
+            self.widgets = self.add_widgets()
+        elif self.size < len(self.widgets):
+            self.widgets = self.remove_widgets()
+        else:
+            pass    # Do nothing
 
-    row_style = {
-        'display': 'flex',
-        'margin': '0px',
-        'padding': '5px'
-    }
+        # Reshape widget list to desired shape
+        self.widgets = self.reshape_widgets()
 
-    col_style = {
-        'display': 'flex',
-        'flexGrow': '1',
-        'flexDirection': 'column',
-        'justifyContent': 'center',
-        'alignItems': 'center',
-        'margin': '0px 5px 0px 5px',
-        'padding': '0px',
-        'borderRadius': '5px',
-        'backgroundColor': 'rgba(0, 0, 0, 0)',
-        'boxShadow': '0px 0px 10px gray'
-    }
+    @property
+    def component(self) -> dbc.Row:
 
-    grid_children = []
+        # Styling
+        grid_style = {
+            'display': 'flex',
+            'flexGrow': '1',
+            'width': '100%',
+            'margin': '0px',
+            'padding': '0px'
+        }
 
-    for r in range(nrows):
-        row_children = []
-        for c in range(ncols):
-            row_children.append(
-                html.Div(
-                    id={'type': 'widget-container', 'index': f'r{r}c{c}'},
-                    className='bg-transparent border border-secondary',
-                    children=[WidgetIcon(r, c)],
-                    style=col_style
-                )
-            )
-        grid_children.append(
-            html.Div(id=f'grid-row-{r}', children=row_children, style=row_style)
-        )
+        row_style = {
+            'display': 'flex',
+            'margin': '0px',
+            'padding': '5px'
+        }
 
-    grid = dbc.Row(id='grid-layout', children=grid_children, style=grid_style)
-    return grid
+        # Component
+        grid_children = []
+        for i in range(self.shape[0]):
+            row_children = []
+            for j in range(self.shape[1]):
+                # Grab the widget by grid position
+                widget = self.widgets[i][j]
+
+                # Update index based on grid position
+                self.update_index(widget, f'r{i}c{j}')
+
+                # Store in row
+                row_children.append(widget)
+
+            # Store in grid
+            grid_children.append(html.Div(id=f'grid-row-{i}', children=row_children, style=row_style))
+
+        # Store in layout
+        grid = dbc.Row(id='grid-layout', children=grid_children, style=grid_style)
+        return grid
+
+    def add_widgets(self) -> list:
+        num_widgets_under = self.size - len(self.widgets)
+        for i in range(num_widgets_under):
+            self.widgets.append(WidgetContainerComponent().json)
+        return self.widgets
+
+    def remove_widgets(self) -> list:
+        num_widgets_over = len(self.widgets) - self.size
+        return self.widgets[:-num_widgets_over]
+
+    def reshape_widgets(self) -> list:
+        widget_array = np.array(self.widgets)
+        widget_array = widget_array.reshape(self.shape)
+        return widget_array.tolist()
+
+    def update_index(self, obj, index):
+        if isinstance(obj, dict):
+            for k, v in obj.items():
+                if k == 'id' and 'index' in v:
+                    v['index'] = index
+                elif isinstance(v, (dict, list)):
+                    self.update_index(v, index)
+        elif isinstance(obj, list):
+            for item in obj:
+                self.update_index(item, index)

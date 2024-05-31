@@ -1,16 +1,21 @@
 from dash import html
 
-from mamba_ui.grid.icon import build_widget_icon as WidgetIcon
+from mamba_ui.grid.base import WidgetGridBase
+from mamba_ui.grid.icon import WidgetIconComponent
 
 
-class WidgetContainerComponent:
+class WidgetContainerComponent(WidgetGridBase):
     def __init__(self, row_id: int = 0, column_id: int = 0):
+        super().__init__()
         self.row_id = row_id
         self.column_id = column_id
 
     @property
     def component(self) -> html.Div:
-        style = {
+
+        uid = f'r{self.row_id}c{self.column_id}'
+
+        container_style = {
             'display': 'flex',
             'flexGrow': '1',
             'flexDirection': 'column',
@@ -24,12 +29,8 @@ class WidgetContainerComponent:
         }
 
         return html.Div(
-            id={'type': 'widget-container', 'index': f'r{self.row_id}c{self.column_id}'},
+            id={'type': 'widget-container', 'index': uid},
             className='bg-transparent border border-secondary',
-            children=[WidgetIcon(self.row_id, self.column_id)],
-            style=style
+            children=[WidgetIconComponent(self.row_id, self.column_id).json],
+            style=container_style
         )
-
-    @property
-    def json(self) -> dict:
-        return self.component.to_plotly_json()

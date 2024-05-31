@@ -1,11 +1,11 @@
+import itertools
 from dash import html, dcc
 import dash_bootstrap_components as dbc
 from dash.exceptions import PreventUpdate
 from dash_extensions.enrich import Input, Output, State
 
 from mamba_ui import app
-from mamba_ui.grid import widget_grid as WidgetGrid
-from mamba_ui.grid.grid import WidgetGridComponent
+from mamba_ui.grid import WidgetGridComponent
 
 
 # Component
@@ -60,4 +60,9 @@ def update_grid_layout(nrows, ncols, settings_open, current_grid):
     if not settings_open:
         raise PreventUpdate
 
-    return WidgetGridComponent(shape=(nrows, ncols), widgets=current_grid).json
+    # Extract the widgets from layout regardless of where they're located
+    widgets = [row_container['props']['children'] for row_container in current_grid]
+    widgets = list(itertools.chain.from_iterable(widgets))
+
+    # Send back new grid component that is built with prior widgets
+    return WidgetGridComponent(shape=(nrows, ncols), widgets=widgets).json
