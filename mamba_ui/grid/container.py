@@ -17,7 +17,8 @@ class WidgetContainerComponent(WidgetGridBase):
 
         container_style = {
             'display': 'flex',
-            'flexGrow': '1',
+            'width': '100%',
+            'height': '100%',
             'flexDirection': 'column',
             'justifyContent': 'center',
             'alignItems': 'center',
