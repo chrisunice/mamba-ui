@@ -12,7 +12,7 @@
   },
   "themes":
   {
-    "default": "CERULEAN",
+    "default": "FLATLY",
     "light": [
       "BOOTSTRAP",
       "CERULEAN",
@@ -24,6 +24,7 @@
       "LUX",
       "MATERIA",
       "MINTY",
+      "MORPH",
       "PULSE",
       "SANDSTONE",
       "SIMPLEX",
@@ -36,7 +37,6 @@
     "dark": [
       "CYBORG",
       "DARKLY",
-      "MORPH",
       "QUARTZ",
       "SLATE",
       "SOLAR",
