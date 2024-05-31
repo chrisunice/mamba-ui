@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class WidgetGridBase(ABC):
+class WidgetGridComponentBase(ABC):
     def __init__(self):
         pass
 

@@ -1,20 +1,17 @@
 from dash import html
 import dash_bootstrap_components as dbc
 
-from mamba_ui.grid.base import WidgetGridBase
-from mamba_ui.widgets import PolarPlotWidget
-from mamba_ui.widgets import LinearPlotWidget
+from mamba_ui.grid.base import WidgetGridComponentBase
+from mamba_ui.widgets.plots.polar import PolarPlotWidget
+from mamba_ui.widgets.plots.linear import LinearPlotWidget
 
 
-class WidgetIconComponent(WidgetGridBase):
-    def __init__(self, row_id: int = 0, column_id: int = 0):
+class WidgetGridIconComponent(WidgetGridComponentBase):
+    def __init__(self):
         super().__init__()
-        self.row_id = row_id
-        self.column_id = column_id
 
     @property
     def component(self):
-        uid = f'r{self.row_id}c{self.column_id}'
 
         menu_label_style = {
             'display': 'flex',
@@ -34,8 +31,8 @@ class WidgetIconComponent(WidgetGridBase):
             className='widget-dropdown-menu',
             label=menu_label,
             children=[
-                self.widget2menuitem(LinearPlotWidget(uid)),
-                self.widget2menuitem(PolarPlotWidget(uid))
+                self.create_menu_item(LinearPlotWidget.widget_name),
+                self.create_menu_item(PolarPlotWidget.widget_name)
             ],
             size='lg',
             toggle_style={
@@ -49,11 +46,12 @@ class WidgetIconComponent(WidgetGridBase):
         )
 
     @staticmethod
-    def widget2menuitem(widget) -> dict:
+    def create_menu_item(widget_name: str) -> dict:
         """ Converts a widget to a menu item"""
-        widget_type = widget.id['type']
-        widget_uid = widget.id['index']
-        widget_name = ' '.join(map(lambda x: x.capitalize(), widget_type.split('-')))
-        menu_item_component = dbc.DropdownMenuItem(widget_name, id={'type': f'{widget_type}-option', 'index': widget_uid})
+        widget_type = '-'.join(widget_name.lower().split())
+        menu_item_component = dbc.DropdownMenuItem(
+            widget_name,
+            id={'type': f'{widget_type}-option', 'index': ''}
+        )
         menu_item_json = menu_item_component.to_plotly_json()
         return menu_item_json

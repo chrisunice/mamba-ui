@@ -3,7 +3,8 @@ from dash.exceptions import PreventUpdate
 from dash_extensions.enrich import Input, Output, MATCH
 
 import mamba_ui as mui
-from mamba_ui.widgets import LinearPlotWidget, PolarPlotWidget
+from mamba_ui.widgets.plots.polar import PolarPlotWidget
+from mamba_ui.widgets.plots.linear import LinearPlotWidget
 
 
 @mui.app.callback(
@@ -26,8 +27,8 @@ def display_widget(*widgets):
         widget_clicked_name = dash.callback_context.triggered_id['type']
         widget_clicked_uid = dash.callback_context.triggered_id['index']
         if widget_clicked_name == 'polar-plot-option':
-            return PolarPlotWidget(widget_clicked_uid)
+            return PolarPlotWidget(widget_clicked_uid).component
         elif widget_clicked_name == 'linear-plot-option':
-            return LinearPlotWidget(widget_clicked_uid)
+            return LinearPlotWidget(widget_clicked_uid).component
         else:
             raise PreventUpdate

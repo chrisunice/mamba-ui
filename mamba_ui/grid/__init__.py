@@ -2,11 +2,11 @@ import numpy as np
 from dash import html
 import dash_bootstrap_components as dbc
 
-from mamba_ui.grid.base import WidgetGridBase
-from mamba_ui.grid.container import WidgetContainerComponent
+from mamba_ui.grid.base import WidgetGridComponentBase
+from mamba_ui.grid.tile import WidgetGridTileComponent
 
 
-class WidgetGridComponent(WidgetGridBase):
+class WidgetGridComponent(WidgetGridComponentBase):
 
     def __init__(self, shape: tuple = (1, 1), widgets: list[dict] = None):
         super().__init__()
@@ -15,7 +15,7 @@ class WidgetGridComponent(WidgetGridBase):
         self.shape = shape
         self.size = np.product(self.shape)
         if widgets is None:
-            widgets = [WidgetContainerComponent().json]
+            widgets = [WidgetGridTileComponent().json]
         self.widgets = widgets
 
         # Add or remove widgets
@@ -71,7 +71,7 @@ class WidgetGridComponent(WidgetGridBase):
     def add_widgets(self) -> list:
         num_widgets_under = self.size - len(self.widgets)
         for i in range(num_widgets_under):
-            self.widgets.append(WidgetContainerComponent().json)
+            self.widgets.append(WidgetGridTileComponent().json)
         return self.widgets
 
     def remove_widgets(self) -> list:
@@ -84,6 +84,9 @@ class WidgetGridComponent(WidgetGridBase):
         return widget_array.tolist()
 
     def update_index(self, obj, index):
+        """
+        Updates all the id['index'] values down the component tree assuming that the tree is all json
+        """
         if isinstance(obj, dict):
             for k, v in obj.items():
                 if k == 'id' and 'index' in v:
