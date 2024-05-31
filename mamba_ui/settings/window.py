@@ -9,7 +9,7 @@ from mamba_ui.settings.gridshape import GridShapeRow
 SettingsWindow = dbc.Modal(
     [
         dcc.Store('settings-store', storage_type='memory'),
-        dbc.ModalHeader(html.H3('Settings')),
+        dbc.ModalHeader(html.H2('Settings')),
         dbc.ModalBody(
             [
                 ThemeDropdownRow,

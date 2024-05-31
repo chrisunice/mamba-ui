@@ -5,11 +5,22 @@ from mamba_ui import app
 from mamba_ui.settings.window import SettingsWindow
 
 
+ApplicationTitle = html.H1(
+    'D\u2074',
+    # 'Mamba',
+    title='Denmar Data analysis Dashboard and Database',
+    style={
+        'fontStyle': 'oblique',
+        'cursor': 'pointer'
+    },
+    className='text-light'
+)
+
 NavBar = html.Div(
     id='navbar',
     className='bg-primary',
     children=[
-        html.H2('Mamba', className='text-light'),
+        ApplicationTitle,
         html.I(
             id='settings-icon',
             className='fa-solid fa-gear fa-2xl text-light',
@@ -20,7 +31,7 @@ NavBar = html.Div(
         'display': 'flex',
         'justifyContent': 'space-between',
         'align-items': 'center',
-        'padding': '0px 10px'
+        'padding': '0px 20px'
     }
 )
 
