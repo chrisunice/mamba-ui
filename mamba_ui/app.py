@@ -29,12 +29,10 @@ app = DashProxy(
     title='Mamba',
     external_stylesheets=[
         getattr(dbc.themes, config['themes']['default']),       # dash bootstrap themes
-        dbc.icons.FONT_AWESOME,                                 # dash bootstrap icons
-        '/assets/gridstack/gridstack.min.css'
+        dbc.icons.FONT_AWESOME,                                 # font awesome icons
+        dbc.icons.BOOTSTRAP,                                    # bootstrap icons
     ],
-    external_scripts=[
-        '/assets/gridstack/gridstack-all.js'
-    ],
+    external_scripts=[],
     suppress_callback_exceptions=True,
     prevent_initial_callbacks=False,
     transforms=[
