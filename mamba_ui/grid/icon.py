@@ -1,17 +1,16 @@
 from dash import html
 import dash_bootstrap_components as dbc
 
-from mamba_ui.grid.base import WidgetGridComponentBase
 from mamba_ui.widgets.plots.polar import PolarPlotWidget
 from mamba_ui.widgets.plots.linear import LinearPlotWidget
 
 
-class WidgetGridIconComponent(WidgetGridComponentBase):
+class WidgetGridIconComponent:
     def __init__(self):
         super().__init__()
 
     @property
-    def component(self):
+    def component(self) -> dbc.DropdownMenu:
 
         menu_label_style = {
             'display': 'flex',
@@ -46,12 +45,10 @@ class WidgetGridIconComponent(WidgetGridComponentBase):
         )
 
     @staticmethod
-    def create_menu_item(widget_name: str) -> dict:
+    def create_menu_item(widget_name: str) -> dbc.DropdownMenuItem:
         """ Converts a widget to a menu item"""
         widget_type = '-'.join(widget_name.lower().split())
-        menu_item_component = dbc.DropdownMenuItem(
+        return dbc.DropdownMenuItem(
             widget_name,
             id={'type': f'{widget_type}-option', 'index': ''}
         )
-        menu_item_json = menu_item_component.to_plotly_json()
-        return menu_item_json

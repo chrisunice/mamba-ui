@@ -20,8 +20,6 @@ def serve_layout():
         'width': '100%'
     }
 
-    widget_grid = WidgetGridComponent().json
-
     return html.Div(
         id='dash-layout',
         children=[
@@ -30,7 +28,7 @@ def serve_layout():
             html.Link(id='external-stylesheet', rel='stylesheet', href=''),
             html.Div(id='upload-data-output'),
             NavBar,
-            html.Div(widget_grid, id='page-container', style=container_styles),
+            html.Div(WidgetGridComponent().component, id='page-container', style=container_styles),
             Footer,
         ],
         style=app_styles

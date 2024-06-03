@@ -1,14 +1,12 @@
 from dash import html
 
-from mamba_ui.grid.base import WidgetGridComponentBase
 
-
-class WidgetGridMenuComponent(WidgetGridComponentBase):
+class WidgetGridMenuComponent:
     def __init__(self):
         super().__init__()
 
     @property
-    def component(self):
+    def component(self) -> html.Div:
 
         menu_bar_style = {
             'display': 'flex',
@@ -24,11 +22,13 @@ class WidgetGridMenuComponent(WidgetGridComponentBase):
             id={'type': 'widget-menu-bar', 'index': ''},
             children=[
                 html.I(
+                    id={'type': 'widget-hamburger-button', 'index': ''},
                     className='fa-solid fa-bars fa-xl text-primary',
                     style={'cursor': 'pointer'},
                     title='Widget Menu'
                 ),
                 html.I(
+                    id={'type': 'widget-trash-button', 'index': ''},
                     className='fa-solid fa-trash-can fa-xl text-primary',
                     style={'cursor': 'position'},
                     title='Remove Widget'

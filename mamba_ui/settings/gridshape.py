@@ -65,4 +65,4 @@ def update_grid_layout(nrows, ncols, settings_open, current_grid):
     widgets = list(itertools.chain.from_iterable(widgets))
 
     # Send back new grid component that is built with prior widgets
-    return WidgetGridComponent(shape=(nrows, ncols), widgets=widgets).json
+    return WidgetGridComponent(shape=(nrows, ncols), widgets=widgets).component

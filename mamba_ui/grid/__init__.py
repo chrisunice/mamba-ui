@@ -2,11 +2,11 @@ import numpy as np
 from dash import html
 import dash_bootstrap_components as dbc
 
-from mamba_ui.grid.base import WidgetGridComponentBase
 from mamba_ui.grid.tile import WidgetGridTileComponent
+from mamba_ui.utils.component2json import component2json
 
 
-class WidgetGridComponent(WidgetGridComponentBase):
+class WidgetGridComponent:
 
     def __init__(self, shape: tuple = (1, 1), widgets: list[dict] = None):
         super().__init__()
@@ -15,7 +15,7 @@ class WidgetGridComponent(WidgetGridComponentBase):
         self.shape = shape
         self.size = np.product(self.shape)
         if widgets is None:
-            widgets = [WidgetGridTileComponent().json]
+            widgets = [WidgetGridTileComponent().component]
         self.widgets = widgets
 
         # Add or remove widgets
@@ -55,6 +55,9 @@ class WidgetGridComponent(WidgetGridComponentBase):
                 # Grab the widget by grid position
                 widget = self.widgets[i][j]
 
+                # Convert the widget to json representation
+                widget = component2json(widget)
+
                 # Update index based on grid position
                 self.update_index(widget, f'r{i}c{j}')
 
@@ -71,17 +74,18 @@ class WidgetGridComponent(WidgetGridComponentBase):
     def add_widgets(self) -> list:
         num_widgets_under = self.size - len(self.widgets)
         for i in range(num_widgets_under):
-            self.widgets.append(WidgetGridTileComponent().json)
+            self.widgets.append(WidgetGridTileComponent().component)
         return self.widgets
 
     def remove_widgets(self) -> list:
         num_widgets_over = len(self.widgets) - self.size
         return self.widgets[:-num_widgets_over]
 
-    def reshape_widgets(self) -> list:
-        widget_array = np.array(self.widgets)
-        widget_array = widget_array.reshape(self.shape)
-        return widget_array.tolist()
+    def reshape_widgets(self):
+        if len(self.widgets) != self.size:
+            raise ValueError(f"Cannot reshape a {self.size} widgets into shape {self.shape}")
+        n, m = self.shape
+        return [self.widgets[i * m:(i + 1) * m] for i in range(n)]
 
     def update_index(self, obj, index):
         """
