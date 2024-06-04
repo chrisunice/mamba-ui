@@ -1,10 +1,10 @@
 from dash import html
 
-from mamba_ui.grid.base import WidgetGridBase
+from mamba_ui.components.base import BaseComponent
 from mamba_ui.grid.icon import WidgetGridIconComponent
 
 
-class WidgetGridContainerComponent(WidgetGridBase):
+class WidgetGridContainerComponent(BaseComponent):
     def __init__(self, index: str = ""):
         super().__init__()
         self.index = index

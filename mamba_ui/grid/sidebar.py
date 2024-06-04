@@ -3,11 +3,12 @@ from dash.exceptions import PreventUpdate
 from dash_extensions.enrich import Input, Output, State, MATCH
 
 from mamba_ui import app
-from mamba_ui.components import HorizontalLine
-from mamba_ui.grid.base import WidgetGridBase
+from mamba_ui.components.lines import horizontal_line as HorizontalLine
+from mamba_ui.components.submit_button_group import SubmitButtonGroup
+from mamba_ui.components.base import BaseComponent
 
 
-class WidgetGridSidebarComponent(WidgetGridBase):
+class WidgetGridSidebarComponent(BaseComponent):
 
     width_open = 'max(25%, 350px)'
     width_closed = 0
@@ -61,7 +62,7 @@ class WidgetGridSidebarComponent(WidgetGridBase):
             children=[
                 html.H3('Menu', className='text-dark', style={'margin': 0}),
                 HorizontalLine('sm'),
-                self._build_widget_menu_container()
+                self._build_widget_menu_container(),
             ],
             style=sidebar_style
         )

@@ -1,12 +1,12 @@
 from dash import html
 import dash_bootstrap_components as dbc
 
-from mamba_ui.grid.base import WidgetGridBase
+from mamba_ui.components.base import BaseComponent
 from mamba_ui.widgets.plots.polar import PolarPlotWidget
 from mamba_ui.widgets.plots.linear import LinearPlotWidget
 
 
-class WidgetGridIconComponent(WidgetGridBase):
+class WidgetGridIconComponent(BaseComponent):
     def __init__(self, index: str = ""):
         super().__init__()
         self.index = index
