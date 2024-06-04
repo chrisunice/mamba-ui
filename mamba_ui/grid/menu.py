@@ -2,11 +2,12 @@ from dash import html
 
 
 class WidgetGridMenuComponent:
-    def __init__(self):
+    def __init__(self, index: str = ""):
         super().__init__()
+        self.index = index
 
     @property
-    def component(self) -> html.Div:
+    def component(self):
 
         menu_bar_style = {
             'display': 'flex',
@@ -19,16 +20,16 @@ class WidgetGridMenuComponent:
         }
 
         return html.Div(
-            id={'type': 'widget-menu-bar', 'index': ''},
+            id={'type': 'widget-menu-bar', 'index': self.index},
             children=[
                 html.I(
-                    id={'type': 'widget-hamburger-button', 'index': ''},
+                    id={'type': 'widget-hamburger-button', 'index': self.index},
                     className='fa-solid fa-bars fa-xl text-primary',
                     style={'cursor': 'pointer'},
                     title='Widget Menu'
                 ),
                 html.I(
-                    id={'type': 'widget-trash-button', 'index': ''},
+                    id={'type': 'widget-trash-button', 'index': self.index},
                     className='fa-solid fa-trash-can fa-xl text-primary',
                     style={'cursor': 'position'},
                     title='Remove Widget'

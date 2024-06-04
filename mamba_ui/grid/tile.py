@@ -7,15 +7,16 @@ the space at the bottom will also be a div
 """
 from dash import html
 
+from mamba_ui.widgets.base import BaseWidget
 from mamba_ui.grid.menu import WidgetGridMenuComponent
 from mamba_ui.grid.container import WidgetGridContainerComponent
 
 
-class WidgetGridTileComponent:
-    def __init__(self):
+class WidgetGridTileComponent(BaseWidget):
+    def __init__(self, index: str = ""):
         """ The entire tile in the widget grid which includes the menu bar and the widget container"""
         super().__init__()
-        pass
+        self.index = index
 
     @property
     def component(self) -> html.Div:
@@ -34,12 +35,14 @@ class WidgetGridTileComponent:
             'boxShadow': '0px 0px 10px gray',
         }
 
+        menu_component = WidgetGridMenuComponent(self.index).component
+
         return html.Div(
-            id={'type': 'grid-tile', 'index': ''},
+            id={'type': 'grid-tile', 'index': self.index},
             children=[
-                WidgetGridMenuComponent().component,
-                WidgetGridContainerComponent().component,
-                html.Div(style=WidgetGridMenuComponent().component.style)
+                menu_component,
+                WidgetGridContainerComponent(self.index).component,
+                html.Div(style=menu_component.style)
             ],
             className='bg-transparent border border-security',
             style=tile_style

@@ -1,11 +1,13 @@
 from dash import html
 
+from mamba_ui.widgets.base import BaseWidget
 from mamba_ui.grid.icon import WidgetGridIconComponent
 
 
-class WidgetGridContainerComponent:
-    def __init__(self):
+class WidgetGridContainerComponent(BaseWidget):
+    def __init__(self, index: str = ""):
         super().__init__()
+        self.index = index
 
     @property
     def component(self) -> html.Div:
@@ -19,8 +21,8 @@ class WidgetGridContainerComponent:
         }
 
         return html.Div(
-            id={'type': 'widget-container', 'index': ''},
+            id={'type': 'widget-container', 'index': self.index},
             className='bg-transparent',
-            children=[WidgetGridIconComponent().component],
+            children=[WidgetGridIconComponent(self.index).component],
             style=container_style
         )

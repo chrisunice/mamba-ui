@@ -1,13 +1,15 @@
 from dash import html
 import dash_bootstrap_components as dbc
 
+from mamba_ui.widgets.base import BaseWidget
 from mamba_ui.widgets.plots.polar import PolarPlotWidget
 from mamba_ui.widgets.plots.linear import LinearPlotWidget
 
 
-class WidgetGridIconComponent:
-    def __init__(self):
+class WidgetGridIconComponent(BaseWidget):
+    def __init__(self, index: str = ""):
         super().__init__()
+        self.index = index
 
     @property
     def component(self) -> dbc.DropdownMenu:
@@ -27,6 +29,7 @@ class WidgetGridIconComponent:
         )
 
         return dbc.DropdownMenu(
+            id={'type': 'widget-dropdown-menu', 'index': self.index},
             className='widget-dropdown-menu',
             label=menu_label,
             children=[
@@ -44,11 +47,10 @@ class WidgetGridIconComponent:
             }
         )
 
-    @staticmethod
-    def create_menu_item(widget_name: str) -> dbc.DropdownMenuItem:
+    def create_menu_item(self, widget_name: str) -> dbc.DropdownMenuItem:
         """ Converts a widget to a menu item"""
         widget_type = '-'.join(widget_name.lower().split())
         return dbc.DropdownMenuItem(
             widget_name,
-            id={'type': f'{widget_type}-option', 'index': ''}
+            id={'type': f'{widget_type}-option', 'index': self.index}
         )

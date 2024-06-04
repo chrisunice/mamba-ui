@@ -5,7 +5,7 @@ from mamba_ui.utils.component2json import component2json
 
 class BaseWidget(ABC):
     def __init__(self):
-        pass
+        super().__init__()
 
     @property
     @abstractmethod
