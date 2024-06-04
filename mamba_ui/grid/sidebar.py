@@ -61,7 +61,7 @@ class WidgetGridSidebarComponent(BaseComponent):
             className='sidebar-visible bg-light',
             children=[
                 html.H3('Menu', className='text-dark', style={'margin': 0}),
-                HorizontalLineComponent('sm').component,
+                HorizontalLineComponent('md').component,
                 self._menu_container,
             ],
             style=sidebar_style
