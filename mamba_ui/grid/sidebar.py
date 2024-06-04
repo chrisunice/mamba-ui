@@ -1,7 +1,7 @@
-from dash import html, callback_context
+from dash import html
 from dash.exceptions import PreventUpdate
 import dash_bootstrap_components as dbc
-from dash_extensions.enrich import Output, State, MATCH, Trigger
+from dash_extensions.enrich import Input, Output, State, MATCH
 
 from mamba_ui import app
 from mamba_ui.components import HorizontalLine
@@ -9,6 +9,9 @@ from mamba_ui.widgets.base import BaseWidget
 
 
 class WidgetGridSidebarComponent(BaseWidget):
+
+    width_open = 'max(25%, 350px)'
+    width_closed = 0
 
     def __init__(self, top_offset, index: str = ""):
         super().__init__()
@@ -25,8 +28,7 @@ class WidgetGridSidebarComponent(BaseWidget):
             'position': 'absolute',
             'top': f'{self.top_offset}px',
             'left': 0,
-            # 'width': 'max(25%, 350px)',
-            'width': 0,
+            'width': f'{self.width_closed}',
             'height': f'calc(100% - {self.top_offset}px)',
             'zIndex': 1000,
             'padding': '10px 0px',
@@ -35,68 +37,37 @@ class WidgetGridSidebarComponent(BaseWidget):
             'overflow': 'hidden'
         }
 
-        sidebar = html.Div(
+        return html.Div(
             id={'type': 'widget-side-bar', 'index': self.index},
             className='sidebar-visible bg-light',
             children=[
-                html.H3('Menu', className='text-dark'),
-                HorizontalLine('sm'),
-                dbc.Button('My Button')
+                html.H3('Menu', className='text-dark', style={'margin': 0}),
+                HorizontalLine('sm')
             ],
             style=sidebar_style
-        )
-
-        not_sidebar = html.Div(
-            children=[],
-            id={'type': 'not-sidebar', 'index': self.index},
-            style={
-                'position': 'fixed',
-                'top': 0,
-                'left': 0,
-                'zIndex': 999,
-                'width': '100vw',
-                'height': '100vh',
-                'visibility': 'visible',
-            }
-        )
-
-        return html.Div(
-            id={'type': 'sidebar-wrapper', 'index': self.index},
-            children=[sidebar, not_sidebar],
         )
 
 
 @app.callback(
     Output({'type': 'widget-side-bar', 'index': MATCH}, 'style'),
-    Output({'type': 'not-sidebar', 'index': MATCH}, 'style'),
     Output({'type': 'widget-hamburger-button', 'index': MATCH}, 'className'),
-    [
-        Trigger({'type': 'widget-hamburger-button', 'index': MATCH}, 'n_clicks'),
-        Trigger({'type': 'not-sidebar', 'index': MATCH}, 'n_clicks'),
-    ],
-    [
-        State({'type': 'widget-side-bar', 'index': MATCH}, 'style'),
-        State({'type': 'not-sidebar', 'index': MATCH}, 'style'),
-    ]
+    Input({'type': 'widget-hamburger-button', 'index': MATCH}, 'n_clicks'),
+    State({'type': 'widget-side-bar', 'index': MATCH}, 'style'),
+    State({'type': 'widget-hamburger-button', 'index': MATCH}, 'className')
 )
-def toggle_sidebar(sidebar_style: dict, not_sidebar_style: dict) -> tuple[dict, dict, str]:
-
-    if callback_context.triggered_id is None:
+def toggle_sidebar(hamburger_clicked: int, sidebar_style: dict, menu_class: str) -> tuple[dict, str]:
+    """ Handles the opening and close of the widget tile's sidebar """
+    if hamburger_clicked is None:
         raise PreventUpdate
     else:
-
-        action = callback_context.triggered_id['type']
-
-        if action == 'widget-hamburger-button':
+        if 'fa-bars' in menu_class:
             # Open the sidebar
-            sidebar_style.update({'width': 'max(25%, 350px)'})
-            not_sidebar_style.update({'visibility': 'visible'})
-            menu_icon = 'fa-solid fa-xmark fa-xl text-primary'
-        elif action == 'not-sidebar':
-            sidebar_style.update({'width': 0})
-            not_sidebar_style.update({'visibility': 'hidden'})
-            menu_icon = 'fa-solid fa-bars fa-xl text-primary'
+            sidebar_style.update({'width': WidgetGridSidebarComponent.width_open})
+            menu_class = menu_class.replace('fa-bars', 'fa-xmark')
+        elif 'fa-xmark' in menu_class:
+            # Close the sidebar
+            sidebar_style.update({'width': WidgetGridSidebarComponent.width_closed})
+            menu_class = menu_class.replace('fa-xmark', 'fa-bars')
         else:
             raise PreventUpdate
-
-        return sidebar_style, not_sidebar_style, menu_icon
+        return sidebar_style, menu_class
