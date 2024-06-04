@@ -6,7 +6,7 @@ from mamba_ui.components.base import BaseComponent
 from mamba_ui.settings.window import SettingsWindow
 
 
-class NavBar(BaseComponent):
+class NavBarComponent(BaseComponent):
     def __init__(self):
         super().__init__()
 
