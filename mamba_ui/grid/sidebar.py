@@ -1,14 +1,13 @@
 from dash import html
 from dash.exceptions import PreventUpdate
-import dash_bootstrap_components as dbc
 from dash_extensions.enrich import Input, Output, State, MATCH
 
 from mamba_ui import app
 from mamba_ui.components import HorizontalLine
-from mamba_ui.widgets.base import BaseWidget
+from mamba_ui.grid.base import WidgetGridBase
 
 
-class WidgetGridSidebarComponent(BaseWidget):
+class WidgetGridSidebarComponent(WidgetGridBase):
 
     width_open = 'max(25%, 350px)'
     width_closed = 0
@@ -17,6 +16,25 @@ class WidgetGridSidebarComponent(BaseWidget):
         super().__init__()
         self.top_offset = top_offset
         self.index = index
+
+    def _build_widget_menu_container(self):
+        """ This container will hold the user defined components for any given widget """
+
+        style = {
+            'display': 'flex',
+            'flexDirection': 'column',
+            'justifyContent': 'flex-start',
+            'alignItems': 'center',
+            'height': '100%',
+            'width': '100%',
+            'padding': '10px'
+        }
+
+        return html.Div(
+            id={'type': 'widget-menu-container', 'index': self.index},
+            children=[html.H4('Build some menu components', className='text-dark')],
+            style=style
+        )
 
     @property
     def component(self):
@@ -42,7 +60,8 @@ class WidgetGridSidebarComponent(BaseWidget):
             className='sidebar-visible bg-light',
             children=[
                 html.H3('Menu', className='text-dark', style={'margin': 0}),
-                HorizontalLine('sm')
+                HorizontalLine('sm'),
+                self._build_widget_menu_container()
             ],
             style=sidebar_style
         )

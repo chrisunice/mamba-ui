@@ -1,8 +1,7 @@
 from abc import abstractmethod
-from mamba_ui.widgets.base import BaseWidget
 
 
-class WidgetGridBase(BaseWidget):
+class WidgetGridBase:
     def __init__(self):
         super().__init__()
 

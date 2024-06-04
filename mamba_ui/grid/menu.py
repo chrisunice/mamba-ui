@@ -1,9 +1,9 @@
 from dash import html
 
-from mamba_ui.widgets.base import BaseWidget
+from mamba_ui.grid.base import WidgetGridBase
 
 
-class WidgetGridMenuComponent(BaseWidget):
+class WidgetGridMenuComponent(WidgetGridBase):
 
     min_height = 50
 

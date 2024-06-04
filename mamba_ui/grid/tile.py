@@ -7,13 +7,13 @@ the space at the bottom will also be a div
 """
 from dash import html
 
-from mamba_ui.widgets.base import BaseWidget
+from mamba_ui.grid.base import WidgetGridBase
 from mamba_ui.grid.menu import WidgetGridMenuComponent
 from mamba_ui.grid.sidebar import WidgetGridSidebarComponent
 from mamba_ui.grid.container import WidgetGridContainerComponent
 
 
-class WidgetGridTileComponent(BaseWidget):
+class WidgetGridTileComponent(WidgetGridBase):
     def __init__(self, index: str = ""):
         """ The entire tile in the widget grid which includes the menu bar and the widget container"""
         super().__init__()

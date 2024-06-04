@@ -1,15 +1,15 @@
 from dash import dcc
 import plotly.graph_objects as go
 
-# Component
+from mamba_ui.widgets.base import BaseWidget
 
 
-class PolarPlotWidget:
+class PolarPlotWidget(BaseWidget):
 
     widget_name = 'Polar Plot'
 
-    def __init__(self, unique_id: str = ''):
-        self.uid = unique_id
+    def __init__(self, index: str = ''):
+        super().__init__(index)
 
     @property
     def component(self):
@@ -19,7 +19,7 @@ class PolarPlotWidget:
             'width': '100%'
         }
 
-        # Layout based on defaul theme being light
+        # Layout based on default theme being light
         polar_layout = go.Layout(
             autosize=True,
             paper_bgcolor='rgba(0, 0, 0, 0)',
@@ -46,7 +46,7 @@ class PolarPlotWidget:
         )
 
         return dcc.Graph(
-            id={'type': 'polar-plot', 'index': self.uid},
+            id={'type': 'polar-plot', 'index': self.index},
             figure=go.Figure(
                 data=go.Scatterpolar({'r': None, 'theta': None}),
                 layout=polar_layout
@@ -55,3 +55,7 @@ class PolarPlotWidget:
             config={'scrollZoom': True},
             style=graph_style
         )
+
+    @property
+    def menu(self) -> list:
+        return []

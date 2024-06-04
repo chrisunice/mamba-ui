@@ -2,12 +2,12 @@ import numpy as np
 from dash import html
 import dash_bootstrap_components as dbc
 
-from mamba_ui.grid.base import BaseWidget
+from mamba_ui.grid.base import WidgetGridBase
 from mamba_ui.grid.tile import WidgetGridTileComponent
 from mamba_ui.utils.component2json import component2json
 
 
-class WidgetGridComponent(BaseWidget):
+class WidgetGridComponent(WidgetGridBase):
 
     def __init__(self, shape: tuple = (1, 1), widgets: list[dict] = None):
         super().__init__()
