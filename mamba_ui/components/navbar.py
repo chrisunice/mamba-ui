@@ -6,7 +6,10 @@ from mamba_ui.settings.window import SettingsWindow
 
 
 ApplicationTitle = html.H1(
-    children=['D', html.Sup('IV', style={'fontSize': 'medium', 'verticalAlign': 'super'})],
+    children=[
+        # 'D', html.Sup('IV', style={'fontSize': 'medium', 'verticalAlign': 'super'})       # roman numerals
+        'D\u2074',
+    ],
     title='Denmar Data analysis Dashboard and Database',
     style={
         'fontStyle': 'oblique',
