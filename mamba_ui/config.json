@@ -2,7 +2,7 @@
   "version": "2.0.0",
   "directories": {
     "cache_dir": "C:/Mamba/cache",
-    "upload_folder": "C/Mamba/uploads",
+    "upload_folder": "C:/Mamba/uploads",
     "image_folder": "C:/Mamba/test_assets/images",
     "database_path": "C:/Mamba/test_assets/imagery.sqlite"
   },
