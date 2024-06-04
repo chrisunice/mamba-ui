@@ -9,6 +9,7 @@ from dash import html
 
 from mamba_ui.widgets.base import BaseWidget
 from mamba_ui.grid.menu import WidgetGridMenuComponent
+from mamba_ui.grid.sidebar import WidgetGridSidebarComponent
 from mamba_ui.grid.container import WidgetGridContainerComponent
 
 
@@ -33,16 +34,18 @@ class WidgetGridTileComponent(BaseWidget):
             'borderRadius': '5px',
             'backgroundColor': 'rgba(0, 0, 0, 0)',
             'boxShadow': '0px 0px 10px gray',
+            'position': 'relative',
         }
 
-        menu_component = WidgetGridMenuComponent(self.index).component
+        menu = WidgetGridMenuComponent(self.index)
 
         return html.Div(
             id={'type': 'grid-tile', 'index': self.index},
             children=[
-                menu_component,
+                menu.component,
+                WidgetGridSidebarComponent(menu.min_height, self.index).component,
                 WidgetGridContainerComponent(self.index).component,
-                html.Div(style=menu_component.style)
+                html.Div(style=menu.component.style)
             ],
             className='bg-transparent border border-security',
             style=tile_style

@@ -30,7 +30,7 @@ NavBar = html.Div(
     style={
         'display': 'flex',
         'justifyContent': 'space-between',
-        'align-items': 'center',
+        'alignItems': 'center',
         'padding': '0px 20px'
     }
 )

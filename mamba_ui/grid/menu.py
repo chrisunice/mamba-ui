@@ -1,7 +1,12 @@
 from dash import html
 
+from mamba_ui.widgets.base import BaseWidget
 
-class WidgetGridMenuComponent:
+
+class WidgetGridMenuComponent(BaseWidget):
+
+    min_height = 50
+
     def __init__(self, index: str = ""):
         super().__init__()
         self.index = index
@@ -15,7 +20,7 @@ class WidgetGridMenuComponent:
             'justifyContent': 'space-between',
             'width': '100%',
             'padding': '0px 10px',
-            'minHeight': '50px',
+            'minHeight': f'{self.min_height}px',
             'borderRadius': '5px'
         }
 
