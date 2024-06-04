@@ -3,9 +3,8 @@ from dash.exceptions import PreventUpdate
 from dash_extensions.enrich import Input, Output, State, MATCH
 
 from mamba_ui import app
-from mamba_ui.components.lines import horizontal_line as HorizontalLine
-from mamba_ui.components.submit_button_group import SubmitButtonGroup
 from mamba_ui.components.base import BaseComponent
+from mamba_ui.components.lines import HorizontalLineComponent
 
 
 class WidgetGridSidebarComponent(BaseComponent):
@@ -18,7 +17,8 @@ class WidgetGridSidebarComponent(BaseComponent):
         self.top_offset = top_offset
         self.index = index
 
-    def _build_widget_menu_container(self):
+    @property
+    def _menu_container(self):
         """ This container will hold the user defined components for any given widget """
 
         style = {
@@ -61,8 +61,8 @@ class WidgetGridSidebarComponent(BaseComponent):
             className='sidebar-visible bg-light',
             children=[
                 html.H3('Menu', className='text-dark', style={'margin': 0}),
-                HorizontalLine('sm'),
-                self._build_widget_menu_container(),
+                HorizontalLineComponent('sm').component,
+                self._menu_container,
             ],
             style=sidebar_style
         )
