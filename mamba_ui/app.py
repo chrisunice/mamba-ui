@@ -38,7 +38,7 @@ app = DashProxy(
     transforms=[
         MultiplexerTransform(),
         ServersideOutputTransform(
-            backend=FileSystemStore(cache_dir=config['directories']['cache_dir'])
+            backend=FileSystemStore(cache_dir=config['paths']['cache_directory'])
         ),
         TriggerTransform(),
         NoOutputTransform(),
@@ -49,6 +49,6 @@ app = DashProxy(
 # Configure upload to server
 dash_uploader.configure_upload(
     app=app,
-    folder=config['directories']['upload_folder'],
+    folder=config['paths']['upload_directory'],
     use_upload_id=True
 )
