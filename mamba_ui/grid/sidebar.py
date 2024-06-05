@@ -23,8 +23,7 @@ class WidgetGridSidebarComponent(BaseComponent):
 
         style = {
             'display': 'flex',
-            'flexDirection': 'column',
-            'justifyContent': 'flex-start',
+            'justifyContent': 'center',
             'alignItems': 'center',
             'height': '100%',
             'width': '100%',
@@ -33,7 +32,7 @@ class WidgetGridSidebarComponent(BaseComponent):
 
         return html.Div(
             id={'type': 'widget-menu-container', 'index': self.index},
-            children=[html.H4('Build some menu components', className='text-dark')],
+            children=[html.H4('Build some menu items', className='text-dark')],
             style=style
         )
 
