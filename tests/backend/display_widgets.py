@@ -5,6 +5,7 @@ from dash_extensions.enrich import Input, Output, State, MATCH
 import mamba_ui as mui
 from mamba_ui.widgets.plots.polar import PolarPlotWidget
 from mamba_ui.widgets.plots.linear import LinearPlotWidget
+from mamba_ui.widgets.template import TemplateExampleWidget
 
 
 @mui.app.callback(
@@ -12,9 +13,11 @@ from mamba_ui.widgets.plots.linear import LinearPlotWidget
     Output({'type': 'widget-menu-container', 'index': MATCH}, 'children'),
     Output({'type': 'widget-dropdown-menu', 'index': MATCH}, 'style'),
     [
+        Input({'type': 'template-example-option', 'index': MATCH}, 'n_clicks'),
         Input({'type': 'linear-plot-option', 'index': MATCH}, 'n_clicks'),
         Input({'type': 'polar-plot-option', 'index': MATCH}, 'n_clicks'),
-        Input({'type': 'widget-trash-button', 'index': MATCH}, 'n_clicks')
+        Input({'type': 'widget-trash-button', 'index': MATCH}, 'n_clicks'),
+
     ],
     [
         State({'type': 'widget-container', 'index': MATCH}, 'children'),
@@ -35,7 +38,13 @@ def display_widget(*args):
         # Get the container children and dropdown menu style
         container, dropdown_style = args[-2:]
 
-        if button_clicked == 'polar-plot-option':
+        if button_clicked == 'template-example-option':
+            widget = TemplateExampleWidget(button_clicked_uid)
+            container.append(widget.component)
+            dropdown_style.update({'display': 'none'})
+            return container, widget.menu, dropdown_style
+
+        elif button_clicked == 'polar-plot-option':
             widget = PolarPlotWidget(button_clicked_uid)
             container.append(widget.component)
             dropdown_style.update({'display': 'none'})
