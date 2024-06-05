@@ -37,7 +37,13 @@ class PlotMenuFilterItemComponent(BaseComponent):
     def component(self) -> dbc.AccordionItem:
         return dbc.AccordionItem(
             children=[
-                self._checklist
+                dbc.Accordion(
+                    children=[
+                        dbc.AccordionItem([], title='Frequency'),
+                        dbc.AccordionItem([], title='Polarization')
+                    ]
+                ),
+                # self._checklist
             ],
             title=html.H4('Filter')
         )

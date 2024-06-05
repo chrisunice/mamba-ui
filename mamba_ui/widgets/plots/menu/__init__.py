@@ -24,10 +24,6 @@ class PlotMenuComponent(BaseComponent):
             'height': '100%'
         }
 
-        accordion_style = {
-            # 'width': '100%'
-        }
-
         return html.Div(
             children=[
                 dbc.Accordion(
@@ -38,7 +34,7 @@ class PlotMenuComponent(BaseComponent):
                         PlotMenuDesignItemComponent(self.index).component,
                         PlotMenuExportItemComponent(self.index).component
                     ],
-                    style=accordion_style
+                    always_open=True,
                 ),
                 SubmitButtonGroupComponent(name='widget', index=self.index).component
             ],
