@@ -1,7 +1,9 @@
 from abc import ABC, abstractmethod
 
+from mamba_ui.components.base import BaseComponent
 
-class BaseWidget(ABC):
+
+class BaseWidget(BaseComponent):
 
     widget_name: str = 'base'
 
