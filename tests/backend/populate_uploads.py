@@ -7,8 +7,8 @@ from mamba_ui import config
 
 
 @du.callback(
-    Output({'type': 'widget-menu-data-checklist', 'index': MATCH}, 'options'),
-    id={'type': 'widget-menu-data-upload', 'index': MATCH},
+    Output({'type': 'plot-menu-data-checklist', 'index': MATCH}, 'options'),
+    id={'type': 'plot-menu-data-upload', 'index': MATCH},
 )
 def populate_uploads(status):
     """ Moves uploaded files from app temp upload directory to client directory and populates data checklist """
