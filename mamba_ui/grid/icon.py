@@ -4,6 +4,7 @@ import dash_bootstrap_components as dbc
 from mamba_ui.components.base import BaseComponent
 from mamba_ui.widgets.plots.polar import PolarPlotWidget
 from mamba_ui.widgets.plots.linear import LinearPlotWidget
+from mamba_ui.widgets.template import TemplateExampleWidget
 
 
 class WidgetGridIconComponent(BaseComponent):
@@ -34,7 +35,8 @@ class WidgetGridIconComponent(BaseComponent):
             label=menu_label,
             children=[
                 self.create_menu_item(LinearPlotWidget.widget_name),
-                self.create_menu_item(PolarPlotWidget.widget_name)
+                self.create_menu_item(PolarPlotWidget.widget_name),
+                self.create_menu_item(TemplateExampleWidget.widget_name)
             ],
             size='lg',
             toggle_style={
