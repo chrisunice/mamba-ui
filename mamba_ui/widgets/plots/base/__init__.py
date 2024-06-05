@@ -1,7 +1,8 @@
 from abc import abstractmethod
 
 from mamba_ui.widgets.base import BaseWidget
-from mamba_ui.widgets.plots.menu import PlotMenuComponent
+from mamba_ui.widgets.plots.base.menu import BasePlotMenuComponent
+from mamba_ui.widgets.plots.base.component import BasePlotComponent
 
 
 class BasePlotWidget(BaseWidget):
@@ -12,12 +13,11 @@ class BasePlotWidget(BaseWidget):
         super().__init__(index)
 
     @property
-    @abstractmethod
     def component(self):
         """ To be implemented by actual plotting widgets """
-        pass
+        return BasePlotComponent(self.index).component
 
     @property
     def menu(self):
         """ Common menu items used between plots """
-        return PlotMenuComponent(self.index).component
+        return BasePlotMenuComponent(self.index).component
