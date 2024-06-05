@@ -1,11 +1,10 @@
 from dash import dcc
 import plotly.graph_objects as go
-import dash_bootstrap_components as dbc
 
-from mamba_ui.widgets.base import BaseWidget
+from mamba_ui.widgets.plots.base import BasePlotWidget
 
 
-class LinearPlotWidget(BaseWidget):
+class LinearPlotWidget(BasePlotWidget):
 
     widget_name = 'Linear Plot'
 
@@ -48,17 +47,3 @@ class LinearPlotWidget(BaseWidget):
             responsive=True,
             style=graph_style
         )
-
-    @property
-    def menu(self):
-        return [
-            dbc.Accordion(
-                children=[
-                    dbc.AccordionItem([], title='Data'),
-                    dbc.AccordionItem([], title='Filters'),
-                    dbc.AccordionItem([], title='Design'),
-                    dbc.AccordionItem([], title='Export')
-                ],
-                style={'width': '100%'}
-            )
-        ]

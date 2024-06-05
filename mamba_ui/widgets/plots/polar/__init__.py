@@ -1,10 +1,10 @@
 from dash import dcc
 import plotly.graph_objects as go
 
-from mamba_ui.widgets.base import BaseWidget
+from mamba_ui.widgets.plots.base import BasePlotWidget
 
 
-class PolarPlotWidget(BaseWidget):
+class PolarPlotWidget(BasePlotWidget):
 
     widget_name = 'Polar Plot'
 
@@ -55,7 +55,3 @@ class PolarPlotWidget(BaseWidget):
             config={'scrollZoom': True},
             style=graph_style
         )
-
-    @property
-    def menu(self) -> list:
-        return []
