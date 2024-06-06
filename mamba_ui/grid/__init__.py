@@ -27,6 +27,9 @@ class WidgetGridComponent(BaseComponent):
         else:
             pass    # Do nothing
 
+        # Resize widgets
+        self.widgets = self.resize_widgets()
+
         # Reshape widget list to desired shape
         self.widgets = self.reshape_widgets()
 
@@ -44,6 +47,7 @@ class WidgetGridComponent(BaseComponent):
 
         row_style = {
             'display': 'flex',
+            'height': f'{100/self.shape[0]}%',
             'margin': '0px',
             'padding': '5px'
         }
@@ -55,9 +59,6 @@ class WidgetGridComponent(BaseComponent):
             for j in range(self.shape[1]):
                 # Grab the widget by grid position
                 widget = self.widgets[i][j]
-
-                # Convert the widget to json representation
-                widget = component2json(widget)
 
                 # Update index based on grid position
                 self.update_index(widget, f'r{i}c{j}')
@@ -73,25 +74,36 @@ class WidgetGridComponent(BaseComponent):
         return grid
 
     def add_widgets(self) -> list:
+        """ Appending more widgets to the list of existing widgets """
         num_widgets_under = self.size - len(self.widgets)
-        for i in range(num_widgets_under):
-            self.widgets.append(WidgetGridTileComponent().component)
-        return self.widgets
+        return self.widgets + [WidgetGridTileComponent().component for _ in range(num_widgets_under)]
 
     def remove_widgets(self) -> list:
+        """ Removing widgets in reverse order of creation """
         num_widgets_over = len(self.widgets) - self.size
         return self.widgets[:-num_widgets_over]
 
+    def resize_widgets(self) -> list[dict]:
+        """ Resizing widget width; height is resized at the grid row level """
+        new_width = {'width': f'{100/self.shape[1]}%'}
+
+        resized_widgets = []
+        for widget in self.widgets:
+            widget_json = component2json(widget)
+            widget_json['props']['style'].update(new_width)
+            resized_widgets.append(widget_json)
+
+        return resized_widgets
+
     def reshape_widgets(self):
+        """ List version of np.array.reshape because of complex elements in list """
         if len(self.widgets) != self.size:
             raise ValueError(f"Cannot reshape a {self.size} widgets into shape {self.shape}")
         n, m = self.shape
         return [self.widgets[i * m:(i + 1) * m] for i in range(n)]
 
     def update_index(self, obj: list | dict, index: str):
-        """
-        Updates all the id['index'] values down the component tree assuming that the tree is all json
-        """
+        """ Updates all the id['index'] values down the component tree assuming that the tree is all json """
         if isinstance(obj, dict):
             for k, v in obj.items():
                 if k == 'id' and 'index' in v:
