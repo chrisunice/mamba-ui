@@ -1,10 +1,3 @@
-"""
-this dudes gonna hold the menu bar at the top
-the widget container in the middle
-    this will switch between the icon and the widget itself
-the space at the bottom will also be a div
-
-"""
 from dash import html
 
 from mamba_ui.components.base import BaseComponent
