@@ -5,6 +5,7 @@ from dash_extensions.enrich import Input, Output, State, MATCH
 import mamba_ui as mui
 from mamba_ui.widgets.plots.polar import PolarPlotWidget
 from mamba_ui.widgets.plots.linear import LinearPlotWidget
+from mamba_ui.widgets.imagery.viewer import ImageryViewerWidget
 
 
 @mui.app.callback(
@@ -14,6 +15,7 @@ from mamba_ui.widgets.plots.linear import LinearPlotWidget
     [
         Input({'type': 'linear-plot-option', 'index': MATCH}, 'n_clicks'),
         Input({'type': 'polar-plot-option', 'index': MATCH}, 'n_clicks'),
+        Input({'type': 'imagery-viewer-option', 'index': MATCH}, 'n_clicks'),
         Input({'type': 'widget-trash-button', 'index': MATCH}, 'n_clicks'),
 
     ],
@@ -44,6 +46,12 @@ def display_widget(*args):
 
         elif button_clicked == 'linear-plot-option':
             widget = LinearPlotWidget(button_clicked_uid)
+            container.append(widget.component)
+            dropdown_style.update({'display': 'none'})
+            return container, widget.menu, dropdown_style
+
+        elif button_clicked == 'imagery-viewer-option':
+            widget = ImageryViewerWidget(button_clicked_uid)
             container.append(widget.component)
             dropdown_style.update({'display': 'none'})
             return container, widget.menu, dropdown_style
