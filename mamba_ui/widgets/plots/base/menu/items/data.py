@@ -4,9 +4,13 @@ import dash_bootstrap_components as dbc
 
 from mamba_ui.components.base import BaseComponent
 from mamba_ui.components.lines import HorizontalLineComponent
+from mamba_ui.components.checklist import ChecklistComponent
 
 
 class PlotMenuDataItemComponent(BaseComponent):
+
+    name = 'Plot Menu Data'
+
     def __init__(self, index: str = ''):
         super().__init__()
         self.index = index
@@ -14,34 +18,12 @@ class PlotMenuDataItemComponent(BaseComponent):
     @property
     def _upload(self) -> du.Upload:
         return du.Upload(
-            id={'type': 'plot-menu-data-upload', 'index': self.index},
+            id={'type': f'{self.uid}-upload', 'index': self.index},
             text='Upload Data',
-            max_files=10
-        )
-
-    @property
-    def _checklist(self) -> dcc.Checklist:
-
-        checklist_style = {
-            'maxHeight': '300px',
-            'overflowY': 'auto'
-        }
-
-        input_style = {
-            'marginRight': '10px'
-        }
-
-        label_style = {
-            'display': 'flex',
-            'alignItems': 'center'
-        }
-
-        return dcc.Checklist(
-            id={'type': 'plot-menu-data-checklist', 'index': self.index},
-            options=[],
-            style=checklist_style,
-            inputStyle=input_style,
-            labelStyle=label_style
+            max_files=10,
+            default_style={
+                'fontSize': 'larger'
+            }
         )
 
     @property
@@ -50,7 +32,7 @@ class PlotMenuDataItemComponent(BaseComponent):
             children=[
                 self._upload,
                 HorizontalLineComponent('sm').component,
-                self._checklist
+                ChecklistComponent(self.uid, index=self.index).component
             ],
             title=html.H4('Data')
         )
