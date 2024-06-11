@@ -32,10 +32,22 @@ class BasePlotMenuComponent(BaseComponent):
                 dbc.Accordion(
                     className='text-dark',
                     children=[
-                        PlotMenuDataItemComponent(self._index).component,
-                        PlotMenuFilterItemComponent(self._index).component,
-                        PlotMenuDesignItemComponent(self._index).component,
-                        PlotMenuExportItemComponent(self._index).component
+                        html.Div(
+                            PlotMenuDataItemComponent(index=self._index).component,
+                            id={'type': 'plot-menu-data-container', 'index': self._index}
+                        ),
+                        html.Div(
+                            PlotMenuFilterItemComponent(index=self._index).component,
+                            id={'type': 'plot-menu-filter-container', 'index': self._index}
+                        ),
+                        html.Div(
+                            PlotMenuDesignItemComponent(index=self._index).component,
+                            id={'type': 'plot-menu-design-container', 'index': self._index}
+                        ),
+                        html.Div(
+                            PlotMenuExportItemComponent(index=self._index).component,
+                            id={'type': 'plot-menu-export-container', 'index': self._index}
+                        )
                     ],
                     always_open=True,
                 ),
