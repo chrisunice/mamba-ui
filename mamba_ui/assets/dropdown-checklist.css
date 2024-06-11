@@ -1,0 +1,15 @@
+.dropdown-menu.show .dropdown-checklist-menu-item.dropdown-item:hover,
+.dropdown-menu.show .dropdown-checklist-menu-item.dropdown-item:focus {
+    color: var(--bs-dropdown-link-color);
+}
+
+.dropdown-menu.show .dropdown-checklist-menu-item.dropdown-item,
+.dropdown-menu.show .dropdown-checklist-menu-item.dropdown-item:hover,
+.dropdown-menu.show .dropdown-checklist-menu-item.dropdown-item:focus {
+    background-color: transparent;
+}
+
+.dropdown-menu.show {
+    width: 100%;
+    min-width: 100%;
+}
