@@ -2,14 +2,15 @@ from dash import dcc, html
 import dash_bootstrap_components as dbc
 
 from mamba_ui.components.base import BaseComponent
-from mamba_ui.components.dropdown_checklist import DropdownChecklist
+from mamba_ui.components.dropdown_checklist import DropdownChecklistComponent
+from mamba_ui.components.numerical_input import NumericalInputComponent
 
 
 class PlotMenuFilterItemComponent(BaseComponent):
     def __init__(
             self,
-            categorical_filters: dict = None,
-            numerical_filters: dict = None,
+            categorical_filters: dict[str, list] = None,
+            numerical_filters: dict[str, dict] = None,
             index: str = ''
     ):
         """
@@ -29,7 +30,7 @@ class PlotMenuFilterItemComponent(BaseComponent):
 
         self.index = index
 
-    def _build_categorical_filter(self, name: str, options: list):
+    def _build_categorical_filter(self, name, options) -> html.Div:
         """ Builds a dropdown checklist component """
 
         style = {
@@ -48,24 +49,45 @@ class PlotMenuFilterItemComponent(BaseComponent):
                     style={'width': '50%'}
                 ),
                 html.Div(
-                    DropdownChecklist(name, options=options, index=self.index).component,
+                    DropdownChecklistComponent(name, options=options, index=self.index).component,
                     style={'width': '50%'}
                 )
             ],
             style=style
         )
 
-    def _build_numerical_filter(self, name: str):
+    def _build_numerical_filter(self, name, min, max, step) -> html.Div:
         """ Builds a range slider component """
-        return
+
+        style = {
+            'display': 'flex',
+            'flexDirection': 'row',
+            'alignItems': 'center',
+            'width': '100%',
+            'minHeight': '50px',
+            'height': '100%'
+        }
+
+        return html.Div(
+            children=[
+                html.Div(
+                    html.Label(name.capitalize(), style={'fontSize': 'larger'}),
+                    style={'width': '50%'}
+                ),
+                html.Div(
+                    NumericalInputComponent(name, minimum=min, maximum=max, step=step).component,
+                    style={'width': '50%'}
+                )
+            ],
+            style=style
+        )
 
     @property
     def component(self) -> dbc.AccordionItem:
-
-        filter_items = [self._build_categorical_filter(k, v) for k, v in self.categorical_filters.items()] + \
-                       [self._build_numerical_filter(k, v) for k, v in self.numerical_filters.items()]
+        categorical_items = [self._build_categorical_filter(k, v) for k, v in self.categorical_filters.items()]
+        numerical_items = [self._build_numerical_filter(k, **dct) for k, dct in self.numerical_filters.items()]
 
         return dbc.AccordionItem(
-            children=filter_items,
+            children=categorical_items + numerical_items,
             title=html.H4('Filter')
         )
