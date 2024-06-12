@@ -49,7 +49,7 @@ class SubmitButtonGroupComponent(BaseComponent):
             'flexDirection': 'column',
             'flex': '1',
             'justify-content': 'flex-end',
-            'align-items': 'left',
+            'alignItems': 'left',
             'width': 'min(100%, 750px)',
             'padding': '10px'
         }
