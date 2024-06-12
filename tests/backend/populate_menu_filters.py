@@ -24,11 +24,13 @@ def populate_menu_filters(widget_container):
     return PlotMenuFilterItemComponent(
         categorical_filters={
             'frequency': options,
-            'polarization': ['HH', 'VV']
+            'polarization': ['HH', 'VV'],
+            'pass': [1, 2, 3, 4]
         },
         numerical_filters={
-            'look': dict(min=0, max=360, step=1),
-            'depression': dict(min=-90, max=90, step=5)
+            'look': dict(minimum=0, maximum=360, step=1),
+            'depression': dict(minimum=-90, maximum=90, step=5),
+            'twist': dict(minimum=-30, maximum=30, step=1)
         },
         index=uid
     ).component
