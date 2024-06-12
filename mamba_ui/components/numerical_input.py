@@ -32,7 +32,7 @@ class NumericalInputComponent(BaseComponent):
 
         input_style = {
             'display': 'flex',
-            'marginLeft': '10px'
+            'margin': '0px 10px'
         }
 
         return dcc.Input(
