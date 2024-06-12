@@ -1,5 +1,9 @@
-from dash import html, dcc
 import dash_bootstrap_components as dbc
+from dash.exceptions import PreventUpdate
+from dash import html, dcc, callback_context
+from dash_extensions.enrich import Input, Output, MATCH, ALL
+
+from mamba_ui import app
 from mamba_ui.widgets.base import BaseComponent
 
 
@@ -42,6 +46,64 @@ class NumericalInputComponent(BaseComponent):
         )
 
     @property
+    def _row1(self):
+
+        row_style = {
+            'display': 'flex',
+            'flexWrap': 'wrap',
+            'justifyContent': 'space-evenly',
+            'alignItems': 'center',
+            'width': '100%',
+        }
+
+        return html.Div(
+            children=[
+                html.Div(
+                    children=[html.Label('Min:'), self._build_input()],
+                    style={'display': 'flex'}
+                ),
+                html.Div(
+                    children=[html.Label('Max:'), self._build_input()],
+                    style={'display': 'flex'}
+                )
+            ],
+            style=row_style
+        )
+
+    @property
+    def _row2(self):
+
+        switch_id = self.id.copy()
+        switch_id.update({'child-component': 'switch'})
+
+        label_id = self.id.copy()
+        label_id.update({'child-component': 'switch-label'})
+
+        row_style = {
+            'display': 'flex',
+            'flexWrap': 'wrap',
+            'justifyContent': 'space-evenly',
+            'alignItems': 'center',
+            'width': '50%',
+        }
+
+        label = html.Label(
+            children=['Inclusive'],
+            id=label_id
+        )
+
+        switch = dbc.Switch(
+            value=True,
+            style={'margin': 0},
+            id=switch_id
+        )
+
+        return html.Div(
+            children=[label, switch],
+            style=row_style
+        )
+
+    @property
     def component(self):
 
         container_style = {
@@ -50,45 +112,21 @@ class NumericalInputComponent(BaseComponent):
             'alignItems': 'center',
         }
 
-        row1_style = {
-            'display': 'flex',
-            'flexWrap': 'wrap',
-            'justifyContent': 'space-evenly',
-            'alignItems': 'center',
-            'width': '100%',
-        }
-
-        row2_style = row1_style.copy()
-        row2_style.update({'width': '50%'})
-
         return html.Div(
             children=[
-                html.Div(
-                    children=[
-                        html.Div(
-                            [
-                                html.Label('Min:'),
-                                self._build_input()
-                            ],
-                            style={'display': 'flex'}
-                        ),
-                        html.Div(
-                            [
-                                html.Label('Max:'),
-                                self._build_input()
-                            ],
-                            style={'display': 'flex'}
-                        )
-                    ],
-                    style=row1_style
-                ),
-                html.Div(
-                    children=[
-                        html.Label('Inclusive'),
-                        dbc.Switch(value=True, style={'margin': 0})
-                    ],
-                    style=row2_style
-                )
+                self._row1,
+                self._row2
             ],
             style=container_style
         )
+
+
+@app.callback(
+    Output({'parent-component': ALL, 'child-component': 'switch-label', 'index': MATCH}, 'children'),
+    Input({'parent-component': ALL, 'child-component': 'switch', 'index': MATCH}, 'value')
+)
+def update_switch_label(switch_values):
+    if callback_context.triggered_id is None:
+        raise PreventUpdate
+
+    return ['Inclusive' if value else 'Exclusive' for value in switch_values]
