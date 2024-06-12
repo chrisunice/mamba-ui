@@ -7,7 +7,7 @@ from mamba_ui import app
 from mamba_ui.components.base import BaseComponent
 
 
-class DropdownChecklist(BaseComponent):
+class DropdownChecklistComponent(BaseComponent):
     def __init__(self, name: str, options: list = None, index: str = ''):
         super().__init__()
         self.name = name
@@ -58,7 +58,7 @@ class DropdownChecklist(BaseComponent):
         toggle_style = {
             'display': 'flex',
             'justify-content': 'space-between',
-            'align-items': 'center',
+            'alignItems': 'center',
             'width': '100%',
         }
 
