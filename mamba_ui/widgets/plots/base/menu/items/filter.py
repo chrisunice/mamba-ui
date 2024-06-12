@@ -1,4 +1,4 @@
-from dash import dcc, html
+from dash import html
 import dash_bootstrap_components as dbc
 
 from mamba_ui.components.base import BaseComponent
@@ -14,10 +14,14 @@ class PlotMenuFilterItemComponent(BaseComponent):
             index: str = ''
     ):
         """
-        :param filters: a dictionary describing the filtering
-            keys - filter names that match columns in the data (i.e. frequency, polarization)
-            values - data nature (i.e. discrete or continuous)
-        :param index:
+        A dbc.AccordionItem that contains functionality for filtering data
+
+        :param categorical_filters: a dictionary of categorical filters where the key is the filter name as a string \
+         and the value is the options for the filter as a list (e.g. Pass, Polarization, Frequency)
+        :param numerical_filters: a dictionary describing the filtering where the key is the filter name as a string \
+         and the value is a dictionary of arguments min, max, and step to pass to the NumericalInputComponent \
+         (e.g. Look, Depression, Twist, Range)
+        :param index: unique index for the component
         """
         super().__init__()
         if categorical_filters is None:
@@ -56,7 +60,7 @@ class PlotMenuFilterItemComponent(BaseComponent):
             style=style
         )
 
-    def _build_numerical_filter(self, name, min, max, step) -> html.Div:
+    def _build_numerical_filter(self, name, minimum, maximum, step) -> html.Div:
         """ Builds a range slider component """
 
         style = {
@@ -75,7 +79,9 @@ class PlotMenuFilterItemComponent(BaseComponent):
                     style={'width': '50%'}
                 ),
                 html.Div(
-                    NumericalInputComponent(name, minimum=min, maximum=max, step=step).component,
+                    NumericalInputComponent(
+                        name, minimum=minimum, maximum=maximum, step=step, index=self.index
+                    ).component,
                     style={'width': '50%'}
                 )
             ],
