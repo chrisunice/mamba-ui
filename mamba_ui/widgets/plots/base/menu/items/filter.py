@@ -43,7 +43,8 @@ class PlotMenuFilterItemComponent(BaseComponent):
             'alignItems': 'center',
             'width': '100%',
             'minHeight': '50px',
-            'height': '100%'
+            'height': '100%',
+            'margin': '10px 0px'
         }
 
         return html.Div(
@@ -69,7 +70,8 @@ class PlotMenuFilterItemComponent(BaseComponent):
             'alignItems': 'center',
             'width': '100%',
             'minHeight': '50px',
-            'height': '100%'
+            'height': '100%',
+            'margin': '10px 0px'
         }
 
         return html.Div(
@@ -95,5 +97,5 @@ class PlotMenuFilterItemComponent(BaseComponent):
 
         return dbc.AccordionItem(
             children=categorical_items + numerical_items,
-            title=html.H4('Filter')
+            title=html.H4('Filter'),
         )
