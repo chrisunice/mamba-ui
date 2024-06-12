@@ -26,8 +26,9 @@ def populate_menu_filters(widget_container):
             'frequency': options,
             'polarization': ['HH', 'VV']
         },
+        numerical_filters={
+            'look': dict(min=0, max=360, step=1),
+            'depression': dict(min=-90, max=90, step=5)
+        },
         index=uid
     ).component
-
-# TODO need to come up with a way so that the process is...
-#  data load -> pick up data columns -> select params to display (look vs rcs) -> build filters on other params (f, p)
