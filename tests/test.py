@@ -4,6 +4,7 @@ from backend.display_widgets import display_widget
 from backend.create_test_session import create_test_client
 from backend.populate_uploads import populate_uploads
 from backend.populate_menu_filters import populate_menu_filters
+from backend.populate_menu_display import populate_menu_display
 
 
 if __name__ == '__main__':
