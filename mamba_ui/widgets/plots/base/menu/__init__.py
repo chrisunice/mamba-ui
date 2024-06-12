@@ -7,6 +7,7 @@ from mamba_ui.components.submit_button_group import SubmitButtonGroupComponent
 
 # widget components
 from mamba_ui.widgets.plots.base.menu.items.data import PlotMenuDataItemComponent
+from mamba_ui.widgets.plots.base.menu.items.display import PlotMenuDisplayItemComponent
 from mamba_ui.widgets.plots.base.menu.items.filter import PlotMenuFilterItemComponent
 from mamba_ui.widgets.plots.base.menu.items.design import PlotMenuDesignItemComponent
 from mamba_ui.widgets.plots.base.menu.items.export import PlotMenuExportItemComponent
@@ -35,6 +36,10 @@ class BasePlotMenuComponent(BaseComponent):
                         html.Div(
                             PlotMenuDataItemComponent(index=self._index).component,
                             id={'type': 'plot-menu-data-container', 'index': self._index}
+                        ),
+                        html.Div(
+                            PlotMenuDisplayItemComponent(index=self._index).component,
+                            id={'type': 'plot-menu-display-container', 'index': self._index}
                         ),
                         html.Div(
                             PlotMenuFilterItemComponent(index=self._index).component,
