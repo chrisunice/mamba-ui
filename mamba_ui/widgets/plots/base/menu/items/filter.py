@@ -1,6 +1,10 @@
-from dash import html
+import json
 import dash_bootstrap_components as dbc
+from dash.exceptions import PreventUpdate
+from dash import html, dcc, callback_context
+from dash_extensions.enrich import Input, Output, MATCH, ALL
 
+from mamba_ui import app
 from mamba_ui.components.base import BaseComponent
 from mamba_ui.components.dropdown_checklist import DropdownChecklistComponent
 from mamba_ui.components.numerical_input import NumericalInputComponent
@@ -92,10 +96,53 @@ class PlotMenuFilterItemComponent(BaseComponent):
 
     @property
     def component(self) -> dbc.AccordionItem:
-        categorical_items = [self._build_categorical_filter(k, v) for k, v in self.categorical_filters.items()]
-        numerical_items = [self._build_numerical_filter(k, **dct) for k, dct in self.numerical_filters.items()]
+        categorical_items = [self._build_categorical_filter(k.lower(), v) for k, v in self.categorical_filters.items()]
+        numerical_items = [self._build_numerical_filter(k.lower(), **dct) for k, dct in self.numerical_filters.items()]
 
         return dbc.AccordionItem(
-            children=categorical_items + numerical_items,
+            children=[
+                dcc.Store(id={'type': 'plot-menu-filter-store', 'index': self.index}, storage_type='memory'),
+                *categorical_items,
+                *numerical_items
+            ],
             title=html.H4('Filter'),
         )
+
+
+@app.callback(
+    Output({'type': 'plot-menu-filter-store', 'index': MATCH}, 'data'),
+    Input({'parent-component': ALL, 'child-component': 'checklist', 'index': MATCH}, 'value'),
+    Input({'parent-component': ALL, 'child-component': 'min-input', 'index': MATCH}, 'value'),
+    Input({'parent-component': ALL, 'child-component': 'max-input', 'index': MATCH}, 'value'),
+    Input({'parent-component': ALL, 'child-component': 'switch', 'index': MATCH}, 'value')
+)
+def store_filters(*_):
+    ctx = callback_context
+    if ctx.triggered_id is None:
+        raise PreventUpdate
+
+    filters = {}
+    for info, value in ctx.inputs.items():
+        component_id = json.loads(info.rstrip('.value'))
+        filter_name = component_id['parent-component'].split('-')[0]
+        if component_id['child-component'] == 'checklist':
+            filters[filter_name] = value
+        elif component_id['child-component'] == 'min-input':
+            try:
+                filters[filter_name].update({'min': value})
+            except KeyError:
+                filters[filter_name] = {'min': value}
+        elif component_id['child-component'] == 'max-input':
+            try:
+                filters[filter_name].update({'max': value})
+            except KeyError:
+                filters[filter_name] = {'max': value}
+        elif component_id['child-component'] == 'switch':
+            try:
+                filters[filter_name].update({'inclusive': value})
+            except KeyError:
+                filters[filter_name] = {'inclusive': value}
+        else:
+            raise ValueError('Unhandled input!')
+
+    return json.dumps(filters)
