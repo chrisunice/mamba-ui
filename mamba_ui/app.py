@@ -50,5 +50,5 @@ app = DashProxy(
 dash_uploader.configure_upload(
     app=app,
     folder=config['paths']['upload_directory'],
-    use_upload_id=True
+    use_upload_id=False
 )
