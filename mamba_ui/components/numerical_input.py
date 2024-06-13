@@ -22,13 +22,13 @@ class NumericalInputComponent(BaseComponent):
         self.maximum = maximum
         self.step = step
         self.id = {
-            'parent-component': f'{self.name}-range-slider',
+            'parent-component': f'{self.name}-numerical-input',
             'index': index
         }
 
-    def _build_input(self) -> dcc.Input:
+    def _build_input(self, name) -> dcc.Input:
         input_id = self.id.copy()
-        input_id.update({'child-component': 'input'})
+        input_id.update({'child-component': f'{name}-input'})
 
         input_style = {
             'display': 'flex',
@@ -59,11 +59,11 @@ class NumericalInputComponent(BaseComponent):
         return html.Div(
             children=[
                 html.Div(
-                    children=[html.Label('Min:'), self._build_input()],
+                    children=[html.Label('Min:'), self._build_input('min')],
                     style={'display': 'flex'}
                 ),
                 html.Div(
-                    children=[html.Label('Max:'), self._build_input()],
+                    children=[html.Label('Max:'), self._build_input('max')],
                     style={'display': 'flex'}
                 )
             ],
