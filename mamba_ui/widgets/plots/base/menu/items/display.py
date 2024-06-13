@@ -1,3 +1,4 @@
+import json
 import dash_bootstrap_components as dbc
 from dash.exceptions import PreventUpdate
 from dash import html, dcc, callback_context
@@ -58,6 +59,7 @@ class PlotMenuDisplayItemComponent(BaseComponent):
             children=[
                 html.Div(
                     children=[
+                        dcc.Store(id={'type': 'plot-menu-display-store', 'index': self.index}, storage_type='memory'),
                         self._build_dropdown('independent'),
                         self._verses,
                         self._build_dropdown('dependent')
@@ -105,3 +107,19 @@ def update_other_dropdown(ivar_value: str, dvar_value: str, ivar_opts: list, dva
         toggle_option(ivar_opts, dvar_value)
 
     return ivar_opts, dvar_opts
+
+
+@app.callback(
+    Output({'type': 'plot-menu-display-store', 'index': MATCH}, 'data'),
+    Input({'type': 'independent-dropdown', 'index': MATCH}, 'value'),
+    Input({'type': 'dependent-dropdown', 'index': MATCH}, 'value')
+)
+def store_variables(i_var, d_var):
+    if callback_context.triggered_id is None:
+        raise PreventUpdate
+
+    tmp = {
+        'independent': i_var,
+        'dependent': d_var
+    }
+    return json.dumps(tmp)
