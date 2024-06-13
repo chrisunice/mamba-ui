@@ -12,7 +12,7 @@ from mamba_ui.widgets.plots.base.menu.items.display import PlotMenuDisplayItemCo
     State({'type': 'plot-menu-data-store', 'index': MATCH}, 'data')
 )
 def populate_menu_display(selected_files, data):
-    if selected_files is None:
+    if callback_context.triggered_id is None:
         raise PreventUpdate
     elif not selected_files:
         options = None
