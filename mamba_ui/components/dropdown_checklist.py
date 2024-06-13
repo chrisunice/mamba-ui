@@ -57,7 +57,7 @@ class DropdownChecklistComponent(BaseComponent):
 
         toggle_style = {
             'display': 'flex',
-            'justify-content': 'space-between',
+            'justifyContent': 'space-between',
             'alignItems': 'center',
             'width': '100%',
         }

@@ -57,7 +57,7 @@ class SubmitButtonGroupComponent(BaseComponent):
         button_container_style = {
             'display': 'flex',
             'justify-content': 'space-between',
-            'margin-top': '10px'
+            'marginTop': '10px'
         }
 
         return html.Div(
