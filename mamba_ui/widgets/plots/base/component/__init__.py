@@ -1,5 +1,3 @@
-from abc import abstractmethod
-
 from mamba_ui.components.base import BaseComponent
 
 
