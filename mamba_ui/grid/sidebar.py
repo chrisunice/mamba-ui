@@ -75,7 +75,6 @@ class WidgetGridSidebarComponent(BaseComponent):
 )
 def toggle_sidebar(hamburger_clicked: int, sidebar_style: dict, menu_class: str) -> tuple[dict, str]:
     """ Handles the opening and close of the widget tile's sidebar """
-    # if hamburger_clicked is None:
     if callback_context.triggered_id is None or hamburger_clicked is None:
         raise PreventUpdate
     else:
