@@ -31,10 +31,13 @@ def is_categorical(series, threshold=0.05):
     Input({'type': 'dependent-dropdown', 'index': MATCH}, 'value'),
     State({'type': 'independent-dropdown', 'index': MATCH}, 'options'),
     State({'type': 'plot-menu-data-store', 'index': MATCH}, 'data'),
-    State({'type': 'plot-menu-data-checklist', 'index': MATCH}, 'value')
+    State({'type': 'plot-menu-data-checklist', 'index': MATCH}, 'value'),
 )
 def populate_menu_filters(i_var, d_var, options, data, selected_files):
-    if np.logical_or(i_var is None, d_var is None):
+    # Prevent any updates until dropdowns get actual values
+    no_values = np.logical_or(i_var is None, d_var is None)
+    no_action = callback_context.triggered_id is None
+    if no_action or no_values:
         raise PreventUpdate
 
     other_columns = [option['value'] for option in options if option['value'] not in [i_var, d_var]]
