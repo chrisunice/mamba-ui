@@ -5,7 +5,7 @@ from backend.create_test_session import create_test_client
 from backend.populate_menu_filters import populate_menu_filters
 from backend.populate_menu_display import populate_menu_display
 from backend.plot_linear_data import plot_linear_data
-
+from backend.populate_control_panel import populate_control_panel
 
 if __name__ == '__main__':
 
