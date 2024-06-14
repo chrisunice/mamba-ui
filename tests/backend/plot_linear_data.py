@@ -2,14 +2,17 @@ import json
 import numpy as np
 from itertools import product
 import plotly.graph_objects as go
+
+from dash import Output
 from dash.exceptions import PreventUpdate
-from dash_extensions.enrich import Input, Output, MATCH, State, ALL
+from dash_extensions.enrich import Input, MATCH, State
 
 import mamba_ui as mui
 
 
+# @mui.app.callback(
 @mui.app.callback(
-    Output({'type': 'linear-plot', 'index': MATCH}, 'figure'),
+    Output({'type': 'linear-plot', 'index': MATCH}, 'figure', allow_duplicate=True),
     Input({'type': 'widget-submit-button', 'index': MATCH}, 'n_clicks'),
     [
         State({'type': 'plot-menu-data-store', 'index': MATCH}, 'data'),        # data stored on the server
@@ -17,7 +20,8 @@ import mamba_ui as mui
         State({'type': 'plot-menu-display-store', 'index': MATCH}, 'data'),     # parameters to display
         State({'type': 'plot-menu-filter-store', 'index': MATCH}, 'data'),      # filters to apply to data
         State({'type': 'linear-plot', 'index': MATCH}, 'figure'),               # existing figure to update
-    ]
+    ],
+    prevent_initial_call=True
 )
 def plot_linear_data(
         submit_click: int,
