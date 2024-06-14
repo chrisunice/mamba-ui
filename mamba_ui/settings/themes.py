@@ -1,7 +1,7 @@
 from dash import dcc, html
 import dash_bootstrap_components as dbc
 from dash.exceptions import PreventUpdate
-from dash_extensions.enrich import Input, Output, State, MATCH
+from dash import Input, Output, State, MATCH
 
 from mamba_ui import app
 from mamba_ui import config

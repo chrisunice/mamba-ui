@@ -3,14 +3,12 @@ import numpy as np
 from itertools import product
 import plotly.graph_objects as go
 
-from dash import Output
 from dash.exceptions import PreventUpdate
-from dash_extensions.enrich import Input, MATCH, State
+from dash import Input, Output, State, MATCH
 
 import mamba_ui as mui
 
 
-# @mui.app.callback(
 @mui.app.callback(
     Output({'type': 'linear-plot', 'index': MATCH}, 'figure', allow_duplicate=True),
     Input({'type': 'widget-submit-button', 'index': MATCH}, 'n_clicks'),
