@@ -1,6 +1,5 @@
-from dash import html
 from dash.exceptions import PreventUpdate
-from dash_extensions.enrich import Input, Output, State, MATCH
+from dash import html, Input, Output, State, MATCH, callback_context
 
 from mamba_ui import app
 from mamba_ui.components.base import BaseComponent
@@ -76,7 +75,8 @@ class WidgetGridSidebarComponent(BaseComponent):
 )
 def toggle_sidebar(hamburger_clicked: int, sidebar_style: dict, menu_class: str) -> tuple[dict, str]:
     """ Handles the opening and close of the widget tile's sidebar """
-    if hamburger_clicked is None:
+    # if hamburger_clicked is None:
+    if callback_context.triggered_id is None or hamburger_clicked is None:
         raise PreventUpdate
     else:
         if 'fa-bars' in menu_class:
