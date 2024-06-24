@@ -1,3 +1,4 @@
+import json
 import math
 import numpy as np
 import pandas as pd
@@ -27,13 +28,16 @@ def is_categorical(series, threshold=0.05):
 
 @mui.app.callback(
     Output({'type': 'plot-menu-filter-container', 'index': MATCH}, 'children'),
+    Output({'parent-component': 'plot-control-panel', 'child-component': 'store', 'index': MATCH}, 'data'),
     Input({'type': 'independent-dropdown', 'index': MATCH}, 'value'),
     Input({'type': 'dependent-dropdown', 'index': MATCH}, 'value'),
     State({'type': 'independent-dropdown', 'index': MATCH}, 'options'),
-    State({'type': 'plot-menu-data-store', 'index': MATCH}, 'data'),
+    State({'parent-component': 'plot-menu-data', 'child-component': 'data-store', 'index': MATCH}, 'data'),
     State({'type': 'plot-menu-data-checklist', 'index': MATCH}, 'value'),
 )
 def populate_menu_filters(i_var, d_var, options, data, selected_files):
+    """ Populates the plot menu filters based on the user selected variables for plotting """
+
     # Prevent any updates until dropdowns get actual values
     no_values = np.logical_or(i_var is None, d_var is None)
     no_action = callback_context.triggered_id is None
@@ -87,9 +91,13 @@ def populate_menu_filters(i_var, d_var, options, data, selected_files):
                     if new_options['maximum'] > existing_options['maximum']:
                         existing_options['maximum'] = new_options['maximum']
 
-    uid = callback_context.triggered_id.index
-    return PlotMenuFilterItemComponent(
+    # Return items
+    filter_item = PlotMenuFilterItemComponent(
         categorical_filters=cat_filters,
         numerical_filters=num_filters,
-        index=uid
-    ).component
+        index=callback_context.triggered_id.index
+    )
+
+    cat_filters = {str(k): list(map(str, v)) for k, v in cat_filters.items()}
+
+    return filter_item.component, json.dumps(cat_filters)
