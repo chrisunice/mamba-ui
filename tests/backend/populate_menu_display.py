@@ -9,9 +9,10 @@ from mamba_ui.widgets.plots.base.menu.items.display import PlotMenuDisplayItemCo
 @mui.app.callback(
     Output({'type': 'plot-menu-display-container', 'index': MATCH}, 'children'),
     Input({'type': 'plot-menu-data-checklist', 'index': MATCH}, 'value'),
-    State({'type': 'plot-menu-data-store', 'index': MATCH}, 'data')
+    State({'parent-component': 'plot-menu-data', 'child-component': 'data-store', 'index': MATCH}, 'data')
 )
 def populate_menu_display(selected_files, data):
+    """ Populates the plot menu display item based on the selected data files """
     if callback_context.triggered_id is None:
         raise PreventUpdate
     elif not selected_files:
