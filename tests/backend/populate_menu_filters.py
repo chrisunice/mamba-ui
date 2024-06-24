@@ -7,7 +7,7 @@ from dash.exceptions import PreventUpdate
 from dash_extensions.enrich import Input, Output, State, MATCH
 
 import mamba_ui as mui
-from mamba_ui.widgets.plots.base.menu.items.filter import PlotMenuFilterItemComponent
+from mamba_ui.widgets.plots.base.menu.filter import PlotMenuFilterItemComponent
 
 
 def is_categorical(series, threshold=0.05):
@@ -28,7 +28,6 @@ def is_categorical(series, threshold=0.05):
 
 @mui.app.callback(
     Output({'type': 'plot-menu-filter-container', 'index': MATCH}, 'children'),
-    Output({'parent-component': 'plot-control-panel', 'child-component': 'store', 'index': MATCH}, 'data'),
     Input({'type': 'independent-dropdown', 'index': MATCH}, 'value'),
     Input({'type': 'dependent-dropdown', 'index': MATCH}, 'value'),
     State({'type': 'independent-dropdown', 'index': MATCH}, 'options'),
@@ -91,13 +90,8 @@ def populate_menu_filters(i_var, d_var, options, data, selected_files):
                     if new_options['maximum'] > existing_options['maximum']:
                         existing_options['maximum'] = new_options['maximum']
 
-    # Return items
-    filter_item = PlotMenuFilterItemComponent(
+    return PlotMenuFilterItemComponent(
         categorical_filters=cat_filters,
         numerical_filters=num_filters,
         index=callback_context.triggered_id.index
-    )
-
-    cat_filters = {str(k): list(map(str, v)) for k, v in cat_filters.items()}
-
-    return filter_item.component, json.dumps(cat_filters)
+    ).component
