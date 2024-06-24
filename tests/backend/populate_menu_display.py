@@ -3,7 +3,7 @@ from dash.exceptions import PreventUpdate
 from dash_extensions.enrich import Input, Output, State, MATCH
 
 import mamba_ui as mui
-from mamba_ui.widgets.plots.base.menu.items.display import PlotMenuDisplayItemComponent
+from mamba_ui.widgets.plots.base.menu.display import PlotMenuDisplayItemComponent
 
 
 @mui.app.callback(
