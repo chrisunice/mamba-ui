@@ -2,7 +2,6 @@ from dash import dcc, html
 import plotly.graph_objects as go
 
 from mamba_ui.components.base import BaseComponent
-from mamba_ui.widgets.plots.base.component.control_panel import PlotControlPanelComponent
 
 
 class LinearPlotComponent(BaseComponent):
@@ -58,8 +57,7 @@ class LinearPlotComponent(BaseComponent):
 
         return html.Div(
             children=[
-                self._graph,
-                PlotControlPanelComponent(self._index).component
+                self._graph
             ],
             style=component_style
         )
