@@ -6,11 +6,11 @@ from mamba_ui.components.base import BaseComponent
 from mamba_ui.components.submit_button_group import SubmitButtonGroupComponent
 
 # widget components
-from mamba_ui.widgets.plots.base.menu.items.data import PlotMenuDataItemComponent
-from mamba_ui.widgets.plots.base.menu.items.display import PlotMenuDisplayItemComponent
-from mamba_ui.widgets.plots.base.menu.items.filter import PlotMenuFilterItemComponent
-from mamba_ui.widgets.plots.base.menu.items.design import PlotMenuDesignItemComponent
-from mamba_ui.widgets.plots.base.menu.items.export import PlotMenuExportItemComponent
+from mamba_ui.widgets.plots.base.menu.data import PlotMenuDataItemComponent
+from mamba_ui.widgets.plots.base.menu.display import PlotMenuDisplayItemComponent
+from mamba_ui.widgets.plots.base.menu.filter import PlotMenuFilterItemComponent
+from mamba_ui.widgets.plots.base.menu.design import PlotMenuDesignItemComponent
+from mamba_ui.widgets.plots.base.menu.export import PlotMenuExportItemComponent
 
 
 class BasePlotMenuComponent(BaseComponent):
