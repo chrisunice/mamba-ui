@@ -13,8 +13,8 @@ import mamba_ui as mui
     Output({'type': 'linear-plot', 'index': MATCH}, 'figure', allow_duplicate=True),
     Input({'type': 'widget-submit-button', 'index': MATCH}, 'n_clicks'),
     [
-        State({'type': 'plot-menu-data-store', 'index': MATCH}, 'data'),        # data stored on the server
-        State({'type': 'plot-menu-data-checklist', 'index': MATCH}, 'value'),   # user selected data
+        State({'parent-component': 'plot-menu-data', 'child-component': 'data-store', 'index': MATCH}, 'data'),         # data stored on the server
+        State({'parent-component': 'plot-menu-data', 'child-component': 'selected-store', 'index': MATCH}, 'data'),     # user selected files
         State({'type': 'plot-menu-display-store', 'index': MATCH}, 'data'),     # parameters to display
         State({'type': 'plot-menu-filter-store', 'index': MATCH}, 'data'),      # filters to apply to data
         State({'type': 'linear-plot', 'index': MATCH}, 'figure'),               # existing figure to update
@@ -35,6 +35,7 @@ def plot_linear_data(
     # Convert JSON to dictionary
     parameters = json.loads(parameters)
     filters = json.loads(filters)
+    selected_files = json.loads(selected_files)
 
     # Apply the numerical filter to all the loaded data
     numerical_filters = {name: value for name, value in filters.items() if isinstance(value, dict)}
