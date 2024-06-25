@@ -7,11 +7,30 @@ from mamba_ui.grid import WidgetGridComponent
 
 
 @mui.app.callback(
-    Output('page-container', 'children'),
-    Input({'name': 'grid-shape-row', 'type': 'rows-input', 'index': ''}, 'value'),
-    Input({'name': 'grid-shape-row', 'type': 'columns-input', 'index': ''}, 'value'),
-    State('settings-window', 'is_open'),
-    State('grid-layout', 'children')
+    Output(
+        component_id='page-container',
+        component_property='children'
+    ),
+    [
+        Input(
+            component_id={'name': 'grid-shape-row', 'type': 'rows-input', 'index': ''},
+            component_property='value'
+        ),
+        Input(
+            component_id={'name': 'grid-shape-row', 'type': 'columns-input', 'index': ''},
+            component_property='value'
+        ),
+    ],
+    [
+        State(
+            component_id={'name': 'settings-window', 'index': ''},
+            component_property='is_open'
+        ),
+        State(
+            component_id={'name': 'widget-grid', 'type': 'layout', 'index': ''},
+            component_property='children'
+        )
+    ]
 )
 def update_grid_layout(nrows, ncols, settings_open, current_grid):
     # Do nothing if settings window is open
