@@ -8,23 +8,29 @@ from mamba_ui.components.base import BaseComponent
 
 
 class DropdownChecklistComponent(BaseComponent):
+
+    name = 'Dropdown Checklist'
+
     def __init__(self, name: str, options: list = None, index: str = ''):
         super().__init__()
         self.name = name
+
         if options is None:
             options = []
         self.options = options
 
         self.id = {
-            'parent-component': f'{self.name}-dropdown-checklist',
+            'parent': f'{self.name}-{self.uid}',
             'index': index
         }
 
     @property
     def _checklist(self):
         """ dbc.Checklist sub component """
+
         checklist_id = self.id.copy()
-        checklist_id.update({'child-component': 'checklist'})
+        checklist_id.update({'child': 'checklist'})
+
         return dbc.Checklist(
             id=checklist_id,
             options=self.options,
@@ -42,7 +48,7 @@ class DropdownChecklistComponent(BaseComponent):
         }
 
         item_id = self.id.copy()
-        item_id.update({'child-component': 'menu-item'})
+        item_id.update({'child': 'menu-item'})
 
         return dbc.DropdownMenuItem(
             className='dropdown-checklist-menu-item',
@@ -63,7 +69,7 @@ class DropdownChecklistComponent(BaseComponent):
         }
 
         menu_id = self.id.copy()
-        menu_id.update({'child-component': 'menu'})
+        menu_id.update({'child': 'menu'})
 
         return dbc.DropdownMenu(
             id=menu_id,
@@ -77,8 +83,8 @@ class DropdownChecklistComponent(BaseComponent):
 
 
 @app.callback(
-    Output({'parent-component': ALL, 'child-component': 'menu', 'index': MATCH}, 'label'),
-    Input({'parent-component': ALL, 'child-component': 'checklist', 'index': MATCH}, 'value')
+    Output({'parent': ALL, 'child': 'menu', 'index': MATCH}, 'label'),
+    Input({'parent': ALL, 'child': 'checklist', 'index': MATCH}, 'value')
 )
 def update_dropdown_label(updates: list) -> list:
     if callback_context.triggered_id is None:
@@ -96,6 +102,9 @@ def update_dropdown_label(updates: list) -> list:
             if num_selections == 0:
                 # zero items selected
                 new_updates.append(default_value)
+            elif num_selections == 1:
+                # display the selection
+                new_updates.append(update)
             else:
                 # multiple items selected
                 new_updates.append(f'{num_selections} selected')
