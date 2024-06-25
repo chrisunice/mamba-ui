@@ -5,9 +5,11 @@ from mamba_ui.components.base import BaseComponent
 
 
 class PolarPlotComponent(BaseComponent):
-    def __init__(self, _index: str = ""):
-        super().__init__()
-        self._index = _index
+
+    name = 'Polar Plot'
+
+    def __init__(self, index: str, name: str = None):
+        super().__init__(name=name, index=index)
 
     @property
     def component(self) -> dcc.Graph:
@@ -44,7 +46,7 @@ class PolarPlotComponent(BaseComponent):
         )
 
         return dcc.Graph(
-            id={'type': 'polar-plot', 'index': self._index},
+            id=self.id,
             figure=go.Figure(
                 data=go.Scatterpolar({'r': None, 'theta': None}),
                 layout=polar_layout

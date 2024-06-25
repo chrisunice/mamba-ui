@@ -6,19 +6,15 @@ from mamba_ui.widgets.plots.polar.menu import PolarPlotMenuComponent
 
 class PolarPlotWidget(BaseWidget):
 
-    widget_name = 'Polar Plot'
+    name = 'Polar Plot Widget'
 
-    def __init__(self, index: str = ""):
-        """
-
-        :param index:
-        """
-        super().__init__(index)
+    def __init__(self, index: str, name: str = None):
+        super().__init__(index=index, name=name)
 
     @property
     def component(self):
-        return PolarPlotComponent(self.index).component
+        return PolarPlotComponent(index=self.id.get('index')).component
 
     @property
     def menu(self):
-        return PolarPlotMenuComponent(self.index).component
+        return PolarPlotMenuComponent(index=self.id.get('index')).component
