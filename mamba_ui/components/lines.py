@@ -8,12 +8,12 @@ class LineComponent(BaseComponent, ABC):
 
     weights = {'sm': '1px', 'md': '2.5px', 'lg': '4px'}
 
-    def __init__(self, weight_name: str):
-        super().__init__()
+    def __init__(self, weight_name: str, name: str = None, index: str = None):
+        super().__init__(name, index)
         try:
             self.weight_px = self.weights[weight_name]
         except KeyError:
-            raise KeyError(f"Valid inputs are {list(self.weights.keys())}. Received {self.weight_name}")
+            raise KeyError(f"Valid inputs are {list(self.weights.keys())}. Received {weight_name}")
         else:
             self.weight_name = weight_name
 
@@ -25,8 +25,10 @@ class LineComponent(BaseComponent, ABC):
 
 class HorizontalLineComponent(LineComponent):
 
-    def __init__(self, weight: str = 'sm'):
-        super().__init__(weight)
+    name = 'Horizontal Line'
+
+    def __init__(self, weight: str = 'sm', name: str = None, index: str = None):
+        super().__init__(weight, name, index)
 
     @property
     def component(self) -> html.Hr:
@@ -36,12 +38,15 @@ class HorizontalLineComponent(LineComponent):
             'height': self.weight_px
         }
 
-        return html.Hr(style=horizontal_style)
+        return html.Hr(id=self.id, style=horizontal_style)
 
 
 class VerticalLineComponent(LineComponent):
-    def __init__(self, weight: str = 'sm'):
-        super().__init__(weight)
+
+    name = 'Vertical Line'
+
+    def __init__(self, weight: str = 'sm', name: str = None, index: str = None):
+        super().__init__(weight, name, index)
 
     @property
     def component(self):
@@ -51,4 +56,4 @@ class VerticalLineComponent(LineComponent):
             'height': 'auto',
         }
 
-        return html.Hr(style=vertical_style)
+        return html.Hr(id=self.id, style=vertical_style)

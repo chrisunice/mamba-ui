@@ -3,13 +3,13 @@ from mamba_ui.components.base import BaseComponent
 
 
 class ChecklistComponent(BaseComponent):
-    def __init__(self, name, options: list = None, index: str = ''):
-        super().__init__()
-        self.name = name
-        if options is None:
-            options = []
+
+    name = 'Checklist'
+
+    def __init__(self, options: list, name: str = None, index: str = None):
+        """ Generic checklist component with custom styling """
+        super().__init__(name, index)
         self.options = options
-        self.index = index
 
     @property
     def component(self) -> dcc.Checklist:
@@ -31,7 +31,7 @@ class ChecklistComponent(BaseComponent):
         }
 
         return dcc.Checklist(
-            id={'type': f'{self.name}-checklist', 'index': self.index},
+            id=self.id,
             options=self.options,
             style=checklist_style,
             inputStyle=input_style,

@@ -2,8 +2,8 @@ from dash import dcc, html
 import dash_bootstrap_components as dbc
 
 from mamba_ui.components.base import BaseComponent
-from mamba_ui.settings.themes import ThemeDropdownRow
-from mamba_ui.settings.gridshape import GridShapeRow
+from mamba_ui.settings.themes import ThemeDropdownRowComponent
+from mamba_ui.settings.gridshape import GridShapeRowComponent
 from mamba_ui.components.lines import HorizontalLineComponent
 
 
@@ -28,10 +28,10 @@ class SettingsWindow(BaseComponent):
 
         return dbc.ModalBody(
             children=[
-                ThemeDropdownRow,
-                HorizontalLineComponent('sm').component,
-                GridShapeRow,
-                HorizontalLineComponent('sm').component
+                ThemeDropdownRowComponent().component,
+                HorizontalLineComponent('sm', index='0').component,
+                GridShapeRowComponent().component,
+                HorizontalLineComponent('sm', index='1').component
             ],
             style=body_style
         )

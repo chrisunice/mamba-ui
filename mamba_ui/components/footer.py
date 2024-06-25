@@ -5,9 +5,12 @@ from mamba_ui import config
 from mamba_ui.components.base import BaseComponent
 
 
-class Footer(BaseComponent):
-    def __init__(self):
-        super().__init__()
+class FooterComponent(BaseComponent):
+
+    name = 'Footer'
+
+    def __init__(self, name: str = None, index: str = None):
+        super().__init__(name, index)
 
     @property
     def component(self) -> html.Footer:
@@ -19,6 +22,7 @@ class Footer(BaseComponent):
         }
 
         return html.Footer(
+            id=self.id,
             children=[
                 html.Span(),
                 html.Span(f'© {datetime.now().year} Denmar Technical Services, Inc. All rights reserved.'),

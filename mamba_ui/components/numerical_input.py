@@ -8,35 +8,30 @@ from mamba_ui.widgets.base import BaseComponent
 
 
 class NumericalInputComponent(BaseComponent):
+
+    name = 'Numerical Input'
+
     def __init__(
             self,
-            name: str,
             minimum: int | float,
             maximum: int | float,
             step: int | float,
-            index: str = ''
+            name: str = None,
+            index: str = None
     ):
-        super().__init__()
-        self.name = name
+        super().__init__(name, index)
         self.minimum = minimum
         self.maximum = maximum
         self.step = step
-        self.id = {
-            'parent': f'{self.name}-numerical-input',
-            'index': index
-        }
 
     def _build_input(self, name) -> dcc.Input:
-        input_id = self.id.copy()
-        input_id.update({'child': f'{name}-input'})
-
         input_style = {
             'display': 'flex',
             'margin': '0px 10px'
         }
 
         return dcc.Input(
-            id=input_id,
+            id=self.get_child_id(f'{name}-input'),
             type='number',
             debounce=True,
             min=self.minimum,
@@ -73,12 +68,6 @@ class NumericalInputComponent(BaseComponent):
     @property
     def _row2(self):
 
-        switch_id = self.id.copy()
-        switch_id.update({'child': 'switch'})
-
-        label_id = self.id.copy()
-        label_id.update({'child': 'switch-label'})
-
         row_style = {
             'display': 'flex',
             'flexWrap': 'wrap',
@@ -88,14 +77,14 @@ class NumericalInputComponent(BaseComponent):
         }
 
         label = html.Label(
-            children=['Inclusive'],
-            id=label_id
+            id=self.get_child_id('switch-label'),
+            children=['Inclusive']
         )
 
         switch = dbc.Switch(
+            id=self.get_child_id('switch'),
             value=True,
             style={'margin': 0},
-            id=switch_id
         )
 
         return html.Div(
@@ -113,6 +102,7 @@ class NumericalInputComponent(BaseComponent):
         }
 
         return html.Div(
+            id=self.id,
             children=[
                 self._row1,
                 self._row2
@@ -122,8 +112,8 @@ class NumericalInputComponent(BaseComponent):
 
 
 @app.callback(
-    Output({'parent': ALL, 'child': 'switch-label', 'index': MATCH}, 'children'),
-    Input({'parent': ALL, 'child': 'switch', 'index': MATCH}, 'value')
+    Output({'name': ALL, 'type': 'switch-label', 'index': MATCH}, 'children'),
+    Input({'name': ALL, 'type': 'switch', 'index': MATCH}, 'value')
 )
 def update_switch_label(switch_values):
     if callback_context.triggered_id is None:

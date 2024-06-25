@@ -11,28 +11,16 @@ class DropdownChecklistComponent(BaseComponent):
 
     name = 'Dropdown Checklist'
 
-    def __init__(self, name: str, options: list = None, index: str = ''):
-        super().__init__()
-        self.name = name
-
-        if options is None:
-            options = []
+    def __init__(self, options: list, name: str = None, index: str = None, ):
+        super().__init__(name, index)
         self.options = options
-
-        self.id = {
-            'parent': f'{self.name}-{self.uid}',
-            'index': index
-        }
 
     @property
     def _checklist(self):
         """ dbc.Checklist sub component """
 
-        checklist_id = self.id.copy()
-        checklist_id.update({'child': 'checklist'})
-
         return dbc.Checklist(
-            id=checklist_id,
+            id=self.get_child_id('checklist'),
             options=self.options,
             className='dropdown-checklist-checklist'
         )
@@ -47,12 +35,9 @@ class DropdownChecklistComponent(BaseComponent):
             'width': '100%',
         }
 
-        item_id = self.id.copy()
-        item_id.update({'child': 'menu-item'})
-
         return dbc.DropdownMenuItem(
             className='dropdown-checklist-menu-item',
-            id=item_id,
+            id=self.get_child_id('menu-item'),
             children=[self._checklist],
             toggle=False,
             style=style
@@ -68,11 +53,8 @@ class DropdownChecklistComponent(BaseComponent):
             'width': '100%',
         }
 
-        menu_id = self.id.copy()
-        menu_id.update({'child': 'menu'})
-
         return dbc.DropdownMenu(
-            id=menu_id,
+            id=self.get_child_id('menu'),
             children=[
                 self._dropdown_item
             ],
@@ -83,8 +65,8 @@ class DropdownChecklistComponent(BaseComponent):
 
 
 @app.callback(
-    Output({'parent': ALL, 'child': 'menu', 'index': MATCH}, 'label'),
-    Input({'parent': ALL, 'child': 'checklist', 'index': MATCH}, 'value')
+    Output({'name': ALL, 'type': 'menu', 'index': MATCH}, 'label'),
+    Input({'name': ALL, 'type': 'checklist', 'index': MATCH}, 'value')
 )
 def update_dropdown_label(updates: list) -> list:
     if callback_context.triggered_id is None:

@@ -6,37 +6,35 @@ from mamba_ui.components.base import BaseComponent
 
 class SubmitButtonGroupComponent(BaseComponent):
 
-    def __init__(self, name: str, index: str = ''):
-        """
-        :param name: unique identifier for the component
-        :param index:
-        """
-        super().__init__()
-        self.name = name
-        self.index = index
+    name = 'Submit Button Group'
+
+    def __init__(self, name: str = None, index: str = None):
+        super().__init__(name, index)
 
     @property
     def _submit_button(self) -> dbc.Button:
+
         submit_style = {
             'width': '60%'
         }
 
         return dbc.Button(
-            html.Label('Submit'),
-            id={'type': f'{self.name}-submit-button', 'index': self.index},
+            id=self.get_child_id('submit'),
+            children=[html.Label('Submit')],
             color='primary',
             style=submit_style
         )
 
     @property
     def _reset_button(self) -> dbc.Button:
-        reset_style ={
+
+        reset_style = {
             'width': '35%'
         }
 
         return dbc.Button(
-            html.Label('Reset'),
-            id={'type': f'{self.name}-reset-button', 'index': self.index},
+            id=self.get_child_id('reset'),
+            children=[html.Label('Reset')],
             color='secondary',
             style=reset_style
         )
@@ -61,6 +59,7 @@ class SubmitButtonGroupComponent(BaseComponent):
         }
 
         return html.Div(
+            id=self.id,
             children=[
                 html.Div(
                     children=[self._submit_button, self._reset_button],
