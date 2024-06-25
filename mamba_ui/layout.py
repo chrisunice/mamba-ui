@@ -1,7 +1,7 @@
 from dash import html, dcc
 
-from mamba_ui.components.navbar import NavBarComponent
-from mamba_ui.components.footer import Footer
+from mamba_ui.components.navbar import NavbarComponent
+from mamba_ui.components.footer import FooterComponent
 from mamba_ui.grid import WidgetGridComponent
 
 
@@ -26,9 +26,9 @@ def serve_layout():
             dcc.Location(id='url', refresh=True),
             dcc.Store(id='session-store', storage_type='session'),
             html.Link(id='external-stylesheet', rel='stylesheet', href=''),
-            NavBarComponent().component,
+            NavbarComponent().component,
             html.Div(WidgetGridComponent().component, id='page-container', style=container_styles),
-            Footer().component,
+            FooterComponent().component,
         ],
         style=app_styles
     )
