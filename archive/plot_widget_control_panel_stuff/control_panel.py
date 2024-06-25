@@ -18,7 +18,7 @@ class PlotControlPanelComponent(BaseComponent):
     def __init__(self, index: str = ''):
         super().__init__()
         self.id = {
-            'parent': self.uid,
+            'parent': self.html_name,
             'index': index
         }
 

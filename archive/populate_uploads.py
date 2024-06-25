@@ -7,7 +7,8 @@ from mamba_ui import config
 
 
 @du.callback(
-    Output({'type': 'plot-menu-data-checklist', 'index': MATCH}, 'options'),
+    # Output({'type': 'plot-menu-data-checklist', 'index': MATCH}, 'options'),
+    Output({'type': 'plot-menu-data', 'parent': 'dropdown-checklist', 'child': 'checklist', 'index': MATCH}, 'options'),
     id={'type': 'plot-menu-data-upload', 'index': MATCH},
 )
 def populate_uploads(status):
