@@ -26,7 +26,7 @@ class WidgetGridContainerComponent(BaseComponent):
             id=self.id,
             className='bg-transparent',
             children=[
-                WidgetGridIconComponent(self.id.get('index')).component
+                WidgetGridIconComponent(index=self.id.get('index')).component
             ],
             style=container_style
         )
