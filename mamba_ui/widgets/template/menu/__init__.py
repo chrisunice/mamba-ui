@@ -7,22 +7,13 @@ class TemplateExampleMenuComponent(BaseComponent):
 
     name = 'Template Example Menu'
 
-    def __init__(self, index: str = ""):
-        super().__init__()
-        self.id = {
-            'parent': self.uid,     # template-example-menu
-            'index': index
-        }
+    def __init__(self, index: str, name: str = None):
+        super().__init__(name=name, index=index)
 
     @property
     def component(self) -> html.Div:
 
-        component_id = self.id.copy()
-        component_id.update(
-            {'child': 'menu'}
-        )
-
         return html.Div(
-            id=component_id,
+            id=self.get_child_id('menu'),
             children=['Template Widget Menu Component']
         )
