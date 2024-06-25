@@ -13,8 +13,8 @@ import mamba_ui as mui
     Output({'type': 'linear-plot', 'index': MATCH}, 'figure', allow_duplicate=True),
     Input({'type': 'widget-submit-button', 'index': MATCH}, 'n_clicks'),
     [
-        State({'parent-component': 'plot-menu-data', 'child-component': 'data-store', 'index': MATCH}, 'data'),         # data stored on the server
-        State({'parent-component': 'plot-menu-data', 'child-component': 'selected-store', 'index': MATCH}, 'data'),     # user selected files
+        State({'parent': 'plot-menu-data', 'child': 'data-store', 'index': MATCH}, 'data'),         # data stored on the server
+        State({'parent': 'plot-menu-data', 'child': 'selected-store', 'index': MATCH}, 'data'),     # user selected files
         State({'type': 'plot-menu-display-store', 'index': MATCH}, 'data'),     # parameters to display
         State({'type': 'plot-menu-filter-store', 'index': MATCH}, 'data'),      # filters to apply to data
         State({'type': 'linear-plot', 'index': MATCH}, 'figure'),               # existing figure to update

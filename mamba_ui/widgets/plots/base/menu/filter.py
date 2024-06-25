@@ -111,10 +111,10 @@ class PlotMenuFilterItemComponent(BaseComponent):
 
 @app.callback(
     Output({'type': 'plot-menu-filter-store', 'index': MATCH}, 'data'),
-    Input({'parent-component': ALL, 'child-component': 'checklist', 'index': MATCH}, 'value'),
-    Input({'parent-component': ALL, 'child-component': 'min-input', 'index': MATCH}, 'value'),
-    Input({'parent-component': ALL, 'child-component': 'max-input', 'index': MATCH}, 'value'),
-    Input({'parent-component': ALL, 'child-component': 'switch', 'index': MATCH}, 'value')
+    Input({'parent': ALL, 'child': 'checklist', 'index': MATCH}, 'value'),
+    Input({'parent': ALL, 'child': 'min-input', 'index': MATCH}, 'value'),
+    Input({'parent': ALL, 'child': 'max-input', 'index': MATCH}, 'value'),
+    Input({'parent': ALL, 'child': 'switch', 'index': MATCH}, 'value')
 )
 def store_filters(*_):
     ctx = callback_context
@@ -124,20 +124,20 @@ def store_filters(*_):
     filters = {}
     for info, value in ctx.inputs.items():
         component_id = json.loads(info.rstrip('.value'))
-        filter_name = component_id['parent-component'].split('-')[0]
-        if component_id['child-component'] == 'checklist':
+        filter_name = component_id['parent'].split('-')[0]
+        if component_id['child'] == 'checklist':
             filters[filter_name] = value
-        elif component_id['child-component'] == 'min-input':
+        elif component_id['child'] == 'min-input':
             try:
                 filters[filter_name].update({'min': value})
             except KeyError:
                 filters[filter_name] = {'min': value}
-        elif component_id['child-component'] == 'max-input':
+        elif component_id['child'] == 'max-input':
             try:
                 filters[filter_name].update({'max': value})
             except KeyError:
                 filters[filter_name] = {'max': value}
-        elif component_id['child-component'] == 'switch':
+        elif component_id['child'] == 'switch':
             try:
                 filters[filter_name].update({'inclusive': value})
             except KeyError:

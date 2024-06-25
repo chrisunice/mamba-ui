@@ -12,7 +12,7 @@ class PlotMenuDesignItemComponent(BaseComponent):
         super().__init__()
         self.index = index
         self.id = {
-            'parent-component': self.uid,
+            'parent': self.uid,
             'index': self.index
         }
 

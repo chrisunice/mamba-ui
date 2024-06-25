@@ -5,5 +5,5 @@
 #
 # @mui.app.callback(
 #     # Output(),
-#     Input({'parent-component': 'plot-control-panel', 'child-component': 'category-dropdown'})
+#     Input({'parent': 'plot-control-panel', 'child': 'category-dropdown'})
 # )

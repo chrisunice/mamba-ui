@@ -22,7 +22,7 @@ class PlotMenuDataItemComponent(BaseComponent):
         super().__init__()
         self.index = index
         self.id = {
-            'parent-component': self.uid,
+            'parent': self.uid,
             'index': index
         }
 
@@ -30,21 +30,21 @@ class PlotMenuDataItemComponent(BaseComponent):
     def _data_store(self):
         """ To store the data server side """
         store_id = self.id.copy()
-        store_id.update({'child-component': 'data-store'})
+        store_id.update({'child': 'data-store'})
         return dcc.Store(id=store_id, storage_type='session')
 
     @property
     def _selected_store(self):
         """ To store which of the loaded files has been selected by the user """
         store_id = self.id.copy()
-        store_id.update({'child-component': 'selected-store'})
+        store_id.update({'child': 'selected-store'})
         return dcc.Store(id=store_id, storage_type='memory')
 
     @property
     def _upload(self) -> html.Div:
         """ The dash uploader Upload component """
         upload_id = self.id.copy()
-        upload_id.update({'child-component': 'upload'})
+        upload_id.update({'child': 'upload'})
 
         upload_style = {
             'fontSize': 'larger'
@@ -72,10 +72,10 @@ class PlotMenuDataItemComponent(BaseComponent):
 
 
 @app.callback(
-    ServersideOutput({'parent-component': 'plot-menu-data', 'child-component': 'data-store', 'index': MATCH}, 'data'),
-    Input({'parent-component': 'plot-menu-data', 'child-component': 'upload', 'index': MATCH}, 'isCompleted'),
-    State({'parent-component': 'plot-menu-data', 'child-component': 'upload', 'index': MATCH}, 'fileNames'),
-    State({'parent-component': 'plot-menu-data', 'child-component': 'data-store', 'index': MATCH}, 'data')
+    ServersideOutput({'parent': 'plot-menu-data', 'child': 'data-store', 'index': MATCH}, 'data'),
+    Input({'parent': 'plot-menu-data', 'child': 'upload', 'index': MATCH}, 'isCompleted'),
+    State({'parent': 'plot-menu-data', 'child': 'upload', 'index': MATCH}, 'fileNames'),
+    State({'parent': 'plot-menu-data', 'child': 'data-store', 'index': MATCH}, 'data')
 )
 def store_data(is_complete: bool, files: list[str], data: None | dict):
     if not is_complete:
@@ -94,7 +94,7 @@ def store_data(is_complete: bool, files: list[str], data: None | dict):
 
 @app.callback(
     Output({'type': 'plot-menu-data-checklist', 'index': MATCH}, 'options'),
-    Input({'parent-component': 'plot-menu-data', 'child-component': 'data-store', 'index': MATCH}, 'data'),
+    Input({'parent': 'plot-menu-data', 'child': 'data-store', 'index': MATCH}, 'data'),
     Trigger('dash-layout', 'children')
 )
 def populate_checklist(data: dict):
@@ -105,7 +105,7 @@ def populate_checklist(data: dict):
 
 
 @app.callback(
-    Output({'parent-component': 'plot-menu-data', 'child-component': 'selected-store', 'index': MATCH}, 'data'),
+    Output({'parent': 'plot-menu-data', 'child': 'selected-store', 'index': MATCH}, 'data'),
     Input({'type': 'plot-menu-data-checklist', 'index': MATCH}, 'value')
 )
 def store_user_selection(selected_files: list):

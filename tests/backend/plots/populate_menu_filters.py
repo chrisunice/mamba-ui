@@ -31,7 +31,7 @@ def is_categorical(series, threshold=0.05):
     Input({'type': 'independent-dropdown', 'index': MATCH}, 'value'),
     Input({'type': 'dependent-dropdown', 'index': MATCH}, 'value'),
     State({'type': 'independent-dropdown', 'index': MATCH}, 'options'),
-    State({'parent-component': 'plot-menu-data', 'child-component': 'data-store', 'index': MATCH}, 'data'),
+    State({'parent': 'plot-menu-data', 'child': 'data-store', 'index': MATCH}, 'data'),
     State({'type': 'plot-menu-data-checklist', 'index': MATCH}, 'value'),
 )
 def populate_menu_filters(i_var, d_var, options, data, selected_files):

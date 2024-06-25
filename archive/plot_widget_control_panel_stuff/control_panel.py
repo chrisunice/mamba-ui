@@ -18,20 +18,20 @@ class PlotControlPanelComponent(BaseComponent):
     def __init__(self, index: str = ''):
         super().__init__()
         self.id = {
-            'parent-component': self.uid,
+            'parent': self.uid,
             'index': index
         }
 
     @property
     def _store(self):
         store_id = self.id.copy()
-        store_id.update({'child-component': 'store'})
+        store_id.update({'child': 'store'})
         return dcc.Store(id=store_id, storage_type='memory')
 
     def _build_icon(self, side: str):
         icon_id = self.id.copy()
         icon_id.update(
-            {'child-component': f'arrow-{side}'}
+            {'child': f'arrow-{side}'}
         )
 
         icon_style = {}
@@ -45,7 +45,7 @@ class PlotControlPanelComponent(BaseComponent):
     def _build_dropdown(self, name: str):
         dropdown_id = self.id.copy()
         dropdown_id.update(
-            {'child-component': f'{name}-dropdown'}
+            {'child': f'{name}-dropdown'}
         )
 
         dropdown_style = {
@@ -88,8 +88,8 @@ class PlotControlPanelComponent(BaseComponent):
 
 
 @app.callback(
-    Output({'parent-component': 'plot-control-panel', 'child-component': 'category-dropdown', 'index': MATCH}, 'options'),
-    Input({'parent-component': 'plot-control-panel', 'child-component': 'store', 'index': MATCH}, 'data')
+    Output({'parent': 'plot-control-panel', 'child': 'category-dropdown', 'index': MATCH}, 'options'),
+    Input({'parent': 'plot-control-panel', 'child': 'store', 'index': MATCH}, 'data')
 )
 def update_category_dropdown(control_panel_store: str):
     if control_panel_store is None:
@@ -102,9 +102,9 @@ def update_category_dropdown(control_panel_store: str):
 
 
 @app.callback(
-    Output({'parent-component': 'plot-control-panel', 'child-component': 'value-dropdown', 'index': MATCH}, 'options'),
-    Input({'parent-component': 'plot-control-panel', 'child-component': 'category-dropdown', 'index': MATCH}, 'value'),
-    Input({'parent-component': 'plot-control-panel', 'child-component': 'store', 'index': MATCH}, 'data')
+    Output({'parent': 'plot-control-panel', 'child': 'value-dropdown', 'index': MATCH}, 'options'),
+    Input({'parent': 'plot-control-panel', 'child': 'category-dropdown', 'index': MATCH}, 'value'),
+    Input({'parent': 'plot-control-panel', 'child': 'store', 'index': MATCH}, 'data')
 )
 def update_value_dropdown(selected_category, control_panel_store: str):
     if selected_category is None:

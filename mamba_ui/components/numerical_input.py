@@ -22,13 +22,13 @@ class NumericalInputComponent(BaseComponent):
         self.maximum = maximum
         self.step = step
         self.id = {
-            'parent-component': f'{self.name}-numerical-input',
+            'parent': f'{self.name}-numerical-input',
             'index': index
         }
 
     def _build_input(self, name) -> dcc.Input:
         input_id = self.id.copy()
-        input_id.update({'child-component': f'{name}-input'})
+        input_id.update({'child': f'{name}-input'})
 
         input_style = {
             'display': 'flex',
@@ -74,10 +74,10 @@ class NumericalInputComponent(BaseComponent):
     def _row2(self):
 
         switch_id = self.id.copy()
-        switch_id.update({'child-component': 'switch'})
+        switch_id.update({'child': 'switch'})
 
         label_id = self.id.copy()
-        label_id.update({'child-component': 'switch-label'})
+        label_id.update({'child': 'switch-label'})
 
         row_style = {
             'display': 'flex',
@@ -122,8 +122,8 @@ class NumericalInputComponent(BaseComponent):
 
 
 @app.callback(
-    Output({'parent-component': ALL, 'child-component': 'switch-label', 'index': MATCH}, 'children'),
-    Input({'parent-component': ALL, 'child-component': 'switch', 'index': MATCH}, 'value')
+    Output({'parent': ALL, 'child': 'switch-label', 'index': MATCH}, 'children'),
+    Input({'parent': ALL, 'child': 'switch', 'index': MATCH}, 'value')
 )
 def update_switch_label(switch_values):
     if callback_context.triggered_id is None:
