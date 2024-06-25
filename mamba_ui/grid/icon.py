@@ -1,10 +1,14 @@
 from dash import html
 import dash_bootstrap_components as dbc
 
+from mamba_ui import config
 from mamba_ui.components.base import BaseComponent
 from mamba_ui.widgets.plots.polar import PolarPlotWidget
 from mamba_ui.widgets.plots.linear import LinearPlotWidget
 from mamba_ui.widgets.imagery.viewer import ImageryViewerWidget
+
+if config['run_mode'] == 'development':
+    from mamba_ui.widgets.template import TemplateExampleWidget
 
 
 class WidgetGridIconComponent(BaseComponent):
@@ -43,15 +47,22 @@ class WidgetGridIconComponent(BaseComponent):
             style=menu_label_style
         )
 
+        menu_items = [
+            self._create_menu_item(LinearPlotWidget.name),
+            self._create_menu_item(PolarPlotWidget.name),
+            self._create_menu_item(ImageryViewerWidget.name)
+        ]
+
+        if config['run_mode'] == 'development':
+            menu_items.append(
+                self._create_menu_item(TemplateExampleWidget.name)
+            )
+
         return dbc.DropdownMenu(
             id=self.get_child_id('dropdown-menu'),
             className='widget-dropdown-menu',
             label=menu_label,
-            children=[
-                self._create_menu_item(LinearPlotWidget.name),
-                self._create_menu_item(PolarPlotWidget.name),
-                self._create_menu_item(ImageryViewerWidget.name)
-            ],
+            children=menu_items,
             size='lg',
             toggle_style={
                 'background': 'transparent',
