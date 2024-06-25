@@ -5,11 +5,11 @@ from mamba_ui.components.base import BaseComponent
 
 class BaseWidget(BaseComponent):
 
-    widget_name: str = 'base'
+    name = 'Base Widget'
 
-    def __init__(self, index: str):
-        super().__init__()
-        self.index = index
+    def __init__(self, index: str, name: str = None):
+        """ Wrapper for BaseComponent that adds menu as a mandatory property just like component """
+        super().__init__(name=name, index=index)
 
     @property
     @abstractmethod
