@@ -8,9 +8,23 @@ from mamba_ui.widgets.imagery.viewer import ImageryViewerWidget
 
 
 class WidgetGridIconComponent(BaseComponent):
-    def __init__(self, index: str = ""):
-        super().__init__()
-        self.index = index
+
+    name = 'Widget Icon'
+
+    def __init__(self, name: str = None, index: str = None):
+        super().__init__(name, index)
+
+    def _create_menu_item(self, widget_name: str) -> dbc.DropdownMenuItem:
+        """ Converts a widget to a menu item"""
+        widget_name = widget_name.replace('Widget', '')
+
+        html_name = '-'.join(widget_name.lower().split())
+        html_name = html_name + '-option'                   # i.e. linear-plot-option
+
+        return dbc.DropdownMenuItem(
+            widget_name,
+            id=self.get_child_id(html_name)     # {'name': 'widget-icon', 'type': 'linear-plot-option', 'index': ''}
+        )
 
     @property
     def component(self) -> dbc.DropdownMenu:
@@ -30,13 +44,13 @@ class WidgetGridIconComponent(BaseComponent):
         )
 
         return dbc.DropdownMenu(
-            id={'type': 'widget-dropdown-menu', 'index': self.index},
+            id=self.get_child_id('dropdown-menu'),
             className='widget-dropdown-menu',
             label=menu_label,
             children=[
-                self.create_menu_item(LinearPlotWidget.widget_name),
-                self.create_menu_item(PolarPlotWidget.widget_name),
-                self.create_menu_item(ImageryViewerWidget.widget_name)
+                self._create_menu_item(LinearPlotWidget.name),
+                self._create_menu_item(PolarPlotWidget.name),
+                self._create_menu_item(ImageryViewerWidget.name)
             ],
             size='lg',
             toggle_style={
@@ -49,10 +63,4 @@ class WidgetGridIconComponent(BaseComponent):
             }
         )
 
-    def create_menu_item(self, widget_name: str) -> dbc.DropdownMenuItem:
-        """ Converts a widget to a menu item"""
-        widget_type = '-'.join(widget_name.lower().split())
-        return dbc.DropdownMenuItem(
-            widget_name,
-            id={'type': f'{widget_type}-option', 'index': self.index}
-        )
+

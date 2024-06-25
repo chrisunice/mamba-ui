@@ -5,9 +5,11 @@ from mamba_ui.grid.icon import WidgetGridIconComponent
 
 
 class WidgetGridContainerComponent(BaseComponent):
-    def __init__(self, index: str = ""):
-        super().__init__()
-        self.index = index
+
+    name = 'Widget Container'
+
+    def __init__(self, name: str = None, index: str = None):
+        super().__init__(name, index)
 
     @property
     def component(self) -> html.Div:
@@ -21,8 +23,10 @@ class WidgetGridContainerComponent(BaseComponent):
         }
 
         return html.Div(
-            id={'type': 'widget-container', 'index': self.index},
+            id=self.id,
             className='bg-transparent',
-            children=[WidgetGridIconComponent(self.index).component],
+            children=[
+                WidgetGridIconComponent(self.id.get('index')).component
+            ],
             style=container_style
         )

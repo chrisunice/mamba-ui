@@ -9,8 +9,24 @@ from mamba_ui.utils.component2json import component2json
 
 class WidgetGridComponent(BaseComponent):
 
-    def __init__(self, shape: tuple = (1, 1), widgets: list[dict] = None):
-        super().__init__()
+    name = 'Widget Grid'
+
+    def __init__(
+            self,
+            shape: tuple = (1, 1),
+            widgets: list[dict] = None,
+            name: str = None,
+            index: str = None,
+    ):
+        """
+        Widget grid component that contains various widget grid tiles
+
+        :param shape: shape of the widget grid; default is 1x1
+        :param widgets: a list of widgets (dash components) in json format
+        :param name: the name of the widget grid that is passed to BaseComponent
+        :param index: a unique identifier for the widget grid that is passed to BaseComponent
+        """
+        super().__init__(name, index)
 
         # Handle arguments
         self.shape = shape
@@ -67,11 +83,19 @@ class WidgetGridComponent(BaseComponent):
                 row_children.append(widget)
 
             # Store in grid
-            grid_children.append(html.Div(id=f'grid-row-{i}', children=row_children, style=row_style))
+            row = html.Div(
+                id=self.get_child_id(f'row-{i}'),       # name: widget-grid, type: row-i
+                children=row_children,
+                style=row_style
+            )
+            grid_children.append(row)
 
         # Store in layout
-        grid = dbc.Row(id='grid-layout', children=grid_children, style=grid_style)
-        return grid
+        return dbc.Row(
+            id=self.get_child_id('layout'),             # name: widget-grid, type: layout
+            children=grid_children,
+            style=grid_style
+        )
 
     def add_widgets(self) -> list:
         """ Appending more widgets to the list of existing widgets """

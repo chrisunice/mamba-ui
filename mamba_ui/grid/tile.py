@@ -1,16 +1,18 @@
 from dash import html
 
 from mamba_ui.components.base import BaseComponent
-from mamba_ui.grid.menu import WidgetGridMenuComponent
+from mamba_ui.grid.menu import WidgetGridMenubarComponent
 from mamba_ui.grid.sidebar import WidgetGridSidebarComponent
 from mamba_ui.grid.container import WidgetGridContainerComponent
 
 
 class WidgetGridTileComponent(BaseComponent):
-    def __init__(self, index: str = ""):
+
+    name = 'Widget Grid Tile'
+
+    def __init__(self, name: str = None, index: str = None):
         """ The entire tile in the widget grid which includes the menu bar and the widget container"""
-        super().__init__()
-        self.index = index
+        super().__init__(name, index)
 
     @property
     def component(self) -> html.Div:
@@ -30,15 +32,18 @@ class WidgetGridTileComponent(BaseComponent):
             'position': 'relative',
         }
 
-        menu = WidgetGridMenuComponent(self.index)
+        index = self.id.get('index')
+        menubar = WidgetGridMenubarComponent(index=index)
+        sidebar = WidgetGridSidebarComponent(top_offset=menubar.min_height, index=index)
+        container = WidgetGridContainerComponent(index=index)
 
         return html.Div(
-            id={'type': 'grid-tile', 'index': self.index},
+            id=self.id,
             children=[
-                menu.component,
-                WidgetGridSidebarComponent(menu.min_height, self.index).component,
-                WidgetGridContainerComponent(self.index).component,
-                html.Div(style=menu.component.style)
+                menubar.component,
+                sidebar.component,
+                container.component,
+                html.Div(style=menubar.component.style)
             ],
             className='bg-transparent border border-security',
             style=tile_style

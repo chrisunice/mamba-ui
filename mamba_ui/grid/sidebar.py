@@ -1,20 +1,18 @@
-from dash.exceptions import PreventUpdate
-from dash import html, Input, Output, State, MATCH, callback_context
+from dash import html
 
-from mamba_ui import app
 from mamba_ui.components.base import BaseComponent
 from mamba_ui.components.lines import HorizontalLineComponent
 
 
 class WidgetGridSidebarComponent(BaseComponent):
 
+    name = 'Widget Sidebar'
     width_open = 'max(25%, 350px)'
     width_closed = 0
 
-    def __init__(self, top_offset, index: str = ""):
-        super().__init__()
+    def __init__(self, top_offset, name: str = None, index: str = None):
+        super().__init__(name, index)
         self.top_offset = top_offset
-        self.index = index
 
     @property
     def _menu_container(self):
@@ -30,7 +28,7 @@ class WidgetGridSidebarComponent(BaseComponent):
         }
 
         return html.Div(
-            id={'type': 'widget-menu-container', 'index': self.index},
+            id=self.get_child_id('menu-container'),
             children=[html.H4('Build some menu items', className='text-dark')],
             style=style
         )
@@ -55,7 +53,7 @@ class WidgetGridSidebarComponent(BaseComponent):
         }
 
         return html.Div(
-            id={'type': 'widget-side-bar', 'index': self.index},
+            id=self.id,
             className='sidebar-visible bg-light',
             children=[
                 html.H3('Menu', className='text-dark', style={'margin': 0}),
@@ -64,28 +62,3 @@ class WidgetGridSidebarComponent(BaseComponent):
             ],
             style=sidebar_style
         )
-
-
-@app.callback(
-    Output({'type': 'widget-side-bar', 'index': MATCH}, 'style'),
-    Output({'type': 'widget-hamburger-button', 'index': MATCH}, 'className'),
-    Input({'type': 'widget-hamburger-button', 'index': MATCH}, 'n_clicks'),
-    State({'type': 'widget-side-bar', 'index': MATCH}, 'style'),
-    State({'type': 'widget-hamburger-button', 'index': MATCH}, 'className')
-)
-def toggle_sidebar(hamburger_clicked: int, sidebar_style: dict, menu_class: str) -> tuple[dict, str]:
-    """ Handles the opening and close of the widget tile's sidebar """
-    if callback_context.triggered_id is None or hamburger_clicked is None:
-        raise PreventUpdate
-    else:
-        if 'fa-bars' in menu_class:
-            # Open the sidebar
-            sidebar_style.update({'width': WidgetGridSidebarComponent.width_open})
-            menu_class = menu_class.replace('fa-bars', 'fa-xmark')
-        elif 'fa-xmark' in menu_class:
-            # Close the sidebar
-            sidebar_style.update({'width': WidgetGridSidebarComponent.width_closed})
-            menu_class = menu_class.replace('fa-xmark', 'fa-bars')
-        else:
-            raise PreventUpdate
-        return sidebar_style, menu_class
