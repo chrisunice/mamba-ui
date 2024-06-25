@@ -10,8 +10,10 @@ class TemplateExampleWidget(BaseWidget):
 
     def __init__(self, index: str = ""):
         """
+        Template Example Component is essentially a wrapper for a component and a menu. Together they make up a widget.
 
-        :param index:
+        :param index: a unique index to identify which tile in the widget grid the component belongs to.
+            Typically, `r0c0` notation is used to correspond to the tile in the first row and first column
         """
         super().__init__(index)
 

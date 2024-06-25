@@ -4,13 +4,25 @@ from mamba_ui.components.base import BaseComponent
 
 
 class TemplateExampleMenuComponent(BaseComponent):
-    def __init__(self, _index: str = ""):
+
+    name = 'Template Example Menu'
+
+    def __init__(self, index: str = ""):
         super().__init__()
-        self._index = _index
+        self.id = {
+            'parent': self.uid,     # template-example-menu
+            'index': index
+        }
 
     @property
     def component(self) -> html.Div:
+
+        component_id = self.id.copy()
+        component_id.update(
+            {'child': 'menu'}
+        )
+
         return html.Div(
-            id={'type': 'template-menu', 'index': self._index},
+            id=component_id,
             children=['Template Widget Menu Component']
         )
