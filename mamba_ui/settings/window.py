@@ -7,7 +7,9 @@ from mamba_ui.settings.gridshape import GridShapeRowComponent
 from mamba_ui.components.lines import HorizontalLineComponent
 
 
-class SettingsWindow(BaseComponent):
+class SettingsWindowComponent(BaseComponent):
+
+    name = 'Settings Window'
 
     def __init__(self):
         super().__init__()
@@ -43,12 +45,12 @@ class SettingsWindow(BaseComponent):
     @property
     def component(self) -> dbc.Modal:
         return dbc.Modal(
+            id=self.id,
             children=[
                 dcc.Store('settings-store', storage_type='memory'),
                 self._header,
                 self._body,
                 self._footer
             ],
-            id='settings-window',
             size='lg'
         )
