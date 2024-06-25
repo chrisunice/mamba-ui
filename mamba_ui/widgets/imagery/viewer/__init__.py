@@ -6,7 +6,7 @@ from mamba_ui.widgets.imagery.viewer.component import ImageryViewerComponent
 
 class ImageryViewerWidget(BaseWidget):
 
-    widget_name = 'Imagery Viewer'
+    name = 'Imagery Viewer Widget'
 
     def __init__(self, index: str = ""):
         """
