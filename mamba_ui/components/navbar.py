@@ -1,7 +1,7 @@
 from dash import html, Input, Output
 
 from mamba_ui.components.base import BaseComponent
-from mamba_ui.settings.window import SettingsWindow
+from mamba_ui.settings.window import SettingsWindowComponent
 
 
 class NavbarComponent(BaseComponent):
@@ -51,7 +51,7 @@ class NavbarComponent(BaseComponent):
             children=[
                 self._title,
                 self._settings_icon,
-                SettingsWindow().component
+                SettingsWindowComponent().component
             ],
             style=navbar_style
         )
