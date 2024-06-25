@@ -1,6 +1,5 @@
-from dash import html, callback_context
 from dash.exceptions import PreventUpdate
-from dash_extensions.enrich import Input, Output, State, MATCH
+from dash import html, callback_context, Input, Output, State, MATCH
 
 import mamba_ui as mui
 from mamba_ui.widgets.plots.polar import PolarPlotWidget
@@ -9,19 +8,47 @@ from mamba_ui.widgets.imagery.viewer import ImageryViewerWidget
 
 
 @mui.app.callback(
-    Output({'type': 'widget-container', 'index': MATCH}, 'children'),
-    Output({'type': 'widget-menu-container', 'index': MATCH}, 'children'),
-    Output({'type': 'widget-dropdown-menu', 'index': MATCH}, 'style'),
     [
-        Input({'type': 'linear-plot-option', 'index': MATCH}, 'n_clicks'),
-        Input({'type': 'polar-plot-option', 'index': MATCH}, 'n_clicks'),
-        Input({'type': 'imagery-viewer-option', 'index': MATCH}, 'n_clicks'),
-        Input({'type': 'widget-trash-button', 'index': MATCH}, 'n_clicks'),
-
+        Output(
+            component_id={'name': 'widget-container', 'index': MATCH},
+            component_property='children'
+        ),
+        Output(
+            component_id={'name': 'widget-sidebar', 'type': 'menu-container', 'index': MATCH},
+            component_property='children'
+        ),
+        Output(
+            component_id={'name': 'widget-icon', 'type': 'dropdown-menu', 'index': MATCH},
+            component_property='style'
+        ),
     ],
     [
-        State({'type': 'widget-container', 'index': MATCH}, 'children'),
-        State({'type': 'widget-dropdown-menu', 'index': MATCH}, 'style')
+        Input(
+            component_id={'name': 'widget-icon', 'type': 'linear-plot-option', 'index': MATCH},
+            component_property='n_clicks'
+        ),
+        Input(
+            component_id={'name': 'widget-icon', 'type': 'polar-plot-option', 'index': MATCH},
+            component_property='n_clicks'
+        ),
+        Input(
+            component_id={'name': 'widget-icon', 'type': 'imagery-viewer-option', 'index': MATCH},
+            component_property='n_clicks'
+        ),
+        Input(
+            component_id={'name': 'widget-menubar', 'type': 'trash-button', 'index': MATCH},
+            component_property='n_clicks'
+        ),
+    ],
+    [
+        State(
+            component_id={'name': 'widget-container', 'index': MATCH},
+            component_property='children'
+        ),
+        State(
+            component_id={'name': 'widget-icon', 'type': 'dropdown-menu', 'index': MATCH},
+            component_property='style'
+        )
     ]
 )
 def display_widget(*args):
@@ -56,7 +83,7 @@ def display_widget(*args):
             dropdown_style.update({'display': 'none'})
             return container, widget.menu, dropdown_style
 
-        elif button_clicked == 'widget-trash-button':
+        elif button_clicked == 'trash-button':
             container = container[:1]
             default_menu = html.H4('Build some menu components', className='text-dark')
             dropdown_style.update({'display': 'flex'})
