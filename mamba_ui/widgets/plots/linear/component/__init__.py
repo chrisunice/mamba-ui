@@ -5,9 +5,11 @@ from mamba_ui.components.base import BaseComponent
 
 
 class LinearPlotComponent(BaseComponent):
-    def __init__(self, _index: str = ""):
-        super().__init__()
-        self._index = _index
+
+    name = 'Linear Plot'
+
+    def __init__(self, index: str, name: str = None):
+        super().__init__(name, index)
 
     @property
     def _graph(self) -> dcc.Graph:
@@ -35,7 +37,7 @@ class LinearPlotComponent(BaseComponent):
         )
 
         return dcc.Graph(
-            id={'type': 'linear-plot', 'index': self._index},
+            id=self.get_child_id('graph'),
             figure=go.Figure(
                 data=go.Scatter({'x': None, 'y': None}),
                 layout=linear_layout

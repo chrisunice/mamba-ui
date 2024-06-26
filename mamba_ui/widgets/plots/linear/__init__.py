@@ -6,10 +6,11 @@ from mamba_ui.widgets.plots.linear.menu import LinearPlotMenuComponent
 
 class LinearPlotWidget(BaseWidget):
 
-    widget_name = 'Linear Plot'
+    name = 'Linear Plot Widget'
 
-    def __init__(self, index: str = ''):
+    def __init__(self, index: str):
         super().__init__(index)
+        self.index = index
 
     @property
     def component(self):
