@@ -35,7 +35,6 @@ class BasePlotMenuComponent(BaseComponent):
         return html.Div(
             children=[
                 dbc.Accordion(
-                    className='text-dark',
                     children=[
                         html.Div(
                             id=self.get_child_id('data-container'),
@@ -58,7 +57,8 @@ class BasePlotMenuComponent(BaseComponent):
                             children=[PlotMenuExportItemComponent(index=index).component]
                         )
                     ],
-                    always_open=True,
+                    className='text-dark',
+                    always_open=True
                 ),
                 SubmitButtonGroupComponent(name='plot-menu-submit-button-group', index=index).component
             ],
