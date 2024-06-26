@@ -1,5 +1,5 @@
 from dash.exceptions import PreventUpdate
-from dash import Input, Output, State, MATCH
+from dash import Input, Output, State, ALL
 
 import mamba_ui as mui
 from mamba_ui import config
@@ -16,17 +16,19 @@ def update_app_theme(selected_theme):
 
 
 @mui.app.callback(
-    Output({'type': 'linear-plot', 'index': MATCH}, 'figure'),
+    Output({'name': 'linear-plot', 'type': 'graph', 'index': ALL}, 'figure'),
     Input({'name': 'theme-dropdown-row', 'type': 'dropdown', 'index': ''}, 'value'),
-    State({'type': 'linear-plot', 'index': MATCH}, 'figure'),
+    State({'name': 'linear-plot', 'type': 'graph', 'index': ALL}, 'figure'),
     State({'name': 'theme-dropdown-row', 'type': 'dropdown', 'index': ''}, 'options')
 
 )
-def update_linear_plot_theme(theme_value, figure, theme_options):
+def update_linear_plot_theme(theme_value, figures, theme_options):
     """ Updates the styling of the linear plot based on the overall application theme """
     if theme_value is None:
         raise PreventUpdate
     else:
+
+        #  Get styling based on theme type
         theme_map = {option['value']: option['label'] for option in theme_options}
         theme_name = theme_map[theme_value]
         if theme_name in config['themes']['light']:
@@ -51,23 +53,29 @@ def update_linear_plot_theme(theme_value, figure, theme_options):
             }
         else:
             raise PreventUpdate
-        figure['layout'].update(layout_updates)
-        figure['layout']['xaxis'].update(xaxis_updates)
-        figure['layout']['yaxis'].update(yaxis_updates)
-        return figure
+
+        # Update all figures
+        for figure in figures:
+            figure['layout'].update(layout_updates)
+            figure['layout']['xaxis'].update(xaxis_updates)
+            figure['layout']['yaxis'].update(yaxis_updates)
+
+        return figures
 
 
 @mui.app.callback(
-    Output({'type': 'polar-plot', 'index': MATCH}, 'figure'),
+    Output({'name': 'polar-plot', 'type': 'graph', 'index': ALL}, 'figure'),
     Input({'name': 'theme-dropdown-row', 'type': 'dropdown', 'index': ''}, 'value'),
-    State({'type': 'polar-plot', 'index': MATCH}, 'figure'),
+    State({'name': 'polar-plot', 'type': 'graph', 'index': ALL}, 'figure'),
     State({'name': 'theme-dropdown-row', 'type': 'dropdown', 'index': ''}, 'options')
 )
-def update_polar_plot_theme(theme_value, figure, theme_options):
+def update_polar_plot_theme(theme_value, figures, theme_options):
     """ Updates the styling of the polar plot based on the overall application theme """
     if theme_value is None:
         raise PreventUpdate
     else:
+
+        # Get styling based on theme type
         theme_map = {option['value']: option['label'] for option in theme_options}
         theme_name = theme_map[theme_value]
         if theme_name in config['themes']['light']:
@@ -92,7 +100,11 @@ def update_polar_plot_theme(theme_value, figure, theme_options):
             }
         else:
             raise PreventUpdate
-        figure['layout'].update(layout_updates)
-        figure['layout']['polar']['angularaxis'].update(angular_updates)
-        figure['layout']['polar']['radialaxis'].update(radial_updates)
-        return figure
+
+        # Update all figures
+        for figure in figures:
+            figure['layout'].update(layout_updates)
+            figure['layout']['polar']['angularaxis'].update(angular_updates)
+            figure['layout']['polar']['radialaxis'].update(radial_updates)
+
+        return figures
