@@ -6,11 +6,32 @@ from mamba_ui.grid.sidebar import WidgetGridSidebarComponent
 
 
 @mui.app.callback(
-    Output({'type': 'widget-side-bar', 'index': MATCH}, 'style', allow_duplicate=True),
-    Output({'type': 'widget-hamburger-button', 'index': MATCH}, 'className', allow_duplicate=True),
-    Input({'type': 'widget-submit-button', 'index': MATCH}, 'n_clicks'),
-    State({'type': 'widget-side-bar', 'index': MATCH}, 'style'),
-    State({'type': 'widget-hamburger-button', 'index': MATCH}, 'className'),
+    [
+        Output(
+            component_id={'name': 'widget-sidebar', 'index': MATCH},
+            component_property='style',
+            allow_duplicate=True
+        ),
+        Output(
+            component_id={'name': 'widget-menubar', 'type': 'hamburger-button', 'index': MATCH},
+            component_property='className',
+            allow_duplicate=True
+        ),
+    ],
+    Input(
+        component_id={'name': 'plot-menu-submit-button-group', 'type': 'submit', 'index': MATCH},
+        component_property='n_clicks'
+    ),
+    [
+        State(
+            component_id={'name': 'widget-sidebar', 'index': MATCH},
+            component_property='style'
+        ),
+        State(
+            component_id={'name': 'widget-menubar', 'type': 'hamburger-button', 'index': MATCH},
+            component_property='className'
+        ),
+    ],
     prevent_initial_call=True
 )
 def close_sidebar_on_submit(submit_click: int, sidebar_style: dict, menu_class: str):
