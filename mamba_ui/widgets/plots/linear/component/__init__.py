@@ -48,7 +48,7 @@ class LinearPlotComponent(BaseComponent):
         )
 
     @property
-    def component(self):
+    def component(self) -> html.Div:
         component_style = {
             'display': 'flex',
             'flexDirection': 'column',
