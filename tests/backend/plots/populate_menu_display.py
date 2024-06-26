@@ -1,15 +1,24 @@
 from dash import callback_context
 from dash.exceptions import PreventUpdate
-from dash_extensions.enrich import Input, Output, State, MATCH
+from dash_extensions.enrich import Input, Output, State, MATCH, ALL
 
 import mamba_ui as mui
 from mamba_ui.widgets.plots.base.menu.display import PlotMenuDisplayItemComponent
 
 
 @mui.app.callback(
-    Output({'type': 'plot-menu-display-container', 'index': MATCH}, 'children'),
-    Input({'type': 'plot-menu-data-checklist', 'index': MATCH}, 'value'),
-    State({'parent': 'plot-menu-data', 'child': 'data-store', 'index': MATCH}, 'data')
+    Output(
+        component_id={'name': ALL, 'type': 'display-container', 'index': MATCH},
+        component_property='children'
+    ),
+    Input(
+        component_id={'name': 'plot-menu-data-checklist', 'index': MATCH},
+        component_property='value'
+    ),
+    State(
+        component_id={'name': 'plot-menu-data', 'type': 'data-store', 'index': MATCH},
+        component_property='data'
+    )
 )
 def populate_menu_display(selected_files, data):
     """ Populates the plot menu display items based on the selected data files """
@@ -29,6 +38,11 @@ def populate_menu_display(selected_files, data):
         options = [dict(label=name, value=name, disabled=False) for name in sorted(column_names)]
 
     # Send back component
-    uid = callback_context.triggered_id.index
-    return PlotMenuDisplayItemComponent(options, uid).component
+    return [
+        PlotMenuDisplayItemComponent(
+            index=callback_context.triggered_id.index,
+            options=options
+        ).component
+    ]
+
 
