@@ -18,40 +18,35 @@ class PlotMenuDataItemComponent(BaseComponent):
 
     name = 'Plot Menu Data'
 
-    def __init__(self, index: str = ''):
-        super().__init__()
-        self.index = index
-        self.id = {
-            'parent': self.uid,
-            'index': index
-        }
+    def __init__(self, index: str, name: str = None):
+        super().__init__(name=name, index=index)
 
     @property
     def _data_store(self):
         """ To store the data server side """
-        store_id = self.id.copy()
-        store_id.update({'child': 'data-store'})
-        return dcc.Store(id=store_id, storage_type='session')
+        return dcc.Store(
+            id=self.get_child_id('data-store'),
+            storage_type='session'
+        )
 
     @property
     def _selected_store(self):
         """ To store which of the loaded files has been selected by the user """
-        store_id = self.id.copy()
-        store_id.update({'child': 'selected-store'})
-        return dcc.Store(id=store_id, storage_type='memory')
+        return dcc.Store(
+            id=self.get_child_id('selected-store'),
+            storage_type='memory'
+        )
 
     @property
     def _upload(self) -> html.Div:
         """ The dash uploader Upload component """
-        upload_id = self.id.copy()
-        upload_id.update({'child': 'upload'})
 
         upload_style = {
             'fontSize': 'larger'
         }
 
         return du.Upload(
-            id=upload_id,
+            id=self.get_child_id('upload'),
             text='Upload Data',
             max_files=10,
             default_style=upload_style
@@ -65,17 +60,21 @@ class PlotMenuDataItemComponent(BaseComponent):
                 self._upload,
                 HorizontalLineComponent('sm').component,
                 self._selected_store,
-                ChecklistComponent(self.uid, index=self.index).component
+                ChecklistComponent(
+                    options=[],
+                    name='Plot Menu Data Checklist',
+                    index=self.id.get('index')
+                ).component
             ],
             title=html.H4('Data')
         )
 
 
 @app.callback(
-    ServersideOutput({'parent': 'plot-menu-data', 'child': 'data-store', 'index': MATCH}, 'data'),
-    Input({'parent': 'plot-menu-data', 'child': 'upload', 'index': MATCH}, 'isCompleted'),
-    State({'parent': 'plot-menu-data', 'child': 'upload', 'index': MATCH}, 'fileNames'),
-    State({'parent': 'plot-menu-data', 'child': 'data-store', 'index': MATCH}, 'data')
+    ServersideOutput({'name': 'plot-menu-data', 'type': 'data-store', 'index': MATCH}, 'data'),
+    Input({'name': 'plot-menu-data', 'type': 'upload', 'index': MATCH}, 'isCompleted'),
+    State({'name': 'plot-menu-data', 'type': 'upload', 'index': MATCH}, 'fileNames'),
+    State({'name': 'plot-menu-data', 'type': 'data-store', 'index': MATCH}, 'data')
 )
 def store_data(is_complete: bool, files: list[str], data: None | dict):
     if not is_complete:
@@ -93,8 +92,8 @@ def store_data(is_complete: bool, files: list[str], data: None | dict):
 
 
 @app.callback(
-    Output({'type': 'plot-menu-data-checklist', 'index': MATCH}, 'options'),
-    Input({'parent': 'plot-menu-data', 'child': 'data-store', 'index': MATCH}, 'data'),
+    Output({'name': 'plot-menu-data-checklist', 'index': MATCH}, 'options'),
+    Input({'name': 'plot-menu-data', 'type': 'data-store', 'index': MATCH}, 'data'),
     Trigger('dash-layout', 'children')
 )
 def populate_checklist(data: dict):
@@ -105,8 +104,8 @@ def populate_checklist(data: dict):
 
 
 @app.callback(
-    Output({'parent': 'plot-menu-data', 'child': 'selected-store', 'index': MATCH}, 'data'),
-    Input({'type': 'plot-menu-data-checklist', 'index': MATCH}, 'value')
+    Output({'name': 'plot-menu-data', 'type': 'selected-store', 'index': MATCH}, 'data'),
+    Input({'name': 'plot-menu-data-checklist', 'index': MATCH}, 'value')
 )
 def store_user_selection(selected_files: list):
     if selected_files is None:

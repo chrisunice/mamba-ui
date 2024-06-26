@@ -11,23 +11,29 @@ from mamba_ui.components.numerical_input import NumericalInputComponent
 
 
 class PlotMenuFilterItemComponent(BaseComponent):
+
+    name = 'Plot Menu Filter'
+
     def __init__(
             self,
+            index: str,
+            name: str = None,
             categorical_filters: dict[str, list] = None,
             numerical_filters: dict[str, dict] = None,
-            index: str = ''
     ):
         """
         A dbc.AccordionItem that contains functionality for filtering data
 
+        :param index: a unique index that should specify the location of the component
+        :param name: the name of the component; if no name is given then the class attribute name will be used
         :param categorical_filters: a dictionary of categorical filters where the key is the filter name as a string \
          and the value is the options for the filter as a list (e.g. Pass, Polarization, Frequency)
         :param numerical_filters: a dictionary describing the filtering where the key is the filter name as a string \
          and the value is a dictionary of arguments min, max, and step to pass to the NumericalInputComponent \
          (e.g. Look, Depression, Twist, Range)
-        :param index: unique index for the component
         """
-        super().__init__()
+        super().__init__(name=name, index=index)
+
         if categorical_filters is None:
             categorical_filters = {}
         self.categorical_filters = categorical_filters
@@ -36,7 +42,12 @@ class PlotMenuFilterItemComponent(BaseComponent):
             numerical_filters = {}
         self.numerical_filters = numerical_filters
 
-        self.index = index
+    @property
+    def _store(self):
+        return dcc.Store(
+            id=self.get_child_id('store'),
+            storage_type='memory'
+        )
 
     def _build_categorical_filter(self, name, options) -> html.Div:
         """ Builds a dropdown checklist component """
@@ -58,7 +69,7 @@ class PlotMenuFilterItemComponent(BaseComponent):
                     style={'width': '50%'}
                 ),
                 html.Div(
-                    DropdownChecklistComponent(name, options=options, index=self.index).component,
+                    DropdownChecklistComponent(options, name=name, index=self.id.get('index')).component,
                     style={'width': '50%'}
                 )
             ],
@@ -66,7 +77,7 @@ class PlotMenuFilterItemComponent(BaseComponent):
         )
 
     def _build_numerical_filter(self, name, minimum, maximum, step) -> html.Div:
-        """ Builds a range slider component """
+        """ Builds a numerical input component """
 
         style = {
             'display': 'flex',
@@ -86,7 +97,11 @@ class PlotMenuFilterItemComponent(BaseComponent):
                 ),
                 html.Div(
                     NumericalInputComponent(
-                        name, minimum=minimum, maximum=maximum, step=step, index=self.index
+                        minimum=minimum,
+                        maximum=maximum,
+                        step=step,
+                        name=name,
+                        index=self.id.get('index')
                     ).component,
                     style={'width': '50%'}
                 )
@@ -101,7 +116,7 @@ class PlotMenuFilterItemComponent(BaseComponent):
 
         return dbc.AccordionItem(
             children=[
-                dcc.Store(id={'type': 'plot-menu-filter-store', 'index': self.index}, storage_type='memory'),
+                self._store,
                 *categorical_items,
                 *numerical_items
             ],
@@ -110,11 +125,28 @@ class PlotMenuFilterItemComponent(BaseComponent):
 
 
 @app.callback(
-    Output({'type': 'plot-menu-filter-store', 'index': MATCH}, 'data'),
-    Input({'parent': ALL, 'child': 'checklist', 'index': MATCH}, 'value'),
-    Input({'parent': ALL, 'child': 'min-input', 'index': MATCH}, 'value'),
-    Input({'parent': ALL, 'child': 'max-input', 'index': MATCH}, 'value'),
-    Input({'parent': ALL, 'child': 'switch', 'index': MATCH}, 'value')
+    Output(
+        component_id={'name': 'plot-menu-filter', 'type': 'store', 'index': MATCH},
+        component_property='data'
+    ),
+    [
+        Input(
+            component_id={'name': ALL, 'type': 'checklist', 'index': MATCH},
+            component_property='value'
+        ),
+        Input(
+            component_id={'name': ALL, 'type': 'min-input', 'index': MATCH},
+            component_property='value'
+        ),
+        Input(
+            component_id={'name': ALL, 'type': 'max-input', 'index': MATCH},
+            component_property='value'
+        ),
+        Input(
+            component_id={'name': ALL, 'type': 'switch', 'index': MATCH},
+            component_property='value'
+        )
+    ]
 )
 def store_filters(*_):
     ctx = callback_context
@@ -124,20 +156,20 @@ def store_filters(*_):
     filters = {}
     for info, value in ctx.inputs.items():
         component_id = json.loads(info.rstrip('.value'))
-        filter_name = component_id['parent'].split('-')[0]
-        if component_id['child'] == 'checklist':
+        filter_name = component_id['name'].split('-')[0]
+        if component_id['type'] == 'checklist':
             filters[filter_name] = value
-        elif component_id['child'] == 'min-input':
+        elif component_id['type'] == 'min-input':
             try:
                 filters[filter_name].update({'min': value})
             except KeyError:
                 filters[filter_name] = {'min': value}
-        elif component_id['child'] == 'max-input':
+        elif component_id['type'] == 'max-input':
             try:
                 filters[filter_name].update({'max': value})
             except KeyError:
                 filters[filter_name] = {'max': value}
-        elif component_id['child'] == 'switch':
+        elif component_id['type'] == 'switch':
             try:
                 filters[filter_name].update({'inclusive': value})
             except KeyError:

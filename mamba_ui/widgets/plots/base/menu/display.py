@@ -9,27 +9,39 @@ from mamba_ui.components.base import BaseComponent
 
 
 class PlotMenuDisplayItemComponent(BaseComponent):
-    def __init__(self, options: list = None, index: str = ''):
+
+    name = 'Plot Menu Display'
+
+    def __init__(
+            self,
+            index: str,
+            name: str = None,
+            options: list = None
+    ):
         """
         A dbc.AccordionItem that contains the functionality of displaying two parameters against one another
 
         :param options: the names of variables that will be used as independent or dependent variables for plotting
         :param index: unique index for the component
         """
-        super().__init__()
-
+        super().__init__(name=name, index=index)
         if options is None:
             options = []
         self.options = options
 
-        self.index = index
+    @property
+    def _store(self):
+        return dcc.Store(
+            id=self.get_child_id('store'),
+            storage_type='memory'
+        )
 
     def _build_dropdown(self, variable_type: str) -> dcc.Dropdown:
         dropdown_style = {
             'width': '100%'
         }
         return dcc.Dropdown(
-            id={'type': f'{variable_type}-dropdown', 'index': self.index},
+            id=self.get_child_id(f'{variable_type}-dropdown'),
             placeholder=f'{variable_type.capitalize()} Variable',
             options=self.options,
             multi=False,
@@ -59,7 +71,7 @@ class PlotMenuDisplayItemComponent(BaseComponent):
             children=[
                 html.Div(
                     children=[
-                        dcc.Store(id={'type': 'plot-menu-display-store', 'index': self.index}, storage_type='memory'),
+                        self._store,
                         self._build_dropdown('independent'),
                         self._verses,
                         self._build_dropdown('dependent')
@@ -73,16 +85,16 @@ class PlotMenuDisplayItemComponent(BaseComponent):
 
 @app.callback(
     [
-        Output({'type': 'independent-dropdown', 'index': MATCH}, 'options'),
-        Output({'type': 'dependent-dropdown', 'index': MATCH}, 'options')
+        Output({'name': 'plot-menu-display', 'type': 'independent-dropdown', 'index': MATCH}, 'options'),
+        Output({'name': 'plot-menu-display', 'type': 'dependent-dropdown', 'index': MATCH}, 'options')
     ],
     [
-        Input({'type': 'independent-dropdown', 'index': MATCH}, 'value'),
-        Input({'type': 'dependent-dropdown', 'index': MATCH}, 'value')
+        Input({'name': 'plot-menu-display', 'type': 'independent-dropdown', 'index': MATCH}, 'value'),
+        Input({'name': 'plot-menu-display', 'type': 'dependent-dropdown', 'index': MATCH}, 'value')
     ],
     [
-        State({'type': 'independent-dropdown', 'index': MATCH}, 'options'),
-        State({'type': 'dependent-dropdown', 'index': MATCH}, 'options')
+        State({'name': 'plot-menu-display', 'type': 'independent-dropdown', 'index': MATCH}, 'options'),
+        State({'name': 'plot-menu-display', 'type': 'dependent-dropdown', 'index': MATCH}, 'options')
     ]
 
 )
@@ -110,9 +122,9 @@ def update_other_dropdown(ivar_value: str, dvar_value: str, ivar_opts: list, dva
 
 
 @app.callback(
-    Output({'type': 'plot-menu-display-store', 'index': MATCH}, 'data'),
-    Input({'type': 'independent-dropdown', 'index': MATCH}, 'value'),
-    Input({'type': 'dependent-dropdown', 'index': MATCH}, 'value')
+    Output({'name': 'plot-menu-display', 'type': 'store', 'index': MATCH}, 'data'),
+    Input({'name': 'plot-menu-display', 'type': 'independent-dropdown', 'index': MATCH}, 'value'),
+    Input({'name': 'plot-menu-display', 'type': 'dependent-dropdown', 'index': MATCH}, 'value')
 )
 def store_variables(i_var, d_var):
     if callback_context.triggered_id is None:

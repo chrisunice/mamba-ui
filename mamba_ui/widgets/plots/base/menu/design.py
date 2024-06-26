@@ -8,13 +8,8 @@ class PlotMenuDesignItemComponent(BaseComponent):
 
     name = 'Plot Menu Design'
 
-    def __init__(self, index: str = ''):
-        super().__init__()
-        self.index = index
-        self.id = {
-            'parent': self.uid,
-            'index': self.index
-        }
+    def __init__(self, index: str, name: str = None):
+        super().__init__(name=name, index=index)
 
     @property
     def component(self) -> dbc.AccordionItem:
