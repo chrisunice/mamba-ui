@@ -1,10 +1,9 @@
-import json
 import math
 import numpy as np
 import pandas as pd
 from dash import callback_context
 from dash.exceptions import PreventUpdate
-from dash_extensions.enrich import Input, Output, State, MATCH
+from dash_extensions.enrich import Input, Output, State, MATCH, ALL
 
 import mamba_ui as mui
 from mamba_ui.widgets.plots.base.menu.filter import PlotMenuFilterItemComponent
@@ -27,12 +26,31 @@ def is_categorical(series, threshold=0.05):
 
 
 @mui.app.callback(
-    Output({'type': 'plot-menu-filter-container', 'index': MATCH}, 'children'),
-    Input({'type': 'independent-dropdown', 'index': MATCH}, 'value'),
-    Input({'type': 'dependent-dropdown', 'index': MATCH}, 'value'),
-    State({'type': 'independent-dropdown', 'index': MATCH}, 'options'),
-    State({'parent': 'plot-menu-data', 'child': 'data-store', 'index': MATCH}, 'data'),
-    State({'type': 'plot-menu-data-checklist', 'index': MATCH}, 'value'),
+    Output({'name': ALL, 'type': 'filter-container', 'index': MATCH}, 'children'),
+    [
+        Input(
+            component_id={'name': 'plot-menu-display', 'type': 'independent-dropdown', 'index': MATCH},
+            component_property='value'
+        ),
+        Input(
+            component_id={'name': 'plot-menu-display', 'type': 'dependent-dropdown', 'index': MATCH},
+            component_property='value'
+        ),
+    ],
+    [
+        State(
+            component_id={'name': 'plot-menu-display', 'type': 'independent-dropdown', 'index': MATCH},
+            component_property='options'
+        ),
+        State(
+            component_id={'name': 'plot-menu-data', 'type': 'data-store', 'index': MATCH},
+            component_property='data'
+        ),
+        State(
+            component_id={'name': 'plot-menu-data-checklist', 'index': MATCH},
+            component_property='value'
+        ),
+    ]
 )
 def populate_menu_filters(i_var, d_var, options, data, selected_files):
     """ Populates the plot menu filters based on the user selected variables for plotting """
@@ -90,8 +108,10 @@ def populate_menu_filters(i_var, d_var, options, data, selected_files):
                     if new_options['maximum'] > existing_options['maximum']:
                         existing_options['maximum'] = new_options['maximum']
 
-    return PlotMenuFilterItemComponent(
-        categorical_filters=cat_filters,
-        numerical_filters=num_filters,
-        index=callback_context.triggered_id.index
-    ).component
+    return [
+        PlotMenuFilterItemComponent(
+            categorical_filters=cat_filters,
+            numerical_filters=num_filters,
+            index=callback_context.triggered_id.index
+        ).component
+    ]
