@@ -17,8 +17,8 @@ from backend.plots.populate_menu_display import populate_menu_display
 from backend.plots.populate_menu_filters import populate_menu_filters
 from backend.plots.plot_linear_data import plot_linear_data
 from backend.plots.close_sidebar_on_submit import close_sidebar_on_submit
-
-# from backend.plots.reset_linear_plot import reset_linear_plot
+from backend.plots.reset_linear_plot import reset_linear_plot
+from backend.plots.reset_plot_menu import reset_plot_menu
 
 if __name__ == '__main__':
 
