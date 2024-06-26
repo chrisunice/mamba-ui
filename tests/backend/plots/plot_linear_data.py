@@ -10,21 +10,48 @@ import mamba_ui as mui
 
 
 @mui.app.callback(
-    Output({'type': 'linear-plot', 'index': MATCH}, 'figure', allow_duplicate=True),
-    Input({'type': 'widget-submit-button', 'index': MATCH}, 'n_clicks'),
+    Output(
+        component_id={'name': 'linear-plot', 'type': 'graph', 'index': MATCH},
+        component_property='figure',
+        allow_duplicate=True
+    ),
+    Input(
+        component_id={'name': 'plot-menu-submit-button-group', 'type': 'submit', 'index': MATCH},
+        component_property='n_clicks'
+    ),
     [
-        State({'parent': 'plot-menu-data', 'child': 'data-store', 'index': MATCH}, 'data'),         # data stored on the server
-        State({'parent': 'plot-menu-data', 'child': 'selected-store', 'index': MATCH}, 'data'),     # user selected files
-        State({'type': 'plot-menu-display-store', 'index': MATCH}, 'data'),     # parameters to display
-        State({'type': 'plot-menu-filter-store', 'index': MATCH}, 'data'),      # filters to apply to data
-        State({'type': 'linear-plot', 'index': MATCH}, 'figure'),               # existing figure to update
+        # Data stored on the server
+        State(
+            component_id={'name': 'plot-menu-data', 'type': 'data-store', 'index': MATCH},
+            component_property='data'
+        ),
+        # Stored user selected files
+        State(
+            component_id={'name': 'plot-menu-data', 'type': 'selected-store', 'index': MATCH},
+            component_property='data'
+        ),
+        # Stored parameters to display
+        State(
+            component_id={'name': 'plot-menu-display', 'type': 'store', 'index': MATCH},
+            component_property='data'
+        ),
+        # Stored filters to apply to data
+        State(
+            component_id={'name': 'plot-menu-filter', 'type': 'store', 'index': MATCH},
+            component_property='data'
+        ),
+        # Existing figure to update
+        State(
+            component_id={'name': 'linear-plot', 'type': 'graph', 'index': MATCH},
+            component_property='figure'
+        ),
     ],
     prevent_initial_call=True
 )
 def plot_linear_data(
         submit_click: int,
         serverside_data: dict,
-        selected_files: list,
+        selected_files: str,
         parameters: str,
         filters: str,
         figure: dict
