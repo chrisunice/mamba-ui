@@ -1,4 +1,4 @@
-from dash import dcc
+from dash import dcc, html
 import plotly.graph_objects as go
 
 from mamba_ui.components.base import BaseComponent
@@ -12,8 +12,7 @@ class PolarPlotComponent(BaseComponent):
         super().__init__(name=name, index=index)
 
     @property
-    def component(self) -> dcc.Graph:
-
+    def _graph(self):
         graph_style = {
             'height': '100%',
             'width': '100%'
@@ -46,7 +45,7 @@ class PolarPlotComponent(BaseComponent):
         )
 
         return dcc.Graph(
-            id=self.id,
+            id=self.get_child_id('graph'),
             figure=go.Figure(
                 data=go.Scatterpolar({'r': None, 'theta': None}),
                 layout=polar_layout
@@ -55,3 +54,24 @@ class PolarPlotComponent(BaseComponent):
             config={'scrollZoom': True},
             style=graph_style
         )
+
+    @property
+    def component(self) -> html.Div:
+
+        component_style = {
+            'display': 'flex',
+            'flexDirection': 'column',
+            'alignItems': 'center',
+            'width': '100%',
+            'height': '100%'
+        }
+
+        return html.Div(
+            children=[
+                self._graph
+            ],
+            style=component_style
+        )
+
+
+
