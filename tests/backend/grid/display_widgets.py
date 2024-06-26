@@ -3,18 +3,13 @@ from dash import html, callback_context, Input, Output, State, MATCH
 
 import mamba_ui as mui
 from mamba_ui import config
-from mamba_ui.widgets.plots.polar import PolarPlotWidget
-from mamba_ui.widgets.plots.linear import LinearPlotWidget
+from mamba_ui.widgets.plots.two_dimensional import TwoDimensionalPlotWidget
 from mamba_ui.widgets.imagery.viewer import ImageryViewerWidget
 
 
 INPUTS = [
     Input(
-        component_id={'name': 'widget-icon', 'type': 'linear-plot-option', 'index': MATCH},
-        component_property='n_clicks'
-    ),
-    Input(
-        component_id={'name': 'widget-icon', 'type': 'polar-plot-option', 'index': MATCH},
+        component_id={'name': 'widget-icon', 'type': '2d-plot-option', 'index': MATCH},
         component_property='n_clicks'
     ),
     Input(
@@ -78,20 +73,8 @@ def display_widget(*args):
         # Get the container children and dropdown menu style
         container, dropdown_style = args[-2:]
 
-        if button_clicked == 'polar-plot-option':
-            widget = PolarPlotWidget(index=button_clicked_uid)
-            container.append(widget.component)
-            dropdown_style.update({'display': 'none'})
-            return container, widget.menu, dropdown_style
-
-        elif button_clicked == 'linear-plot-option':
-            widget = LinearPlotWidget(index=button_clicked_uid)
-            container.append(widget.component)
-            dropdown_style.update({'display': 'none'})
-            return container, widget.menu, dropdown_style
-
-        elif button_clicked == 'imagery-viewer-option':
-            widget = ImageryViewerWidget(index=button_clicked_uid)
+        if button_clicked == 'template-example-option':
+            widget = TemplateExampleWidget(index=button_clicked_uid)
             container.append(widget.component)
             dropdown_style.update({'display': 'none'})
             return container, widget.menu, dropdown_style
@@ -102,8 +85,14 @@ def display_widget(*args):
             dropdown_style.update({'display': 'flex'})
             return container, default_menu, dropdown_style
 
-        elif button_clicked == 'template-example-option':
-            widget = TemplateExampleWidget(index=button_clicked_uid)
+        elif button_clicked == '2d-plot-option':
+            widget = TwoDimensionalPlotWidget(index=button_clicked_uid)
+            container.append(widget.component)
+            dropdown_style.update({'display': 'none'})
+            return container, widget.menu, dropdown_style
+
+        elif button_clicked == 'imagery-viewer-option':
+            widget = ImageryViewerWidget(index=button_clicked_uid)
             container.append(widget.component)
             dropdown_style.update({'display': 'none'})
             return container, widget.menu, dropdown_style

@@ -6,7 +6,7 @@ from dash.exceptions import PreventUpdate
 from dash_extensions.enrich import Input, Output, State, MATCH, ALL
 
 import mamba_ui as mui
-from mamba_ui.widgets.plots.base.menu.filter import PlotMenuFilterItemComponent
+from mamba_ui.widgets.plots.two_dimensional.menu.filter import TwoDimensionalPlotMenuFilterItemComponent
 
 
 def is_categorical(series, threshold=0.05):
@@ -29,25 +29,25 @@ def is_categorical(series, threshold=0.05):
     Output({'name': ALL, 'type': 'filter-container', 'index': MATCH}, 'children'),
     [
         Input(
-            component_id={'name': 'plot-menu-display', 'type': 'independent-dropdown', 'index': MATCH},
+            component_id={'name': '2d-plot-menu-display', 'type': 'independent-dropdown', 'index': MATCH},
             component_property='value'
         ),
         Input(
-            component_id={'name': 'plot-menu-display', 'type': 'dependent-dropdown', 'index': MATCH},
+            component_id={'name': '2d-plot-menu-display', 'type': 'dependent-dropdown', 'index': MATCH},
             component_property='value'
         ),
     ],
     [
         State(
-            component_id={'name': 'plot-menu-display', 'type': 'independent-dropdown', 'index': MATCH},
+            component_id={'name': '2d-plot-menu-display', 'type': 'independent-dropdown', 'index': MATCH},
             component_property='options'
         ),
         State(
-            component_id={'name': 'plot-menu-data', 'type': 'data-store', 'index': MATCH},
+            component_id={'name': '2d-plot-menu-data', 'type': 'data-store', 'index': MATCH},
             component_property='data'
         ),
         State(
-            component_id={'name': 'plot-menu-data-checklist', 'index': MATCH},
+            component_id={'name': '2d-plot-menu-data-checklist', 'index': MATCH},
             component_property='value'
         ),
     ]
@@ -109,7 +109,7 @@ def populate_menu_filters(i_var, d_var, options, data, selected_files):
                         existing_options['maximum'] = new_options['maximum']
 
     return [
-        PlotMenuFilterItemComponent(
+        TwoDimensionalPlotMenuFilterItemComponent(
             categorical_filters=cat_filters,
             numerical_filters=num_filters,
             index=callback_context.triggered_id.index

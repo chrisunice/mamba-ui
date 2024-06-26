@@ -10,9 +10,9 @@ from mamba_ui.components.dropdown_checklist import DropdownChecklistComponent
 from mamba_ui.components.numerical_input import NumericalInputComponent
 
 
-class PlotMenuFilterItemComponent(BaseComponent):
+class TwoDimensionalPlotMenuFilterItemComponent(BaseComponent):
 
-    name = 'Plot Menu Filter'
+    name = '2D Plot Menu Filter'
 
     def __init__(
             self,
@@ -126,7 +126,7 @@ class PlotMenuFilterItemComponent(BaseComponent):
 
 @app.callback(
     Output(
-        component_id={'name': 'plot-menu-filter', 'type': 'store', 'index': MATCH},
+        component_id={'name': '2d-plot-menu-filter', 'type': 'store', 'index': MATCH},
         component_property='data'
     ),
     [

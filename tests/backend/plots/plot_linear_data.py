@@ -11,38 +11,38 @@ import mamba_ui as mui
 
 @mui.app.callback(
     Output(
-        component_id={'name': 'linear-plot', 'type': 'graph', 'index': MATCH},
+        component_id={'name': '2d-plot', 'type': 'graph', 'index': MATCH},
         component_property='figure',
         allow_duplicate=True
     ),
     Input(
-        component_id={'name': 'plot-menu-submit-button-group', 'type': 'submit', 'index': MATCH},
+        component_id={'name': '2d-plot-menu-submit-button-group', 'type': 'submit', 'index': MATCH},
         component_property='n_clicks'
     ),
     [
         # Data stored on the server
         State(
-            component_id={'name': 'plot-menu-data', 'type': 'data-store', 'index': MATCH},
+            component_id={'name': '2d-plot-menu-data', 'type': 'data-store', 'index': MATCH},
             component_property='data'
         ),
         # Stored user selected files
         State(
-            component_id={'name': 'plot-menu-data', 'type': 'selected-store', 'index': MATCH},
+            component_id={'name': '2d-plot-menu-data', 'type': 'selected-store', 'index': MATCH},
             component_property='data'
         ),
         # Stored parameters to display
         State(
-            component_id={'name': 'plot-menu-display', 'type': 'store', 'index': MATCH},
+            component_id={'name': '2d-plot-menu-display', 'type': 'store', 'index': MATCH},
             component_property='data'
         ),
         # Stored filters to apply to data
         State(
-            component_id={'name': 'plot-menu-filter', 'type': 'store', 'index': MATCH},
+            component_id={'name': '2d-plot-menu-filter', 'type': 'store', 'index': MATCH},
             component_property='data'
         ),
         # Existing figure to update
         State(
-            component_id={'name': 'linear-plot', 'type': 'graph', 'index': MATCH},
+            component_id={'name': '2d-plot', 'type': 'graph', 'index': MATCH},
             component_property='figure'
         ),
     ],

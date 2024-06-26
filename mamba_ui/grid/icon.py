@@ -3,8 +3,7 @@ import dash_bootstrap_components as dbc
 
 from mamba_ui import config
 from mamba_ui.components.base import BaseComponent
-from mamba_ui.widgets.plots.polar import PolarPlotWidget
-from mamba_ui.widgets.plots.linear import LinearPlotWidget
+from mamba_ui.widgets.plots.two_dimensional import TwoDimensionalPlotWidget
 from mamba_ui.widgets.imagery.viewer import ImageryViewerWidget
 
 if config['run_mode'] == 'development':
@@ -48,8 +47,7 @@ class WidgetGridIconComponent(BaseComponent):
         )
 
         menu_items = [
-            self._create_menu_item(LinearPlotWidget.name),
-            self._create_menu_item(PolarPlotWidget.name),
+            self._create_menu_item(TwoDimensionalPlotWidget.name),
             self._create_menu_item(ImageryViewerWidget.name)
         ]
 

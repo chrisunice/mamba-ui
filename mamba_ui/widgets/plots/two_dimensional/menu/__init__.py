@@ -6,16 +6,16 @@ from mamba_ui.components.base import BaseComponent
 from mamba_ui.components.submit_button_group import SubmitButtonGroupComponent
 
 # widget components
-from mamba_ui.widgets.plots.base.menu.data import PlotMenuDataItemComponent
-from mamba_ui.widgets.plots.base.menu.display import PlotMenuDisplayItemComponent
-from mamba_ui.widgets.plots.base.menu.filter import PlotMenuFilterItemComponent
-from mamba_ui.widgets.plots.base.menu.design import PlotMenuDesignItemComponent
-from mamba_ui.widgets.plots.base.menu.export import PlotMenuExportItemComponent
+from mamba_ui.widgets.plots.two_dimensional.menu.data import TwoDimensionalPlotMenuDataItemComponent
+from mamba_ui.widgets.plots.two_dimensional.menu.display import TwoDimensionalPlotMenuDisplayItemComponent
+from mamba_ui.widgets.plots.two_dimensional.menu.filter import TwoDimensionalPlotMenuFilterItemComponent
+from mamba_ui.widgets.plots.two_dimensional.menu.design import TwoDimensionalPlotMenuDesignItemComponent
+from mamba_ui.widgets.plots.two_dimensional.menu.export import TwoDimensionalPlotMenuExportItemComponent
 
 
-class BasePlotMenuComponent(BaseComponent):
+class TwoDimensionalPlotMenuComponent(BaseComponent):
 
-    name = 'Base Plot Menu'
+    name = '2D Plot Menu'
 
     def __init__(self, index: str, name: str = None):
         super().__init__(name=name, index=index)
@@ -38,29 +38,29 @@ class BasePlotMenuComponent(BaseComponent):
                     children=[
                         html.Div(
                             id=self.get_child_id('data-container'),
-                            children=[PlotMenuDataItemComponent(index=index).component]
+                            children=[TwoDimensionalPlotMenuDataItemComponent(index=index).component]
                         ),
                         html.Div(
                             id=self.get_child_id('display-container'),
-                            children=[PlotMenuDisplayItemComponent(index=index).component]
+                            children=[TwoDimensionalPlotMenuDisplayItemComponent(index=index).component]
                         ),
                         html.Div(
                             id=self.get_child_id('filter-container'),
-                            children=[PlotMenuFilterItemComponent(index=index).component]
+                            children=[TwoDimensionalPlotMenuFilterItemComponent(index=index).component]
                         ),
                         html.Div(
                             id=self.get_child_id('design-container'),
-                            children=[PlotMenuDesignItemComponent(index=index).component]
+                            children=[TwoDimensionalPlotMenuDesignItemComponent(index=index).component]
                         ),
                         html.Div(
                             id=self.get_child_id('export-container'),
-                            children=[PlotMenuExportItemComponent(index=index).component]
+                            children=[TwoDimensionalPlotMenuExportItemComponent(index=index).component]
                         )
                     ],
                     className='text-dark',
                     always_open=True
                 ),
-                SubmitButtonGroupComponent(name='plot-menu-submit-button-group', index=index).component
+                SubmitButtonGroupComponent(name='2d-plot-menu-submit-button-group', index=index).component
             ],
             style=container_style
         )

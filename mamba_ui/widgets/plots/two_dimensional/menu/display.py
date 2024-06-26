@@ -8,9 +8,9 @@ from mamba_ui import app
 from mamba_ui.components.base import BaseComponent
 
 
-class PlotMenuDisplayItemComponent(BaseComponent):
+class TwoDimensionalPlotMenuDisplayItemComponent(BaseComponent):
 
-    name = 'Plot Menu Display'
+    name = '2D Plot Menu Display'
 
     def __init__(
             self,
@@ -85,16 +85,16 @@ class PlotMenuDisplayItemComponent(BaseComponent):
 
 @app.callback(
     [
-        Output({'name': 'plot-menu-display', 'type': 'independent-dropdown', 'index': MATCH}, 'options'),
-        Output({'name': 'plot-menu-display', 'type': 'dependent-dropdown', 'index': MATCH}, 'options')
+        Output({'name': '2d-plot-menu-display', 'type': 'independent-dropdown', 'index': MATCH}, 'options'),
+        Output({'name': '2d-plot-menu-display', 'type': 'dependent-dropdown', 'index': MATCH}, 'options')
     ],
     [
-        Input({'name': 'plot-menu-display', 'type': 'independent-dropdown', 'index': MATCH}, 'value'),
-        Input({'name': 'plot-menu-display', 'type': 'dependent-dropdown', 'index': MATCH}, 'value')
+        Input({'name': '2d-plot-menu-display', 'type': 'independent-dropdown', 'index': MATCH}, 'value'),
+        Input({'name': '2d-plot-menu-display', 'type': 'dependent-dropdown', 'index': MATCH}, 'value')
     ],
     [
-        State({'name': 'plot-menu-display', 'type': 'independent-dropdown', 'index': MATCH}, 'options'),
-        State({'name': 'plot-menu-display', 'type': 'dependent-dropdown', 'index': MATCH}, 'options')
+        State({'name': '2d-plot-menu-display', 'type': 'independent-dropdown', 'index': MATCH}, 'options'),
+        State({'name': '2d-plot-menu-display', 'type': 'dependent-dropdown', 'index': MATCH}, 'options')
     ]
 
 )
@@ -122,9 +122,9 @@ def update_other_dropdown(ivar_value: str, dvar_value: str, ivar_opts: list, dva
 
 
 @app.callback(
-    Output({'name': 'plot-menu-display', 'type': 'store', 'index': MATCH}, 'data'),
-    Input({'name': 'plot-menu-display', 'type': 'independent-dropdown', 'index': MATCH}, 'value'),
-    Input({'name': 'plot-menu-display', 'type': 'dependent-dropdown', 'index': MATCH}, 'value')
+    Output({'name': '2d-plot-menu-display', 'type': 'store', 'index': MATCH}, 'data'),
+    Input({'name': '2d-plot-menu-display', 'type': 'independent-dropdown', 'index': MATCH}, 'value'),
+    Input({'name': '2d-plot-menu-display', 'type': 'dependent-dropdown', 'index': MATCH}, 'value')
 )
 def store_variables(i_var, d_var):
     if callback_context.triggered_id is None:

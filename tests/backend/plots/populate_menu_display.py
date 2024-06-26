@@ -3,7 +3,7 @@ from dash.exceptions import PreventUpdate
 from dash_extensions.enrich import Input, Output, State, MATCH, ALL
 
 import mamba_ui as mui
-from mamba_ui.widgets.plots.base.menu.display import PlotMenuDisplayItemComponent
+from mamba_ui.widgets.plots.two_dimensional.menu.display import TwoDimensionalPlotMenuDisplayItemComponent
 
 
 @mui.app.callback(
@@ -12,11 +12,11 @@ from mamba_ui.widgets.plots.base.menu.display import PlotMenuDisplayItemComponen
         component_property='children'
     ),
     Input(
-        component_id={'name': 'plot-menu-data-checklist', 'index': MATCH},
+        component_id={'name': '2d-plot-menu-data-checklist', 'index': MATCH},
         component_property='value'
     ),
     State(
-        component_id={'name': 'plot-menu-data', 'type': 'data-store', 'index': MATCH},
+        component_id={'name': '2d-plot-menu-data', 'type': 'data-store', 'index': MATCH},
         component_property='data'
     )
 )
@@ -39,7 +39,7 @@ def populate_menu_display(selected_files, data):
 
     # Send back component
     return [
-        PlotMenuDisplayItemComponent(
+        TwoDimensionalPlotMenuDisplayItemComponent(
             index=callback_context.triggered_id.index,
             options=options
         ).component

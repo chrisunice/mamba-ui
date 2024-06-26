@@ -14,9 +14,9 @@ from mamba_ui.components.lines import HorizontalLineComponent
 from mamba_ui.components.checklist import ChecklistComponent
 
 
-class PlotMenuDataItemComponent(BaseComponent):
+class TwoDimensionalPlotMenuDataItemComponent(BaseComponent):
 
-    name = 'Plot Menu Data'
+    name = '2D Plot Menu Data'
 
     def __init__(self, index: str, name: str = None):
         super().__init__(name=name, index=index)
@@ -62,7 +62,7 @@ class PlotMenuDataItemComponent(BaseComponent):
                 self._selected_store,
                 ChecklistComponent(
                     options=[],
-                    name='Plot Menu Data Checklist',
+                    name='2D Plot Menu Data Checklist',
                     index=self.id.get('index')
                 ).component
             ],
@@ -71,10 +71,10 @@ class PlotMenuDataItemComponent(BaseComponent):
 
 
 @app.callback(
-    ServersideOutput({'name': 'plot-menu-data', 'type': 'data-store', 'index': MATCH}, 'data'),
-    Input({'name': 'plot-menu-data', 'type': 'upload', 'index': MATCH}, 'isCompleted'),
-    State({'name': 'plot-menu-data', 'type': 'upload', 'index': MATCH}, 'fileNames'),
-    State({'name': 'plot-menu-data', 'type': 'data-store', 'index': MATCH}, 'data')
+    ServersideOutput({'name': '2d-plot-menu-data', 'type': 'data-store', 'index': MATCH}, 'data'),
+    Input({'name': '2d-plot-menu-data', 'type': 'upload', 'index': MATCH}, 'isCompleted'),
+    State({'name': '2d-plot-menu-data', 'type': 'upload', 'index': MATCH}, 'fileNames'),
+    State({'name': '2d-plot-menu-data', 'type': 'data-store', 'index': MATCH}, 'data')
 )
 def store_data(is_complete: bool, files: list[str], data: None | dict):
     if not is_complete:
@@ -92,8 +92,8 @@ def store_data(is_complete: bool, files: list[str], data: None | dict):
 
 
 @app.callback(
-    Output({'name': 'plot-menu-data-checklist', 'index': MATCH}, 'options'),
-    Input({'name': 'plot-menu-data', 'type': 'data-store', 'index': MATCH}, 'data'),
+    Output({'name': '2d-plot-menu-data-checklist', 'index': MATCH}, 'options'),
+    Input({'name': '2d-plot-menu-data', 'type': 'data-store', 'index': MATCH}, 'data'),
     Trigger('dash-layout', 'children')
 )
 def populate_checklist(data: dict):
@@ -104,8 +104,8 @@ def populate_checklist(data: dict):
 
 
 @app.callback(
-    Output({'name': 'plot-menu-data', 'type': 'selected-store', 'index': MATCH}, 'data'),
-    Input({'name': 'plot-menu-data-checklist', 'index': MATCH}, 'value')
+    Output({'name': '2d-plot-menu-data', 'type': 'selected-store', 'index': MATCH}, 'data'),
+    Input({'name': '2d-plot-menu-data-checklist', 'index': MATCH}, 'value')
 )
 def store_user_selection(selected_files: list):
     if selected_files is None:

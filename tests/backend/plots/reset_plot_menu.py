@@ -2,11 +2,11 @@ from dash.exceptions import PreventUpdate
 from dash import Input, Output, MATCH, ALL, callback_context
 
 import mamba_ui as mui
-from mamba_ui.widgets.plots.base.menu.data import PlotMenuDataItemComponent
-from mamba_ui.widgets.plots.base.menu.display import PlotMenuDisplayItemComponent
-from mamba_ui.widgets.plots.base.menu.filter import PlotMenuFilterItemComponent
-from mamba_ui.widgets.plots.base.menu.design import PlotMenuDesignItemComponent
-from mamba_ui.widgets.plots.base.menu.export import PlotMenuExportItemComponent
+from mamba_ui.widgets.plots.two_dimensional.menu.data import TwoDimensionalPlotMenuDataItemComponent
+from mamba_ui.widgets.plots.two_dimensional.menu.display import TwoDimensionalPlotMenuDisplayItemComponent
+from mamba_ui.widgets.plots.two_dimensional.menu.filter import TwoDimensionalPlotMenuFilterItemComponent
+from mamba_ui.widgets.plots.two_dimensional.menu.design import TwoDimensionalPlotMenuDesignItemComponent
+from mamba_ui.widgets.plots.two_dimensional.menu.export import TwoDimensionalPlotMenuExportItemComponent
 
 
 @mui.app.callback(
@@ -49,9 +49,9 @@ def reset_plot_menu(reset_click: int):
 
     index = callback_context.triggered_id['index']
     return [
-        [PlotMenuDataItemComponent(index=index).component],
-        [PlotMenuDisplayItemComponent(index=index).component],
-        [PlotMenuFilterItemComponent(index=index).component],
-        [PlotMenuDesignItemComponent(index=index).component],
-        [PlotMenuExportItemComponent(index=index).component]
+        [TwoDimensionalPlotMenuDataItemComponent(index=index).component],
+        [TwoDimensionalPlotMenuDisplayItemComponent(index=index).component],
+        [TwoDimensionalPlotMenuFilterItemComponent(index=index).component],
+        [TwoDimensionalPlotMenuDesignItemComponent(index=index).component],
+        [TwoDimensionalPlotMenuExportItemComponent(index=index).component]
     ]

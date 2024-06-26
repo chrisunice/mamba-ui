@@ -18,15 +18,15 @@ class BaseComponent(ABC):
         """
         super().__init__()
 
-        if name is None:
-            name = self.name
+        if name is not None:
+            self.name = name
 
         if index is None:
             index = ''
 
         self.id = {
-            'name': '-'.join(name.lower().split()),         # base-component
-            'index': index                                  # unique index
+            'name': self.html_name,         # base-component
+            'index': index                  # unique index
         }
 
     def get_child_id(self, childs_name: str) -> dict:
@@ -45,6 +45,10 @@ class BaseComponent(ABC):
         child_id = self.id.copy()
         child_id['type'] = childs_name
         return child_id
+
+    @property
+    def html_name(self):
+        return '-'.join(self.name.lower().split())
 
     @property
     @abstractmethod

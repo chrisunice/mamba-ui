@@ -4,9 +4,9 @@ import dash_bootstrap_components as dbc
 from mamba_ui.components.base import BaseComponent
 
 
-class PlotMenuExportItemComponent(BaseComponent):
+class TwoDimensionalPlotMenuExportItemComponent(BaseComponent):
 
-    name = 'Plot Menu Export'
+    name = '2D Plot Menu Export'
 
     def __init__(self, index: str, name: str = None):
         super().__init__(name=name, index=index)
