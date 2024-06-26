@@ -82,7 +82,7 @@ def store_data(is_complete: bool, files: list[str], data: None | dict):
 
     # Handle incoming data
     full_file_paths = [f"{config['paths']['upload_directory']}\\{file}" for file in files]
-    incoming_data = {os.path.basename(fpath).rstrip('.csv'): pd.read_csv(fpath) for fpath in full_file_paths}
+    incoming_data = {os.path.splitext(os.path.basename(fpath))[0]: pd.read_csv(fpath) for fpath in full_file_paths}
 
     # Update data store
     if data is None:
