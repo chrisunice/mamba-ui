@@ -14,9 +14,11 @@ from mamba_ui.widgets.plots.base.menu.export import PlotMenuExportItemComponent
 
 
 class BasePlotMenuComponent(BaseComponent):
-    def __init__(self, _index: str = ''):
-        super().__init__()
-        self._index = _index
+
+    name = 'Base Plot Menu'
+
+    def __init__(self, index: str, name: str = None):
+        super().__init__(name=name, index=index)
 
     @property
     def component(self) -> html.Div:
@@ -28,35 +30,37 @@ class BasePlotMenuComponent(BaseComponent):
             'height': '100%'
         }
 
+        index = self.id.get('index')
+
         return html.Div(
             children=[
                 dbc.Accordion(
                     className='text-dark',
                     children=[
                         html.Div(
-                            PlotMenuDataItemComponent(index=self._index).component,
-                            id={'type': 'plot-menu-data-container', 'index': self._index}
+                            id=self.get_child_id('data-container'),
+                            children=[PlotMenuDataItemComponent(index=index).component]
                         ),
                         html.Div(
-                            PlotMenuDisplayItemComponent(index=self._index).component,
-                            id={'type': 'plot-menu-display-container', 'index': self._index}
+                            id=self.get_child_id('display-container'),
+                            children=[PlotMenuDisplayItemComponent(index=index).component]
                         ),
                         html.Div(
-                            PlotMenuFilterItemComponent(index=self._index).component,
-                            id={'type': 'plot-menu-filter-container', 'index': self._index}
+                            id=self.get_child_id('filter-container'),
+                            children=[PlotMenuFilterItemComponent(index=index).component]
                         ),
                         html.Div(
-                            PlotMenuDesignItemComponent(index=self._index).component,
-                            id={'type': 'plot-menu-design-container', 'index': self._index}
+                            id=self.get_child_id('design-container'),
+                            children=[PlotMenuDesignItemComponent(index=index).component]
                         ),
                         html.Div(
-                            PlotMenuExportItemComponent(index=self._index).component,
-                            id={'type': 'plot-menu-export-container', 'index': self._index}
+                            id=self.get_child_id('export-container'),
+                            children=[PlotMenuExportItemComponent(index=index).component]
                         )
                     ],
                     always_open=True,
                 ),
-                SubmitButtonGroupComponent(name='widget', index=self._index).component
+                SubmitButtonGroupComponent(name='plot-menu-submit-button-group', index=index).component
             ],
             style=container_style
         )
