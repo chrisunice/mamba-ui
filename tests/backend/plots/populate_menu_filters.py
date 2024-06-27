@@ -25,56 +25,40 @@ def is_categorical(series, threshold=0.05):
     return False
 
 
+def get_step_size(data_range: int | float) -> int | float:
+    desired_steps = 100
+    step_increment = data_range / desired_steps
+    return 10**np.round(np.log10(step_increment))
+
+
 @mui.app.callback(
     Output({'name': ALL, 'type': 'filter-container', 'index': MATCH}, 'children'),
-    [
-        Input(
-            component_id={'name': '2d-plot-menu-display', 'type': 'independent-dropdown', 'index': MATCH},
-            component_property='value'
-        ),
-        Input(
-            component_id={'name': '2d-plot-menu-display', 'type': 'dependent-dropdown', 'index': MATCH},
-            component_property='value'
-        ),
-    ],
-    [
-        State(
-            component_id={'name': '2d-plot-menu-display', 'type': 'independent-dropdown', 'index': MATCH},
-            component_property='options'
-        ),
-        State(
-            component_id={'name': '2d-plot-menu-data', 'type': 'data-store', 'index': MATCH},
-            component_property='data'
-        ),
-        State(
-            component_id={'name': '2d-plot-menu-data-checklist', 'index': MATCH},
-            component_property='value'
-        ),
-    ]
+    Input(
+        component_id={'name': '2d-plot-menu-data-checklist', 'index': MATCH},
+        component_property='value'
+    ),
+    State(
+        component_id={'name': '2d-plot-menu-data', 'type': 'data-store', 'index': MATCH},
+        component_property='data'
+    )
 )
-def populate_menu_filters(i_var, d_var, options, data, selected_files):
+def populate_menu_filters(selected_files, data):
     """ Populates the plot menu filters based on the user selected variables for plotting """
 
-    # Prevent any updates until dropdowns get actual values
-    no_values = np.logical_or(i_var is None, d_var is None)
-    no_action = callback_context.triggered_id is None
-    if no_action or no_values:
+    if callback_context.triggered_id is None:
         raise PreventUpdate
-
-    other_columns = [option['value'] for option in options if option['value'] not in [i_var, d_var]]
 
     # Build filters
     cat_filters = {}
     num_filters = {}
 
-    # Step over every other column not being actively displayed
-    for col_name in other_columns:
+    # Step over selected files
+    for fname in selected_files:
+        df = data[fname]
 
-        # Step through each selected file
-        for file_name in selected_files:
-
-            # Get the column data
-            col_data = data[file_name][col_name]
+        # Step over columns in dataframe
+        for col_name in df.columns:
+            col_data = df[col_name]
 
             if is_categorical(col_data):
                 # Handle categorical columns
@@ -91,7 +75,10 @@ def populate_menu_filters(i_var, d_var, options, data, selected_files):
 
             else:
                 # Handle numerical columns
-                new_options = {'minimum': math.floor(col_data.min()), 'maximum': math.ceil(col_data.max()), 'step': 1}
+                minimum = math.floor(col_data.min())
+                maximum = math.ceil(col_data.max())
+                data_range = maximum - minimum
+                new_options = {'minimum': minimum, 'maximum': maximum, 'step': get_step_size(data_range)}
 
                 try:
                     existing_options = num_filters[col_name]
