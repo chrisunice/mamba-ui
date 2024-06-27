@@ -19,7 +19,7 @@ from mamba_ui.grid.sidebar import WidgetGridSidebarComponent
         ),
     ],
     Input(
-        component_id={'name': 'plot-menu-submit-button-group', 'type': 'submit', 'index': MATCH},
+        component_id={'name': '2d-plot-menu-submit-button-group', 'type': 'submit', 'index': MATCH},
         component_property='n_clicks'
     ),
     [
